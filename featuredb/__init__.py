@@ -18,9 +18,9 @@ def on_new_request(event):
 	#set_template_lookup(request.registry.queryUtility(IMakoLookup))
 
 	if app_path is None:
-		app_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', '..'))
+		app_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '..'))
 		app_name = os.path.split(app_path)[1]
-		config_file = os.path.join(app_path, '..', 'config', app_name + '.ini')
+		config_file = os.path.join(app_path, '..', '..', 'config', app_name + '.ini')
 
 	request.config = config.get_config(config_file)
 	request.connmgr = connection.ConnectionManager(request, request.config)
