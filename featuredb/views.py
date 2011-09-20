@@ -1,5 +1,3 @@
-from featuredb.models import DBSession
-from featuredb.models import MyModel
 from pyramid_handlers import action
 
 

@@ -1,5 +1,4 @@
 import os
-import sys
 
 from setuptools import setup, find_packages
 
@@ -9,15 +8,9 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'pyramid',
-    'SQLAlchemy',
-    'transaction',
-    'pyramid_tm',
+	'pyramid_beaker',
     'pyramid_debugtoolbar',
-    'zope.sqlalchemy',
     ]
-
-if sys.version_info[:3] < (2,5,0):
-    requires.append('pysqlite')
 
 setup(name='FeatureDb',
       version='0.0',
@@ -36,7 +29,6 @@ setup(name='FeatureDb',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      test_suite='featuredb',
       install_requires = requires,
       entry_points = """\
       [paste.app_factory]
