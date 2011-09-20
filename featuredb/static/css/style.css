@@ -212,6 +212,15 @@ body {
 h1,h2,h3,h4,h5 {
 	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
+
+.priority-list .priority {
+	display: block;
+	float: left;
+	margin: 0.5em 0.5em 0 0;
+	text-decoration: none;
+	color: #000;
+}
+
 .priority {
     font-family: "Arial","Helvetica","Verdana","sans-serif";
 	padding: 2px 4px 2px 4px;
