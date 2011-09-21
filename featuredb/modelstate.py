@@ -7,6 +7,7 @@
 #==================================================================
 
 import re
+from markupsafe import Markup
 from webhelpers.html import tags
 from webhelpers.html.builder import HTML, literal
 
@@ -46,7 +47,6 @@ def traverse_object_for_value(obj, name, is_array=False):
 				newobj = traverse_object_for_value(newobj, int(sep[1:-1], 10), is_array=True)
 
 			return traverse_object_for_value(newobj, tail)
-
 
 class CiocFormRenderer(FormRenderer):
 	def value(self, name, default=None):
@@ -158,7 +158,26 @@ class CiocFormRenderer(FormRenderer):
 			return HTML.tag("ul", tags.literal(content), **attrs)
 
 		
-		return HTML.tag("div", errors[0], **attrs)
+		return Markup('''
+			<div class="ui-widget clearfix" style="margin: 0.25em;">
+				<div class="ui-state-error error-field-wrapper"> 
+				<span class="ui-icon ui-icon-alert error-notice-icon"></span>%s
+				</div>
+			</div>
+			''') % errors[0]
+
+	def error_notice(self, msg='There were validation errors'):
+		if not self.all_errors():
+			return ''
+
+		return Markup('''
+			<div class="ui-widget clearfix">
+				<div class="ui-state-error ui-corner-all error-notice-wrapper"> 
+					<p><span class="ui-icon ui-icon-alert error-notice-icon"></span>
+					<strong>Alert:</strong> %s</p>
+				</div>
+			</div>
+			''') % msg
 
 class ModelState(object):
 	def __init__(self, request):
@@ -179,7 +198,7 @@ class ModelState(object):
 		return self.form.schema
 
 	@schema.setter
-	def schema_set(self, value):
+	def schema(self, value):
 		if self.form.schema:
 			raise RuntimeError, \
 					"schema property has already been set"
@@ -190,7 +209,7 @@ class ModelState(object):
 		return self.form.validators
 
 	@validators.setter
-	def validators_set(self, value):
+	def validators(self, value):
 		if self.form.validators:
 			raise RuntimeError, \
 					"validators property has alread been set"
@@ -201,7 +220,7 @@ class ModelState(object):
 		return self.form.method
 
 	@method.setter
-	def method_set(self, value):
+	def method(self, value):
 		self.form.method = value
 
 	@property
@@ -209,7 +228,7 @@ class ModelState(object):
 		return self._defaults
 
 	@defaults.setter
-	def defaults_set(self, value):
+	def defaults(self, value):
 		if self._defaults:
 			raise RuntimeError, \
 					"defaults property has already been set"
@@ -222,9 +241,14 @@ class ModelState(object):
 		
 
 
+	@property
+	def data(self):
+		return self.form.data
+
 	def validate(self, *args, **kw):
 		return self.form.validate(*args, **kw)
 
+	
 	def bind(self, obj=None, include=None, exclude=None):
 		if obj is None:
 			obj = DefaultModel()

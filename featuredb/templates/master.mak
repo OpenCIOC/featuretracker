@@ -25,6 +25,13 @@
   <!-- CSS concatenated and minified via ant build script-->
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/redmond/jquery-ui.css" type="text/css" />
+  <style type="text/css">
+    /* fix the broken font handling in default jquery-ui styles */
+    .ui-widget {
+        font-family: inherit;
+        font-size: 1em;
+    }
+  </style>
   <!-- end CSS-->
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->

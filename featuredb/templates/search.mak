@@ -10,23 +10,29 @@ def grouper(n, iterable, fillvalue=None):
 model_state = request.model_state 
 renderer = model_state.renderer
 %>
+${renderer.error_notice()}
 <h1>Search for Features</h1>
 <h2 class="ui-corner-top">Advanced Search</h2>
 <form method="get" action="${request.route_url('home', action='results')}">
 	<table>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Terms', 'Full-Text Search')}</td>
-			<td class="ui-widget-content">${renderer.text('Terms', size=50, maxlength=100)}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('Terms')}
+				${renderer.text('Terms', size=50, maxlength=100)}
+			</td>
 		</tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Keyword', 'Keyword')}</td>
 			<td class="ui-widget-content">
+				${renderer.errorlist('Keyword')}
 				${renderer.select('Keyword', options=[('','')] + map(tuple, keywords))}
 				</td>
 		</tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Module', 'Module')}</td>
 			<td class="ui-widget-content">
+				${renderer.errorlist('Module')}
 				${renderer.select('Module', options=[('','')] + 
 						[(m.MODULE_ID, m.ModuleName) for m in modules])}
 				</td>
@@ -35,12 +41,14 @@ renderer = model_state.renderer
 		<tr>
 			<td class="ui-widget-header">${renderer.label('UserPriority', 'My Rating')}</td>
 			<td class="ui-widget-content">
+				${renderer.errorlist('UserPriority')}
 				${renderer.select('UserPriority', options=priorities_formatted)}
 				</td>
 		</tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Estimate', 'Estimate')}</td>
 			<td class="ui-widget-content">
+				${renderer.errorlist('Estimate')}
 				${renderer.select('Estimate', options=[('','')] + map(tuple, estimates))}
 				</td>
 		</tr>

@@ -37,11 +37,15 @@ def main(global_config, **settings):
 	config.add_static_view('robots.txt', 'featuredb:static/robots.txt', cache_max_age=3600)
 	config.add_static_view('humans.txt', 'featuredb:static/humans.txt', cache_max_age=3600)
 
+	config.add_handler('enhancement', '/enhancement/{id}', action='index',
+			handler='featuredb.views.Enhancement')
+
 	config.add_handler('home_index', '/',
 			handler='featuredb.views.Index', action='index')
 
 	config.add_handler('home', '/{action}',
 			handler='featuredb.views.Index')
+
 
 	config.add_subscriber(on_new_request, 'pyramid.events.NewRequest')
 
