@@ -12,6 +12,10 @@ class UnicodeString(validators.UnicodeString):
 	trim = True
 	if_empty = None
 
+class String(validators.String):
+	trim = True
+	if_empty = None
+
 class IntID(validators.Int):
 	if_empty = None
 	min = 1
@@ -25,7 +29,7 @@ class SearchSchema(Schema):
 
 	Terms = UnicodeString(max=100)
 	Keyword = IntID()
-	Module = IntID()
+	Module = String(max=1)
 	UserPriority = IntID()
 	SysPriority = IntID()
 	Estimate = IntID()
@@ -129,3 +133,6 @@ class Enhancement(object):
 	@action(renderer='enhancement.mak')
 	def index(self):
 		request = self.request
+		enh_id = request.matchdict['id'] 
+
+		return {}

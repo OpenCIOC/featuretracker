@@ -372,6 +372,32 @@ h1,h2,h3,h4,h5 {
 	float: left; margin-right: .3em; margin-top: .025em; vertical-align: bottom;
 }
 
+.module-icon {
+  display: inline-block;
+  overflow: hidden;
+  text-indent: -999px;
+  vertical-align: baseline;
+  margin-top: 2px;
+}
+
+.module-icon-cic {
+  background: url('../img/cic-icon.gif');
+  width: 17px; height: 17px;
+}
+.module-icon-vol {
+  background: url('../img/vol-icon.gif');
+  width: 17px; height: 17px;
+}
+.module-icon-tracker {
+  background: url('../img/ct-icon.gif');
+  width: 17px; height: 17px;
+}
+
+.module-icons {
+	display: inline-block;
+	float: right;
+}
+
 
 /* ==|== non-semantic helper classes ========================================
    Please define your styles before this section.

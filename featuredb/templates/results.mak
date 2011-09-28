@@ -25,13 +25,23 @@ searched = searched_for.items()
 
 %endif
 
+%if results:
 
+<p>There are <strong>${len(results)}</strong> enhancements(s) that match your criteria. 
+<br>Click on the enhancement name to view the full details of the enhancement.</p>
+<% modules = [('CIC', 'CIC'),('VOL', 'Volunteer'),('TRACKER', 'Client Tracker')] %>
 <ol class="results">
 
 %for result in results:
 <li class="result">
 
-<h3 class="ui-state-default ui-corner-all"><a href="${request.route_url('enhancement', id=result.ID)}">#${result.ID} ${result.Title}</a></h3>
+<h3 class="ui-state-default ui-corner-all"><a href="${request.route_url('enhancement', id=result.ID)}">#${result.ID} ${result.Title}</a><span class="module-icons">
+%for module, title in modules:
+%if getattr(result, module):
+<span class="module-icon module-icon-${module.lower()}" title="${title}"></span>
+%endif
+%endfor
+</span></h3>
 
 <p class="status-line status-line1">Module(s): ${result.Modules} ; 
 Status: ${result.Status}</p>
@@ -52,3 +62,6 @@ My Ranking: <span class="${priority.PriorityCode.lower().replace(' ', '-')}-text
 %endfor
 
 </ol>
+%else:
+<p><strong>There are no enhancements that match your criteria. Please modify your search to be less restrictive and try again.</strong></p>
+%endif
