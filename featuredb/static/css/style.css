@@ -314,7 +314,7 @@ h1,h2,h3,h4,h5 {
 }
 
 
-.results {
+.results, .enhancement {
 	width: 50em;
 	margin: 0;
 	padding: 0;
@@ -396,6 +396,43 @@ h1,h2,h3,h4,h5 {
 .module-icons {
 	display: inline-block;
 	float: right;
+}
+
+.description {
+	font-size: 120%;
+}
+.enhancement h2 {
+	padding: 0.1em 0.3em;
+	margin-left: -0.3em;
+	margin-bottom:0.3em;
+}
+
+.enhancement-status-row dl{
+	float: left;
+	width: 19.5em;
+	margin: 0;
+	padding: 0;
+	font-size: 85%;
+}
+
+.enhancement-status-row dt { font-weight: bold; }
+.enhancement-status-row dd { margin: 0; padding: 0; }
+
+ul.keywords, ul.modules {
+	float: left;
+	width: 25em;
+	margin: 0;
+	padding: 0;
+}
+
+.keywords-and-modules li {
+	list-style: none;
+	margin: .5em 0;
+	
+}
+
+li.title {
+	font-weight: bold;
 }
 
 

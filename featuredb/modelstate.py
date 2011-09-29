@@ -174,7 +174,7 @@ class CiocFormRenderer(FormRenderer):
 			<div class="ui-widget clearfix">
 				<div class="ui-state-error ui-corner-all error-notice-wrapper"> 
 					<p><span class="ui-icon ui-icon-alert error-notice-icon"></span>
-					<strong>Alert:</strong> %s</p>
+					%s</p>
 				</div>
 			</div>
 			''') % msg
@@ -187,11 +187,7 @@ class ModelState(object):
 
 	@property
 	def is_valid(self):
-		if not self.form.is_validated:
-			raise RuntimeError, \
-					"Form has not been validated. Call validate() first"
-
-		return not self.form.validate()
+		return not self.form.errors
 
 	@property
 	def schema(self):
@@ -263,4 +259,11 @@ class ModelState(object):
 
 	def errors_for(self, name):
 		return self.renderer.errors_for(name)
+
+	def add_error_for(self, name, msg):
+		errlist = self.form.errors_for(name)
+		errlist.append(msg)
+
+		self.form.errors[name] = errlist
+
 
