@@ -41,10 +41,12 @@ body, button, input, select, textarea { font-family: sans-serif; color: #222; }
    Links
    ========================================================================== */
 
+a { color: #2E6E9E; font-weight: bold; text-decoration: none; }
+
 a:focus { outline: thin dotted; }
 
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
-a:hover, a:active { outline: 0; }
+a:hover, a:active {	outline: 0; text-decoration: underline; }
 
 
 /* =============================================================================
