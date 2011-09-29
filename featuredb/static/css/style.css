@@ -284,26 +284,48 @@ h1,h2,h3,h4,h5 {
 	background-color:#E0E0EB;
 }
 
-.very-high-text {
+.very-high-results {
 	color: #FF9999;
 }
-.high-text {
+.high-results {
 	color:#FFC299;
 }
-.moderate-text {
+.moderate-results {
 	color: #EBD699;
 }
-.low-text {
+.low-results {
 	color: #C2D699;
 }
-.very-low-text {
+.very-low-results {
 	color: #ADC299;
 }
-.neutral-text {
+.neutral-results {
 	color:#ADC2D6;
 }
-.do-not-want-text {
+.do-not-want-results {
 	color:#C2C2D6;
+}
+
+.very-high-text {
+	color: #FF0000;
+}
+.high-text {
+	color:#FF6600;
+}
+.moderate-text {
+	color: #CC9900;
+}
+.low-text {
+	color: #669900;
+}
+.very-low-text {
+	color: #336600;
+}
+.neutral-text {
+	color:#336699;
+}
+.do-not-want-text {
+	color:#666699;
 }
 
 .enhancement-list {
@@ -409,7 +431,7 @@ h1,h2,h3,h4,h5 {
 
 .enhancement-status-row dl{
 	float: left;
-	width: 19.5em;
+	width: 14.5em;
 	margin: 0;
 	padding: 0;
 	font-size: 85%;
@@ -419,16 +441,15 @@ h1,h2,h3,h4,h5 {
 .enhancement-status-row dd { margin: 0; padding: 0; }
 
 ul.keywords, ul.modules {
-	float: left;
-	width: 25em;
 	margin: 0;
 	padding: 0;
 }
-
-.keywords-and-modules li {
+ul.keywords li, ul.modules li{ 
+	float: left;
+	margin: 0;
+	padding: 0;
 	list-style: none;
-	margin: .5em 0;
-	
+	margin: 0.5em 0.5em 0.5em 0;
 }
 
 li.title {
