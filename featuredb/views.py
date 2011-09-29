@@ -117,11 +117,26 @@ class Index(object):
 
 	@action(renderer='priority.mak')
 	def priority(self):
-		request = self.request
 
 		return {}
 
 
+	@action(renderer='login.mak')
+	def login(self):
+		return {}
+
+	@action(name="login", renderer='login.mak', request_method='POST')
+	def login_process(self):
+		request = self.request
+
+
+		return {}
+
+	@action(renderer='register.mak')
+	def register(self):
+		request = self.request
+
+		return {}
 
 def _priority_xml_to_dict(pri):
 	if not pri:
