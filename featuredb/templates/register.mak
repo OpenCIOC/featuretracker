@@ -1,8 +1,9 @@
-<%inherit file="master.mak">
+<%inherit file="master.mak"/>
+<%block name="title">Register</%block>
+<%block name="newsearch"/>
 
-<h1>Register</h1>
-
-<form method="post" action="${request.route_url('home', action='register')}">
+<% renderer = request.model_state.renderer %>
+<form method="post" action="${request.route_url('register')}">
 	<table>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Email', 'Email Address')}</td>
@@ -15,36 +16,50 @@
 			<td class="ui-widget-header">${renderer.label('Password', 'Password')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('password')}
-				${renderer.password('password', size=60))}
+				${renderer.password('password', size=60)}
 			</td>
 		</tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('ConfirmPassword', 'Confirm Password')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('ConfirmPassword')}
-				${renderer.password('ConfirmPassword', size=60))}
+				${renderer.password('ConfirmPassword', size=60)}
 			</td>
 		</tr>
+		<tr><td colspan="2" class="ui-widget-header" style="text-align: center">Optional Info</td></tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Member', 'CIOC Membership')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('Member')}
-				${renderer.select('Member', options=[('','')] )}
-				</td>
-		</tr>
-		<% priorities_formatted = [('','')] + [(p.PRIORITY_ID, p.PriorityName) for p in priorities] %>
-		<tr>
-			<td class="ui-widget-header">${renderer.label('UserPriority', 'My Rating')}</td>
-			<td class="ui-widget-content">
-				${renderer.errorlist('UserPriority')}
-				${renderer.select('UserPriority', options=priorities_formatted)}
+				${renderer.select('Member', options=[('',''), ('', 'A nice member')] )}
 				</td>
 		</tr>
 		<tr>
-			<td class="ui-widget-header">${renderer.label('Estimate', 'Estimate')}</td>
+			<td class="ui-widget-header">${renderer.label('Agency', 'CIOC Agency')}</td>
 			<td class="ui-widget-content">
-				${renderer.errorlist('Estimate')}
-				${renderer.select('Estimate', options=[('','')] + map(tuple, estimates))}
+				${renderer.errorlist('Agency')}
+				${renderer.select('Agency', options=[('',''),('GOO', 'A nice Agency')] )}
+				</td>
+		</tr>
+		<tr>
+			<td class="ui-widget-header">${renderer.label('OrgName', 'Organization Name')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('OrgName')}
+				${renderer.text('OrgName', maxlength=50 )}
+				</td>
+		</tr>
+		<tr>
+			<td class="ui-widget-header">${renderer.label('FirstName', 'First Name')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('LastName')}
+				${renderer.text('LastName', maxlength=50 )}
+				</td>
+		</tr>
+		<tr>
+			<td class="ui-widget-header">${renderer.label('FirstName', 'Last Name')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('LastName')}
+				${renderer.text('LastName', maxlength=50 )}
 				</td>
 		</tr>
 	</table>

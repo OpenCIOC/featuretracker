@@ -37,17 +37,26 @@ def main(global_config, **settings):
 	config.add_static_view('robots.txt', 'featuredb:static/robots.txt', cache_max_age=3600)
 	config.add_static_view('humans.txt', 'featuredb:static/humans.txt', cache_max_age=3600)
 
-	config.add_handler('enhancement', '/enhancement/{id:\d+}', action='index',
-			handler='featuredb.views.Enhancement')
+	config.add_route('enhancement', '/enhancement/{id:\d+}')
 
-	config.add_handler('home_index', '/',
-			handler='featuredb.views.Index', action='index')
+	config.add_handler('search_index', '/',
+			handler='featuredb.views.search.Search', action='index')
 
-	config.add_handler('home', '/{action}',
-			handler='featuredb.views.Index')
+	config.add_handler('search_results', '/results',
+			handler='featuredb.views.search.Search', action='results')
+
+	config.add_handler('priority', '/priority',
+			handler='featuredb.views.priority.Priority', action='index')
+
+	config.add_handler('login', '/login',
+			handler='featuredb.views.login.Login', action='index')
+
+	config.add_handler('register', '/register',
+			handler='featuredb.views.register.Register', action='index')
 
 
 	config.add_subscriber(on_new_request, 'pyramid.events.NewRequest')
+	config.scan()
 
 	return config.make_wsgi_app()
 

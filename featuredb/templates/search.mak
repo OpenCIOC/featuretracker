@@ -6,14 +6,15 @@ def grouper(n, iterable, fillvalue=None):
     args = [iter(iterable)] * n
     return izip_longest(fillvalue=fillvalue, *args)
 %>
+<%block name="title">Search for Features</%block>
+<%block name="newsearch"/>
 <% 
 model_state = request.model_state 
 renderer = model_state.renderer
 %>
 ${renderer.error_notice()}
-<h1>Search for Features</h1>
 <h2 class="ui-corner-top">Advanced Search</h2>
-<form method="get" action="${request.route_url('home', action='results')}">
+<form method="get" action="${request.route_url('search_results')}">
 	<table>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Terms', 'Full-Text Search')}</td>
@@ -62,7 +63,7 @@ ${renderer.error_notice()}
 <h3>${label}</h3>
 <div class="priority-list clearfix">
 %for priority in priorities:
-<a class="priority ${priority.PriorityCode.lower().replace(' ', '-')}" href="${request.route_url('home', action='results', _query=[(prefix + 'Priority',priority[0])])}">${priority.PriorityName} (${getattr(priority, prefix + 'EnhancementCount')})</a>
+<a class="priority ${priority.PriorityCode.lower().replace(' ', '-')}" href="${request.route_url('search_results', _query=[(prefix + 'Priority',priority[0])])}">${priority.PriorityName} (${getattr(priority, prefix + 'EnhancementCount')})</a>
 %endfor
 </div>
 %endfor
@@ -75,7 +76,7 @@ ${renderer.error_notice()}
 	%for keyword in group:
 		<td>
 			%if keyword:
-			<a href="${request.route_url('home', action='results', _query=[('Keyword',keyword[0])])}">${keyword.Keyword} (${keyword.EnhancementCount})</a>
+			<a href="${request.route_url('search_results', _query=[('Keyword',keyword[0])])}">${keyword.Keyword} (${keyword.EnhancementCount})</a>
 			%endif
 		</td>
 	%endfor

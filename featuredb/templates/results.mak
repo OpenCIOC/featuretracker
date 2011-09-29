@@ -1,5 +1,5 @@
 <%inherit file="master.mak"/>
-
+<%block name="title">Search Results</%block>
 <% 
 searched_for_map = {
 	'UserPriority': 'My Ranking',
@@ -29,26 +29,28 @@ searched = searched_for.items()
 
 <p>There are <strong>${len(results)}</strong> enhancements(s) that match your criteria. 
 <br>Click on the enhancement name to view the full details of the enhancement.</p>
-<% modules = [('CIC', 'CIC'),('VOL', 'Volunteer'),('TRACKER', 'Client Tracker')] %>
+<% modules = [('CIC', 'Community Information'),('VOL', 'Volunteer Opportunities'),('TRACKER', 'Client Tracker')] %>
 <ol class="results">
 
 %for result in results:
 <li class="result">
 
-<h3 class="ui-state-default ui-corner-all"><a href="${request.route_url('enhancement', id=result.ID)}">#${result.ID} ${result.Title}</a><span class="module-icons">
+<h3 class="ui-state-default ui-corner-all clearfix"><span class="module-icons">
 %for module, title in modules:
 %if getattr(result, module):
 <span class="module-icon module-icon-${module.lower()}" title="${title}"></span>
 %endif
 %endfor
-</span></h3>
+</span>
+<a href="${request.route_url('enhancement', id=result.ID)}">#${result.ID} ${result.Title}</a>
+</h3>
 
 <p class="status-line status-line1">Module(s): ${result.Modules} ; 
 Status: ${result.Status}</p>
 
 <p class="status-line status-line2">Last Modified: ${result.LastModified} ; 
 <% priority = priorities[result.SysPriority] %>
-Priority: <span class="${priority.PriorityCode.lower().replace(' ', '-')}-text">${priority.PriorityName}</span> ;
+Priority: <span class="${priority.PriorityCode.lower().replace(' ', '-')}-results">${priority.PriorityName}</span> ;
 Est. Cost: ${result.CostRange}</p>
 
 <p class="short-description">${result.ShortDescription}</p>

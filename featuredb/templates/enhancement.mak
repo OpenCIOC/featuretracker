@@ -1,4 +1,5 @@
 <%inherit file="master.mak" />
+<%! from markupsafe import Markup %>
 
 <% model_state = request.model_state %>
 %if not model_state.is_valid:
@@ -22,7 +23,7 @@ ${request.model_state.renderer.error_notice(model_state.errors_for('*')[0])}
 <ul class="modules clearfix">
 <li class="title">Modules:</li>
 %for module in enhancement.Modules:
-<li><a href="${request.route_url('home', action='results', _query=[('Module', module['MODULE_ID'])])}">${module['ModuleName']}</a></li>
+<li><a href="${request.route_url('search_results', _query=[('Module', module['MODULE_ID'])])}">${module['ModuleName']}</a></li>
 %endfor
 </ul>
 </%doc>
@@ -35,7 +36,7 @@ ${request.model_state.renderer.error_notice(model_state.errors_for('*')[0])}
 
 <dl><dt>Modules</dt>
 %for module in enhancement.Modules:
-<dd><a href="${request.route_url('home', action='results', _query=[('Module', module['MODULE_ID'])])}">${module['ModuleName']}</a></dd>
+<dd><a href="${request.route_url('search_results', _query=[('Module', module['MODULE_ID'])])}">${module['ModuleName']}</a></dd>
 %endfor
 </dl>
 </div>
@@ -47,13 +48,16 @@ ${request.model_state.renderer.error_notice(model_state.errors_for('*')[0])}
 <p><strong>Notes:</strong> ${enhancement.AdditionalNotes }</p>
 %endif
 
-<ul class="keywords clearfix">
-<li class="title">Keywords:</li>
-%for keyword in enhancement.Keywords:
-<li><a href="${request.route_url('home', action='results', _query=[('Keyword', keyword['KEYWORD_ID'])])}">${keyword['Keyword']}</a></li>
-%endfor
-</ul>
+%if enhancement.Keywords:
+<%
+link_tmpl = Markup('<a href="%s">%s</a>')
+url_gen = lambda x: request.route_url('search_results', _query=[('Keyword', x['KEYWORD_ID'])])
 
+keywords = ((url_gen(k), k['Keyword']) for k in enhancement.Keywords)
+keywords = (link_tmpl % k for k in keywords)
+%>
+<p><strong>Keywords:</strong> ${Markup(', ').join(keywords)} </p>
+%endif
 
 <p class="status-line status-line2">Last Modified: ${enhancement.LastModified} ; Modified By: ${enhancement.ModifiedBy}</p>
 </div>

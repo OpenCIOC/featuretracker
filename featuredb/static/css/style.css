@@ -224,6 +224,11 @@ h1,h2,h3,h4,h5 {
 	color: #000;
 }
 
+.headernewsearch {
+	float: right;
+	font-size: 50%;
+}
+
 .priority {
     font-family: "Arial","Helvetica","Verdana","sans-serif";
 	padding: 2px 4px 2px 4px;
@@ -441,22 +446,6 @@ h1,h2,h3,h4,h5 {
 
 .enhancement-status-row dt { font-weight: bold; }
 .enhancement-status-row dd { margin: 0; padding: 0; }
-
-ul.keywords, ul.modules {
-	margin: 0;
-	padding: 0;
-}
-ul.keywords li, ul.modules li{ 
-	float: left;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	margin: 0.5em 0.5em 0.5em 0;
-}
-
-li.title {
-	font-weight: bold;
-}
 
 
 /* ==|== non-semantic helper classes ========================================

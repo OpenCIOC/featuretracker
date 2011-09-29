@@ -12,7 +12,7 @@
        More info: h5bp.com/b/378 -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title></title>
+  <title><%block name="title"/></title>
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -46,6 +46,8 @@
 
   <div id="container">
     <header>
+	<h1 class="clearfix"><%block name="newsearch"><span class="headernewsearch"><a href="${request.route_url('search_index')}">New Search</a></span></%block>${self.title()}</h1>
+	
 
     </header>
     <div id="main" role="main">

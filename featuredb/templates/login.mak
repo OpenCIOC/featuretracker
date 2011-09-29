@@ -17,4 +17,4 @@ ${renderer.error_notice()}
 </table>
 </form>
 
-<p>Don't have a password yet? <a href="${request.route_url('home', action='register')}">Tell us about yourself</a> or <a href="${request.route_url('home_index', _query=[('bypass_login', 'on')])}">go right to the enhancements</a>.</p>
+<p>Don't have a password yet? <a href="${request.route_url('register')}">Tell us about yourself</a> or <a href="${request.route_url('search_index', _query=[('bypass_login', 'on')])}">go right to the enhancements</a>.</p>
