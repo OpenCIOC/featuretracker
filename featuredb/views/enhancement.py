@@ -13,7 +13,7 @@ def _priority_xml_to_dict(pri):
 
 def _xml_to_dict_list(modules):
 	if not modules:
-		return modules
+		return []
 
 	root = ET.fromstring(modules)
 	return [x.attrib for x in root]
