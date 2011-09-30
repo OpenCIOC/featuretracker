@@ -1,4 +1,4 @@
-<%inherit file="master.mak"/>
+<%inherit file="priority.mak"/>
 <%block name="title">Search Results</%block>
 <% 
 searched_for_map = {
@@ -49,16 +49,18 @@ searched = searched_for.items()
 Status: ${result.Status}</p>
 
 <p class="status-line status-line2">Last Modified: ${result.LastModified} ; 
-<% priority = priorities[result.SysPriority] %>
+<% priority = priority_map[result.SysPriority] %>
 Priority: <span class="${priority.PriorityCode.lower().replace(' ', '-')}-results">${priority.PriorityName}</span> ;
 Est. Cost: ${result.CostRange}</p>
 
 <p class="short-description">${result.ShortDescription}</p>
 
 
-<% priority = priorities[result.UserPriority] %>
+%if request.user:
+<% priority = priority_map[result.UserPriority] %>
 <p class="status-my-rank"><span class="ui-icon ui-icon-circle-triangle-e inline-icon"></span> 
 My Ranking: <span class="${priority.PriorityCode.lower().replace(' ', '-')}-text align-bottom">${priority.PriorityName}</span></p>
+%endif
 
 </li>
 %endfor
@@ -67,3 +69,4 @@ My Ranking: <span class="${priority.PriorityCode.lower().replace(' ', '-')}-text
 %else:
 <p><strong>There are no enhancements that match your criteria. Please modify your search to be less restrictive and try again.</strong></p>
 %endif
+

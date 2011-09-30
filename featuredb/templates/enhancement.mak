@@ -1,5 +1,6 @@
-<%inherit file="master.mak" />
+<%inherit file="priority.mak" />
 <%! from markupsafe import Markup %>
+<%block name="title">Enhancement Details</%block>
 
 <% model_state = request.model_state %>
 %if not model_state.is_valid:
@@ -48,9 +49,9 @@ ${request.model_state.renderer.error_notice(model_state.errors_for('*')[0])}
 <p><strong>Notes:</strong> ${enhancement.AdditionalNotes }</p>
 %endif
 
+<% link_tmpl = Markup('<a href="%s">%s</a>') %>
 %if enhancement.Keywords:
 <%
-link_tmpl = Markup('<a href="%s">%s</a>')
 url_gen = lambda x: request.route_url('search_results', _query=[('Keyword', x['KEYWORD_ID'])])
 
 keywords = ((url_gen(k), k['Keyword']) for k in enhancement.Keywords)
@@ -59,8 +60,19 @@ keywords = (link_tmpl % k for k in keywords)
 <p><strong>Keywords:</strong> ${Markup(', ').join(keywords)} </p>
 %endif
 
+%if enhancement.SeeAlsos:
+<%
+url_gen = lambda x: request.route_url('enhancement', id=x['ID'])
+
+see_alsos = ((url_gen(s), s['Title']) for s in enhancement.SeeAlsos)
+see_alsos = (link_tmpl % s for s in see_alsos)
+%>
+<p><strong>See Also:</strong> ${Markup(', ').join(see_alsos)} </p>
+%endif
+
 <p class="status-line status-line2">Last Modified: ${enhancement.LastModified} ; Modified By: ${enhancement.ModifiedBy}</p>
 </div>
+
 
 
 

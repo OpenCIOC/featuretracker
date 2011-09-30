@@ -34,8 +34,22 @@ class Enhancement(ViewBase):
 			return {}
 
 		enhancement = None
+		priorities = []
+		user_priorities = []
 		with request.connmgr.get_connection() as conn:
-			enhancement = conn.execute('EXEC dbo.sp_EnhancementDetail ?, ?', request.user, enh_id).fetchone()
+			cursor = conn.execute('EXEC dbo.sp_EnhancementDetail ?, ?', request.user, enh_id)
+
+			enhancement = cursor.fetchone()
+			if request.user:
+				cursor.nextset()
+
+				priorities = cursor.fetchall()
+
+				cursor.nextset()
+
+				user_priorities = cursor.fetchall()
+
+			cursor.close()
 
 		if enhancement is None:
 			#error condition, change template?
@@ -46,7 +60,8 @@ class Enhancement(ViewBase):
 		enhancement.UserPriority = _priority_xml_to_dict(enhancement.UserPriority)
 		enhancement.Modules = _xml_to_dict_list(enhancement.Modules)
 		enhancement.Keywords = _xml_to_dict_list(enhancement.Keywords)
+		enhancement.SeeAlsos = _xml_to_dict_list(enhancement.SeeAlsos)
 
 
-		return {'enhancement': enhancement, 'ErrMsg': None}
+		return {'enhancement': enhancement, 'priorities':priorities, 'user_priorities': user_priorities}
 

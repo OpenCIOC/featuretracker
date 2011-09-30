@@ -33,6 +33,7 @@ class Search(ViewBase):
 	@action(renderer='search.mak')
 	def index(self):
 		request = self.request
+		user_priorities = []
 		with request.connmgr.get_connection() as conn:
 			cursor = conn.execute('EXEC dbo.sp_SearchPage ?', request.user)
 
@@ -50,9 +51,14 @@ class Search(ViewBase):
 
 			estimates = cursor.fetchall()
 
+			if request.user:
+				cursor.nextset()
+				user_priorities = cursor.fetchall()
+
 			cursor.close()
 
-		return dict(keywords=keywords, modules=modules, priorities=priorities, estimates=estimates)
+		return dict(keywords=keywords, modules=modules, priorities=priorities,
+			  estimates=estimates, user_priorities=user_priorities)
 
 
 	@action(renderer='results.mak')
@@ -70,6 +76,7 @@ class Search(ViewBase):
 			log.debug('errors: %s', model_state.form.errors)
 			return retval
 
+		user_priorities = []
 		with request.connmgr.get_connection() as conn:
 			data = model_state.data
 			args = [request.user] 
@@ -86,9 +93,14 @@ class Search(ViewBase):
 
 			results = cursor.fetchall()
 
+			if request.user:
+				cursor.nextset()
+				user_priorities = cursor.fetchall()
+
 			cursor.close()
 
 		searched_for = {d[0]: x for d,x in zip(searched_for.cursor_description, searched_for) if x}
-		priorities = {x[0]: x for x in priorities}
+		priority_map = {x[0]: x for x in priorities}
 
-		return dict(searched_for=searched_for, priorities=priorities, results=results)
+		return dict(searched_for=searched_for, priorities=priorities,
+			  results=results, user_priorities=user_priorities, priority_map=priority_map)

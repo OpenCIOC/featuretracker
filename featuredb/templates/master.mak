@@ -44,7 +44,10 @@
 
 <body>
 
-  <div id="container">
+<div class="colmask rightmenu">
+<div class="colleft">
+  <div class="col1wrap">
+  <div id="container" class="col1">
     <header>
 	<h1 class="clearfix"><%block name="newsearch"><span class="headernewsearch"><a href="${request.route_url('search_index')}">New Search</a></span></%block>${self.title()}</h1>
 	
@@ -59,6 +62,10 @@
 
     </footer>
   </div> <!--! end of #container -->
+  </div>
+  <%block name="priority_mgmt"/>
+</div>
+</div>
 
 
   <!-- JavaScript at the bottom for fast page loading -->

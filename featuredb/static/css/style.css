@@ -216,6 +216,44 @@ h1,h2,h3,h4,h5 {
 	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
+	/* column container */
+	.colmask {
+		position:relative;		/* This fixes the IE7 overflow hidden bug and stops the layout jumping out of place */
+	    clear:both;
+	    float:left;
+        width:100%;			/* width of whole page */
+		overflow:hidden;	/* This chops off any overhanging divs */
+	}
+	/* 2 column right menu settings */
+	.rightmenu .colleft {
+        float:left;
+        width:200%;
+        margin-left:-22em;
+        position:relative;
+        right:100%;
+        background:#fff;
+    }
+    .rightmenu .col1wrap {
+	    float:left;
+	    width:50%;
+	    position:relative;
+	    left:50%;
+	    padding-bottom:1em;
+	}
+	.rightmenu .col1 {
+        margin:0 1em 0 23em;
+        overflow:hidden;
+	}
+    .rightmenu .col2 {
+        float:right;
+        width:20em;
+        position:relative;
+        left:21em;
+    }
+    .ie6 .col1 {
+	    width:100%;
+	}
+
 .priority-list .priority {
 	display: block;
 	float: left;
@@ -227,6 +265,12 @@ h1,h2,h3,h4,h5 {
 .headernewsearch {
 	float: right;
 	font-size: 50%;
+	vertical-align: middle;
+	line-height: 200%;
+}
+
+.headernewsearch a {
+	vertical-align: middle;
 }
 
 .priority {
@@ -239,7 +283,7 @@ h1,h2,h3,h4,h5 {
 }
 .priority-en {
 	margin: 0px;
-	padding: 2px;
+	padding: 0px;
 }
 .very-high {
 	background-color: #FF9999;
@@ -335,16 +379,21 @@ h1,h2,h3,h4,h5 {
 	color:#666699;
 }
 
-.enhancement-list {
-
+h2.priority {
+	margin: 0;
 }
+.enhancement-list {
+	min-height: 1em;
+	padding: 2px;
+	margin: 0 0 0 2em;
+}
+
 .small-note {
 	font-size: x-small;	
 }
 
 
 .results, .enhancement {
-	width: 50em;
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -457,6 +506,7 @@ h1,h2,h3,h4,h5 {
 	margin: 0.125em 0;
 }
 
+
 /* ==|== non-semantic helper classes ========================================
    Please define your styles before this section.
    ========================================================================== */
@@ -490,13 +540,36 @@ h1,h2,h3,h4,h5 {
    Modify as content requires.
    ========================================================================== */
 
-@media only screen and (min-width: 480px) {
+@media only screen and (min-width: 768px) {
   /* Style adjustments for viewports 480px and over go here */
+	/*
+	#priority-mgmt {
+		float: right;
+		width: 25em;
+	}
+
+	#container {
+		float: left;
+		width: 30em;
+	}
+		*/
 
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1140px) {
   /* Style adjustments for viewports 768px and over go here */
+
+	/*
+	#priority-mgmt {
+		float: right;
+		width: 25em;
+	}
+
+	#container {
+		float: left;
+		width: 50em;
+	}
+		*/
 
 }
 

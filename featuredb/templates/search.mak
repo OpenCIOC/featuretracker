@@ -1,4 +1,4 @@
-<%inherit file="master.mak"/>
+<%inherit file="priority.mak"/>
 <%!
 from itertools import izip_longest
 def grouper(n, iterable, fillvalue=None):
@@ -57,9 +57,14 @@ ${renderer.error_notice()}
 	<br>
 	<input type="submit" value="Submit">
 </form>
+<% 
+priority_types = [('My Ratings', 'User'), ("CIOC's Internal System Ratings", 'Sys')]
+if not request.user:
+	del priority_types[0]
 
+%>
 <h2>Browse by Priority</h2>
-%for label, prefix in [('My Ratings', 'User'), ("CIOC's Internal System Ratings", 'Sys')]:
+%for label, prefix in priority_types:
 <h3>${label}</h3>
 <div class="priority-list clearfix">
 %for priority in priorities:
