@@ -153,7 +153,7 @@ class CiocFormRenderer(FormRenderer):
 			attrs['class_'] = "Alert"
 
 		if len(errors) > 1:
-			content = "\n".join(HTML.tag("li", error) for error in errors)
+			content = Markup("\n").join(HTML.tag("li", error) for error in errors)
 
 			return HTML.tag("ul", tags.literal(content), **attrs)
 
@@ -166,12 +166,16 @@ class CiocFormRenderer(FormRenderer):
 			</div>
 			''') % errors[0]
 
-	def error_notice(self, msg='There were validation errors'):
+	def error_notice(self, msg=None):
 		if not self.all_errors():
 			return ''
 
+		star_err = self.errors_for('*')
+		if star_err:
+			star_err = star_err[0]
+		msg =  msg or star_err or 'There were validation errors'
 		return Markup('''
-			<div class="ui-widget clearfix">
+			<div class="ui-widget error-notice clearfix">
 				<div class="ui-state-error ui-corner-all error-notice-wrapper"> 
 					<p><span class="ui-icon ui-icon-alert error-notice-icon"></span>
 					%s</p>
@@ -256,6 +260,9 @@ class ModelState(object):
 
 	def is_error(self, name):
 		return self.renderer.is_error(name)
+
+	def errors(self):
+		return self.form.errors
 
 	def errors_for(self, name):
 		return self.renderer.errors_for(name)

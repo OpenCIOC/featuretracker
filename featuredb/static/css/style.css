@@ -389,6 +389,9 @@ h1,h2,h3,h4,h5 {
 	display: inline-block; vertical-align: bottom;
 }
 
+.error-notice {
+	margin: 1em 0;
+}
 .error-notice-wrapper {
 	padding: 0 .7em; float:left;
 }
@@ -444,9 +447,15 @@ h1,h2,h3,h4,h5 {
 	font-size: 85%;
 }
 
+
 .enhancement-status-row dt { font-weight: bold; }
 .enhancement-status-row dd { margin: 0; padding: 0; }
 
+.field-help {
+	font-size: 85%;
+	color: #666;
+	margin: 0.125em 0;
+}
 
 /* ==|== non-semantic helper classes ========================================
    Please define your styles before this section.

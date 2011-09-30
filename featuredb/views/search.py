@@ -34,7 +34,7 @@ class Search(ViewBase):
 	def index(self):
 		request = self.request
 		with request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC dbo.sp_SearchPage ?', None)
+			cursor = conn.execute('EXEC dbo.sp_SearchPage ?', request.user)
 
 			keywords =  cursor.fetchall()
 
@@ -72,7 +72,7 @@ class Search(ViewBase):
 
 		with request.connmgr.get_connection() as conn:
 			data = model_state.data
-			args = [None] #XXX User Email
+			args = [request.user] 
 			args.extend(data.get(f) for f in field_order)
 			cursor = conn.execute('EXEC dbo.sp_SearchResults %s' % ','.join('?' * len(args)), *args)
 

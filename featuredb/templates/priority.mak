@@ -1,6 +1,5 @@
 <%inherit file="master.mak"/>
 
-
 <h1>My Enhancements</h1>
 <p class="small-note">Click and drag the enhancement to re-order or re-prioritize.
 <br>Click the info icon to view the enhancement.
@@ -130,8 +129,8 @@
 <%block name="bottomscripts">
 <script type="text/javascript">
 	$(function() {
-		$( "#sortable-very-high, #sortable-high, #sortable-moderate" ).sortable({
-			connectWith: ".connectedSortable"
+		$( ".enhancement-list" ).sortable({
+			connectWith: ".enhancement-list"
 		}).disableSelection();
 	});
 </script>

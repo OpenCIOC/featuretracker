@@ -35,7 +35,7 @@ class Enhancement(ViewBase):
 
 		enhancement = None
 		with request.connmgr.get_connection() as conn:
-			enhancement = conn.execute('EXEC dbo.sp_EnhancementDetail ?, ?', None, enh_id).fetchone()
+			enhancement = conn.execute('EXEC dbo.sp_EnhancementDetail ?, ?', request.user, enh_id).fetchone()
 
 		if enhancement is None:
 			#error condition, change template?
