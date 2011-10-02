@@ -33,7 +33,7 @@ ${renderer.error_notice()}
 			<td class="ui-widget-content">
 				${renderer.errorlist('TomorrowsDate')}
 				${renderer.text('TomorrowsDate', size=60, maxlength=60)}
-				<div class="field-help">Enter tomorrow's date as yyyy-mm-dd to help prevent spammers</div>
+				<div class="field-help">Enter tomorrow's date as dd/mm/yyyy to help prevent spammers</div>
 			</td>
 		</tr>
 		<tr><td colspan="2" class="ui-widget-header" style="text-align: center">Optional Info</td></tr>
