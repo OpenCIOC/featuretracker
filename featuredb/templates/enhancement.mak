@@ -1,5 +1,8 @@
 <%inherit file="priority.mak" />
-<%! from markupsafe import Markup %>
+<%! 
+from markupsafe import Markup 
+from webhelpers.html import tags
+%>
 <%block name="title">Enhancement Details</%block>
 
 <% model_state = request.model_state %>
@@ -43,6 +46,11 @@ ${request.model_state.renderer.error_notice(model_state.errors_for('*')[0])}
 </div>
 
 <p class="description"><strong>Description:</strong> ${enhancement.BasicDescription}</p>
+
+%if request.user:
+<% dataargs = {'data-enh-id': enhancement.ID, 'data-enh-title': enhancement.Title} %>
+<strong>My Ranking:</strong> ${tags.select(None, enhancement.UserPriority['PRIORITY_ID'],[(x.PRIORITY_ID, x.PriorityName) for x in priorities], id='priority-selector-%d' % enhancement.ID, class_='priority-selector', **dataargs)} </p>
+%endif
 
 
 %if enhancement.AdditionalNotes:

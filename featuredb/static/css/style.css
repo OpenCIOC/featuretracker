@@ -383,9 +383,21 @@ h2.priority {
 	margin: 0;
 }
 .enhancement-list {
-	min-height: 1em;
+	min-height: 2em;
 	padding: 2px;
 	margin: 0 0 0 2em;
+}
+
+li.selected-enhancement {
+	cursor: move;
+}
+.selected-enhancement-remove {
+	cursor: pointer;
+}
+
+.priority-enhancement-actions {
+	display: inline-block;
+	float: right;
 }
 
 .small-note {
@@ -505,6 +517,8 @@ h2.priority {
 	color: #666;
 	margin: 0.125em 0;
 }
+
+
 
 
 /* ==|== non-semantic helper classes ========================================

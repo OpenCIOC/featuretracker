@@ -78,6 +78,7 @@
   
   <!-- scripts concatenated and minified via ant build script-->
   <script defer src="/static/js/plugins.js"></script>
+  <script defer src="/static/js/libs/json2.min.js"></script>
   <script defer src="/static/js/script.js"></script>
   <!-- end scripts-->
   

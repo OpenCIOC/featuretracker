@@ -25,13 +25,9 @@ def group_priorities(user_priorities):
 <% priority_class = priority.PriorityCode.lower().replace(' ', '-') %>
 <h3 class="priority ${priority_class}">${priority.PriorityName}</h3>
 <div class="priority-en ${priority_class}-en"> 
-	<ol class="enhancement-list connectedSortable ui-sortable">
+	<ol class="enhancement-list connectedSortable ui-sortable" data-priority="${priority.PRIORITY_ID}" id="selected-priority-list-${priority.PRIORITY_ID}">
 	%for enhancement in priority_groups.get(priority.PRIORITY_ID,[]):
-		<li data-enhancement-id="${enhancement.ID}">${enhancement.Title}
-		<a class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;" href="${request.route_path('enhangement', id=enhancement.ID)}">
-		</a>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;"></span>
-		</li>
+		${enhancement_item(enhancement.ID, enhancement.Title)}
 	%endfor
 	</ol>
 </div>
@@ -162,14 +158,141 @@ def group_priorities(user_priorities):
 %endif
 </%block>
 
+<%def name="enhancement_item(id, title)">
+	<li data-enh-id="${id}" id="selected-enhancement-${id}" class="selected-enhancement">
+	<span class="priority-enhancement-actions"><a class="ui-state-default ui-icon ui-icon-info selected-enhancement-details" style="display: inline-block; vertical-align: bottom;" href="${request.route_path('enhancement', id=id)}"> </a>
+	<span class="ui-state-default ui-icon ui-icon-circle-close selected-enhancement-remove" style="display: inline-block; vertical-align: bottom; "></span></span>
+	${title}
+	</li>
+</%def>
 
 <%block name="bottomscripts">
+<script type="text/html" id="enhancement-item-tmpl">
+${enhancement_item('IDIDID', '[TITLE]')}
+</script>
 <script type="text/javascript">
-	$(function() {
-		$( ".enhancement-list" ).sortable({
-			connectWith: ".enhancement-list"
-		}).disableSelection();
-	});
+	(function() {
+		var neutral_priority = ${[p.PRIORITY_ID for p in priorities if p.Weight == 0][0]},
+			enh_item_tmpl = null,
+		gen_enh_item = function(id, title) {
+			if (!enh_item_tmpl) {
+				enh_item_tmpl = $('#enhancement-item-tmpl').html()
+			}
+			return $(enh_item_tmpl.replace(/IDIDID/g, id).replace(/\[TITLE\]/g, title));
+		},
+		add_enhancement = function(id, title, priority) {
+			var list_item = $('#selected-enhancement-' + id), old_priority_list = list_item.parent(),
+				old_priority = old_priority_list.data('priority'), priority_list = $('#selected-priority-list-' + priority);
+			if (!list_item.length && priority !== neutral_priority) {
+				list_item = gen_enh_item(id, title);
+			}
+			
+			if (old_priority && old_priority === priority) {
+				//XXX same priority
+				return;
+			}
+
+
+			if (priority != neutral_priority) {
+				priority_list.append(list_item);
+			} else {
+				list_item.remove();
+			}
+
+			;
+			
+			update_priorities(priority_list.add(old_priority_list));
+
+		},
+		update_priorities = function(priority_lists) {
+			var priorities = [], ajax_settings = {cache: false, contentType: 'application/json', type:'POST'};
+			priority_lists.each(function(idx, el) {
+				var enhancements = [], self = $(el), priority = self.data('priority'), 
+					priority_obj = {id: priority, enhancements: enhancements};
+				priorities.push(priority_obj);
+				self.find('li').each(function(idx, el) {
+					enhancements.push($(el).data('enhId'));
+				})
+			});
+			ajax_settings['data'] = JSON.stringify(priorities);
+			$.ajax("${request.route_path('priority')}", ajax_settings);
+			
+		},
+		set_enhancement_priority = function(enhId, priority){
+			$("#priority-selector-" + enhId).find('option[value="' + priority + '"]').prop('selected', true);
+		}, 
+		refresh_priorities = function(data) {
+			$('.enhancement-list').each(function(index, el) {
+				// clear old priority information
+				var self = $(this), priority = self.data('priority'), 
+					enhancements = data[priority], i, list_item, enh;
+
+				self.find('li').each(function(index, el) {
+					set_enhancement_priority($(el).data('enhId'), priority);
+				})
+				
+				self.empty();
+				
+				if (!enhancements) {
+					return;
+				}
+
+				for (i = 0; i < enhancements.length; i++) {
+					
+					enh = enhancements[i];
+					list_item = gen_enh_item(enh.ID, enh.Title);
+					self.append(list_item);
+					set_enhancement_priority(enh.ID, priority);
+				}
+			});
+
+
+		}, fetch_latest_values = function() {
+			$.ajax("${request.route_path('priority')}", {cache: false, dataType: 'json', success:refresh_priorities});
+		};
+
+		window['add_enhancement'] = add_enhancement;
+
+		$(function() {
+			var old_priority_list = null;
+			$( ".enhancement-list" ).sortable({
+				connectWith: ".enhancement-list"
+			}).disableSelection().bind('sortstop', function(evt, ui) {
+				var priority_list = ui.item.parent(), priority=priority_list.data('priority'), 
+					old_priority=(old_priority_list ? old_priority_list.data('priority') : null);
+				if (old_priority !== priority) {
+					priority_list = priority_list.add(old_priority_list);
+					set_enhancement_priority(ui.item.data('enhId'), priority);
+				}
+				old_priority_list = null;
+				update_priorities(priority_list);
+
+			}).bind('sortstart', function(evt,ui) {
+				old_priority_list = ui.item.parent();
+			});
+
+			$('.priority-selector').live('change', function(evt) {
+				var priority = this.value, self = $(this), data = self.data();
+				add_enhancement(data.enhId, data.enhTitle, priority);
+			});
+			$('.selected-enhancement-remove').live('click', function(evt) {
+				var self = $(this), priority = self.parents('li').first(), priority_list = priority.parent();
+				set_enhancement_priority(priority.data('enhId'), neutral_priority);
+				priority.remove();
+				update_priorities(priority_list);
+			});
+
+			fetch_latest_values();
+
+		});
+		/*
+		window.addEventListener('pageshow', function(evt) {
+			//if (evt.persisted) {
+				fetch_latest_values();
+			//}
+		}, false);
+		*/
+	})();
 </script>
 </%block>
 
