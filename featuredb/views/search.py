@@ -19,6 +19,7 @@ class SearchSchema(Schema):
 	UserPriority = validators.IntID()
 	SysPriority = validators.IntID()
 	Estimate = validators.Int(min=0, max=32767)
+	IncludeClosed = validators.Bool()
 
 field_order =  [
 	'Keyword',
@@ -26,6 +27,7 @@ field_order =  [
 	'UserPriority',
 	'Estimate',
 	'SysPriority',
+	'IncludeClosed',
 	'Terms',
 	]
 
