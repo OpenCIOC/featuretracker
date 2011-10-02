@@ -18,7 +18,7 @@ class SearchSchema(Schema):
 	Module = validators.String(max=1)
 	UserPriority = validators.IntID()
 	SysPriority = validators.IntID()
-	Estimate = validators.IntID()
+	Estimate = validators.Int(min=0, max=32767)
 
 field_order =  [
 	'Keyword',
