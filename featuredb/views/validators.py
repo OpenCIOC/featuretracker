@@ -50,3 +50,4 @@ class TomorrowsDate(validators.DateValidator):
 DateConverter = validators.DateConverter
 FieldsMatch = validators.FieldsMatch
 MaxLength = validators.MaxLength
+Int = validators.Int
