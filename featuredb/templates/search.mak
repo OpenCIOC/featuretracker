@@ -13,9 +13,9 @@ model_state = request.model_state
 renderer = model_state.renderer
 %>
 ${renderer.error_notice()}
-<h2 class="ui-corner-top">Advanced Search</h2>
+<h2 class="ui-state-default ui-corner-all search-type">Advanced Search</h2>
 <form method="get" action="${request.route_url('search_results')}">
-	<table>
+	<table class="form-table">
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Terms', 'Full-Text Search')}</td>
 			<td class="ui-widget-content">
@@ -53,6 +53,13 @@ ${renderer.error_notice()}
 				${renderer.select('Estimate', options=[('','')] + map(tuple, estimates))}
 				</td>
 		</tr>
+		<tr>
+			<td class="ui-widget-header">${renderer.label('IncludeClosed', 'Closed/Cancelled')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('IncludeClosed')}
+				${renderer.checkbox('IncludeClosed')}&nbsp;<label for="IncludeClosed">Include Closed, Cancelled, and Duplicate Items</label>
+				</td>
+		</tr>
 	</table>
 	<br>
 	<input type="submit" value="Submit">
@@ -63,9 +70,10 @@ if not request.user:
 	del priority_types[0]
 
 %>
-<h2>Browse by Priority</h2>
+<h2 class="ui-state-default ui-corner-all search-type">Browse by Priority</h2>
 %for label, prefix in priority_types:
 <h3>${label}</h3>
+<%block name="closed_note"><p class="small-note">This search does not include closed, cancelled or duplicate feature requests</p></%block>
 <div class="priority-list clearfix">
 %for priority in priorities:
 <a class="priority ${priority.PriorityCode.lower().replace(' ', '-')}" href="${request.route_url('search_results', _query=[(prefix + 'Priority',priority[0])])}">${priority.PriorityName} (${getattr(priority, prefix + 'EnhancementCount')})</a>
@@ -74,7 +82,8 @@ if not request.user:
 %endfor
 
 
-<h2>Browse by Keyword</h2>
+<h2 class="ui-state-default ui-corner-all search-type">Browse by Keyword</h2>
+${closed_note()}
 <table class="ui-widget-content" cellspacing="0" cellpadding="4">
 %for group in grouper(3, keywords):
 	<tr>

@@ -1,5 +1,5 @@
-/* 
- * HTML5 ✰ Boilerplate
+﻿/* 
+ * HTML5 âœ° Boilerplate
  *
  * What follows is the result of much research on cross-browser styling. 
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
@@ -161,15 +161,15 @@ table button, table input { *overflow: auto; }
  * 2. Allow styling of clickable form elements in iOS
  */
 
-button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; }
+button, input[type=button], input[type=reset], input[type=submit] { cursor: pointer; -webkit-appearance: button; }
 
 /*
  * Consistent box sizing and appearance
  */
 
-input[type="checkbox"], input[type="radio"] { box-sizing: border-box; }
-input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
-input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
+input[type=checkbox], input[type=radio] { box-sizing: border-box; }
+input[type=search] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
+input[type=search]::-webkit-search-decoration { -webkit-appearance: none; }
 
 /* 
  * Remove inner padding and border in FF3/4: h5bp.com/l 
@@ -195,6 +195,10 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
 
 table { border-collapse: collapse; border-spacing: 0; }
 td { vertical-align: top; }
+
+.form-table td {
+	padding: 3px;
+}
 
 
 /* ==|== primary styles =====================================================
@@ -382,6 +386,17 @@ h1,h2,h3,h4,h5 {
 h2.priority {
 	margin: 0;
 }
+
+h2.search-type {
+	padding: .2em .3em;
+	margin-bottom: .5em;
+	margin-top: 1em;
+}
+
+h3.search-type {
+	margin-bottom: .4em;
+	margin-top: .8em;
+}
 .enhancement-list {
 	min-height: 2em;
 	padding: 2px;
@@ -391,6 +406,7 @@ h2.priority {
 li.selected-enhancement {
 	cursor: move;
 }
+
 .selected-enhancement-remove {
 	cursor: pointer;
 }
