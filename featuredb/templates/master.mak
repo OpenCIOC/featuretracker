@@ -44,13 +44,24 @@
 
 <body>
 
-<header class="ui-widget-header" style="padding-left: 1em;"><h1 style="margin: 0;">CIOC Feature Request Database</h1></header>
+<header class="ui-widget-header" style="padding-left: 1em;">
+<nav class="site-nav"><%block name="sitenav">
+<%block name="newsearch"><a href="${request.route_url('search_index')}">New Search</a> | </%block>
+%if request.user:
+<a href="new_request">New Request</a> |
+<a href="${request.route_url('logout')}">Logout</a>
+%else:
+<a href="${request.route_url('login')}">Login</a>
+%endif
+</%block>
+</nav>
+<h1 style="margin: 0;">CIOC Feature Request Database</h1></header>
 <div class="colmask rightmenu">
 <div class="colleft">
   <div class="col1wrap">
   <div id="container" class="col1">
     <header>
-	<h1 class="clearfix"><%block name="newsearch"><nav class="headernewsearch"><%block name="searchnav"/><a href="${request.route_url('search_index')}">New Search</a></nav></%block>${self.title()}</h1>
+	<h1 class="clearfix"><%block name="searchnav"/>${self.title()}</h1>
 	
 
     </header>

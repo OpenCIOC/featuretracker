@@ -1,6 +1,6 @@
 <%inherit file="master.mak"/>
 <%block name="title">Login</%block>
-<%block name="newsearch"/>
+<%block name="sitenav"/>
 
 <% renderer = request.model_state.renderer %>
 
