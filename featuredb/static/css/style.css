@@ -539,6 +539,9 @@ li.selected-enhancement {
 	margin: 0.125em 0;
 }
 
+.browse-table td {
+	padding: 0.25em 1em;
+}
 /*
 .searchnav a {
 	text-decoration: None;
