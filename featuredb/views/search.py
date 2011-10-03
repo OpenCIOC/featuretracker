@@ -104,5 +104,7 @@ class Search(ViewBase):
 		searched_for = {d[0]: x for d,x in zip(searched_for.cursor_description, searched_for) if x}
 		priority_map = {x[0]: x for x in priorities}
 
+		request.session['search_ids'] = [x.ID for x in results]
+
 		return dict(searched_for=searched_for, priorities=priorities,
 			  results=results, user_priorities=user_priorities, priority_map=priority_map)

@@ -3,6 +3,13 @@
 from markupsafe import Markup 
 from webhelpers.html import tags
 %>
+<%block name="searchnav">
+%if enh_nav:
+<span class="searchnav">
+${Markup(' | ').join(Markup('<a href="%s">%s</a>') % (request.route_url('enhancement', id=id), text) for text, id in enh_nav)}
+</span>
+%endif
+</%block>
 <%block name="title">Enhancement Details</%block>
 
 <% model_state = request.model_state %>

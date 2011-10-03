@@ -72,5 +72,19 @@ class Enhancement(ViewBase):
 		enhancement.BasicDescription = _make_html(enhancement.BasicDescription)
 		enhancement.AdditionalNotes = _make_html(enhancement.AdditionalNotes)
 
-		return {'enhancement': enhancement, 'priorities':priorities, 'user_priorities': user_priorities}
+		search_ids = request.session.get('search_ids')
+
+		enh_nav = []
+		if search_ids:
+			idx = search_ids.index(enhancement.ID)
+			if idx != 0:
+				enh_nav.append(('< prev', search_ids[idx-1]))
+
+			if idx != len(search_ids)-1:
+				enh_nav.append(('next >', search_ids[idx+1]))
+
+
+
+		return {'enhancement': enhancement, 'enh_nav': enh_nav,
+		  'priorities':priorities, 'user_priorities': user_priorities}
 
