@@ -12,7 +12,7 @@ def group_priorities(user_priorities):
 %>
 
 <%block name="priority_mgmt">
-%if request.user:
+%if request.user and user_priorities:
 <div id="priority-mgmt" class="col2">
 
 <h1>My Enhancements</h1>
@@ -32,127 +32,6 @@ def group_priorities(user_priorities):
 	</ol>
 </div>
 %endfor
-<%doc>
-<h3 class="very-high priority">Very High</h3>
-<div class="very-high-en priority-en">
-	<ol id="sortable-very-high" class="enhancement-list connectedSortable ui-sortable">
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-	</ol>
-</div>
-<h3 class="high priority">High</h3>
-<div class="high-en priority-en">
-	<ol id="sortable-high" class="enhancement-list connectedSortable ui-sortable">
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-	</ol>
-</div>
-<h3 class="moderate priority">Moderate</h3>
-<div class="moderate-en priority-en">
-	<ol id="sortable-moderate" class="enhancement-list connectedSortable ui-sortable">
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-	</ol>
-</div>
-<h3 class="low priority">Low</h3>
-<div class="low-en priority-en">
-	<ol class="enhancement-list">
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-	</ol>
-</div>
-<h3 class="very-low priority">Very Low</h3>
-<div class="very-low-en priority-en">
-	<ol class="enhancement-list">
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-	</ol>
-</div>
-<h3 class="do-not-want priority">Not Desired (Dislike)</h3>
-<div class="do-not-want-en priority-en">
-	<ol class="enhancement-list">
-		<li>Enhancement Text
-		<a class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;" href="${request.route_path('enhancement', id='1')}"> </a>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-		<li>Enhancement Text
-		<span class="ui-state-default ui-icon ui-icon-info" style="display: inline-block; vertical-align: bottom;">
-		</span>
-		<span class="ui-state-default ui-icon ui-icon-circle-close" style="display: inline-block; vertical-align: bottom;">
-		</span></li>
-	</ol>
-</div>
-</%doc>
 
 </div><!-- #priority-mgmt -->
 %endif
@@ -167,6 +46,7 @@ def group_priorities(user_priorities):
 </%def>
 
 <%block name="bottomscripts">
+%if request.user and user_priorities:
 <script type="text/html" id="enhancement-item-tmpl">
 ${enhancement_item('IDIDID', '[TITLE]')}
 </script>
@@ -255,6 +135,7 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 
 		$(function() {
 			var old_priority_list = null;
+			fetch_latest_values();
 			$( ".enhancement-list" ).sortable({
 				connectWith: ".enhancement-list"
 			}).disableSelection().bind('sortstop', function(evt, ui) {
@@ -282,7 +163,6 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 				update_priorities(priority_list);
 			});
 
-			fetch_latest_values();
 
 		});
 		/*
@@ -294,6 +174,7 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 		*/
 	})();
 </script>
+%endif
 </%block>
 
 ${next.body()}
