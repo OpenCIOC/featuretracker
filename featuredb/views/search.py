@@ -53,6 +53,10 @@ class Search(ViewBase):
 
 			estimates = cursor.fetchall()
 
+			cursor.nextset()
+
+			releases = cursor.fetchall()
+
 			if request.user:
 				cursor.nextset()
 				user_priorities = cursor.fetchall()
@@ -60,7 +64,7 @@ class Search(ViewBase):
 			cursor.close()
 
 		return dict(keywords=keywords, modules=modules, priorities=priorities,
-			  estimates=estimates, user_priorities=user_priorities)
+			  estimates=estimates, user_priorities=user_priorities, releases=releases)
 
 
 	@action(renderer='results.mak')
