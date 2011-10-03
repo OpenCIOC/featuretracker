@@ -4,6 +4,8 @@ from xml.etree import cElementTree as ET
 from featuredb.views.base import ViewBase
 from featuredb.views import validators
 
+from markupsafe import escape, Markup
+
 def _priority_xml_to_dict(pri):
 	if not pri:
 		return None
@@ -18,6 +20,11 @@ def _xml_to_dict_list(modules):
 	root = ET.fromstring(modules)
 	return [x.attrib for x in root]
 
+def _make_html(text):
+	if not text:
+		return None
+
+	return escape(text).replace('\r', '').replace('\n', Markup('<br>'))
 @view_config(route_name='enhancement', renderer='enhancement.mak')
 class Enhancement(ViewBase):
 
@@ -54,7 +61,7 @@ class Enhancement(ViewBase):
 		if enhancement is None:
 			#error condition, change template?
 			self.model_state.add_error_for('*', 'No enhancement with ID %d' % enh_id)
-			return {}
+			return {'priorities':priorities, 'user_priorities': user_priorities}
 
 		enhancement.SysPriority = _priority_xml_to_dict(enhancement.SysPriority)
 		enhancement.UserPriority = _priority_xml_to_dict(enhancement.UserPriority)
@@ -62,6 +69,8 @@ class Enhancement(ViewBase):
 		enhancement.Keywords = _xml_to_dict_list(enhancement.Keywords)
 		enhancement.SeeAlsos = _xml_to_dict_list(enhancement.SeeAlsos)
 
+		enhancement.BasicDescription = _make_html(enhancement.BasicDescription)
+		enhancement.AdditionalNotes = _make_html(enhancement.AdditionalNotes)
 
 		return {'enhancement': enhancement, 'priorities':priorities, 'user_priorities': user_priorities}
 
