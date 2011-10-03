@@ -98,3 +98,33 @@ ${closed_note()}
 %endfor
 </table>
 
+<h2 class="ui-state-default ui-corner-all search-type">Browse by Estimate</h2>
+${closed_note()}
+<table class="ui-widget-content" cellspacing="0" cellpadding="4">
+%for group in grouper(3, estimates):
+	<tr>
+	%for estimate in group:
+		<td>
+			%if estimate:
+			<a href="${request.route_url('search_results', _query=[('Estimate',estimate[0])])}">${estimate.CostRange} (${estimate.EnhancementCount})</a>
+			%endif
+		</td>
+	%endfor
+	</tr>
+%endfor
+</table>
+
+<h2 class="ui-state-default ui-corner-all search-type">Browse by Release</h2>
+<table class="ui-widget-content" cellspacing="0" cellpadding="4">
+%for group in grouper(3, releases):
+	<tr>
+	%for release in group:
+		<td>
+			%if release:
+			<a href="${request.route_url('search_results', _query=[('Release',release[0]), ('IncludeClosed', 'on')])}">${release.ReleaseName} (${release.EnhancementCount})</a>
+			%endif
+		</td>
+	%endfor
+	</tr>
+%endfor
+</table>

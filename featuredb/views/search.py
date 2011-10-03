@@ -9,7 +9,7 @@ log = logging.getLogger('featuredb.views.search')
 
 class SearchSchema(Schema):
 	allow_extra_keys = True
-	filter_extra_keys = False
+	filter_extra_keys = True
 
 	if_key_missing = None
 
@@ -20,6 +20,7 @@ class SearchSchema(Schema):
 	SysPriority = validators.IntID()
 	Estimate = validators.Int(min=0, max=32767)
 	IncludeClosed = validators.Bool()
+	Release	= validators.IntID()
 
 field_order =  [
 	'Keyword',
@@ -27,6 +28,7 @@ field_order =  [
 	'UserPriority',
 	'Estimate',
 	'SysPriority',
+	'Release',
 	'IncludeClosed',
 	'Terms',
 	]
