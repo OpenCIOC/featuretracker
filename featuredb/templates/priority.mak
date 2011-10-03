@@ -13,7 +13,7 @@ def group_priorities(user_priorities):
 
 <%block name="priority_mgmt">
 %if request.user and user_priorities:
-<div id="priority-mgmt" class="col2">
+<div id="priority-mgmt" class="col2" style="position">
 
 <h1>My Enhancements</h1>
 <p class="small-note">Click and drag the enhancement to re-order or re-prioritize.
@@ -137,7 +137,12 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 			var old_priority_list = null;
 			fetch_latest_values();
 			$( ".enhancement-list" ).sortable({
-				connectWith: ".enhancement-list"
+				connectWith: ".enhancement-list",
+				// Mozilla breaks the dragging
+				sort: $.browser.mozilla ?  function(event, ui) {  
+				   ui.helper.css({'top' : ui.position.top + $(window).scrollTop() + 'px'});
+				} : null
+
 			}).disableSelection().bind('sortstop', function(evt, ui) {
 				var priority_list = ui.item.parent(), priority=priority_list.data('priority'), 
 					old_priority=(old_priority_list ? old_priority_list.data('priority') : null);
@@ -151,7 +156,6 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 			}).bind('sortstart', function(evt,ui) {
 				old_priority_list = ui.item.parent();
 			});
-
 			$('.priority-selector').live('change', function(evt) {
 				var priority = this.value, self = $(this), data = self.data();
 				add_enhancement(data.enhId, data.enhTitle, priority);
