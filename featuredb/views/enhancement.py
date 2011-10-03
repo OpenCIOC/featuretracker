@@ -76,13 +76,15 @@ class Enhancement(ViewBase):
 
 		enh_nav = []
 		if search_ids:
-			idx = search_ids.index(enhancement.ID)
-			if idx != 0:
-				enh_nav.append(('< prev', search_ids[idx-1]))
+			try:
+				idx = search_ids.index(enhancement.ID)
+				if idx != 0:
+					enh_nav.append(('< prev', search_ids[idx-1]))
 
-			if idx != len(search_ids)-1:
-				enh_nav.append(('next >', search_ids[idx+1]))
-
+				if idx != len(search_ids)-1:
+					enh_nav.append(('next >', search_ids[idx+1]))
+			except ValueError:
+				pass
 
 
 		return {'enhancement': enhancement, 'enh_nav': enh_nav,
