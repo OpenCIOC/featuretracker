@@ -6,7 +6,7 @@ _app_name = None
 def _get_app_name():
 	global _app_name
 	if _app_name is None:
-		app_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+		app_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', '..'))
 		_app_name = os.path.split(app_path)[1]
 
 	return _app_name
