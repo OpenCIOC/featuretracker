@@ -134,6 +134,11 @@ class CiocFormRenderer(FormRenderer):
 
 		return literal('#') + tags.text(name, value, id, **kw)
 
+	def password(self, name, id=None, **attrs):
+		kw = {'class_': 'password'}
+		kw.update(attrs)
+		return tags.password(name, id=id, **kw)
+
 	def errorlist(self, name=None, **attrs):
 		"""
 		Renders errors in a <ul> element if there are multiple, otherwise will
