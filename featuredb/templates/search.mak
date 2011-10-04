@@ -74,7 +74,11 @@ if not request.user:
 %>
 <h2 class="ui-state-default ui-corner-all search-type">Browse by Priority</h2>
 %for label, prefix, show_help in priority_types:
-<h3>${label} <span id="open-dialog" class="ui-state-default ui-icon ui-icon-help inline-icon" title="What's This?"></span></h3>
+<h3>${label}
+%if show_help:
+<span id="open-dialog" class="ui-state-default ui-icon ui-icon-help inline-icon" title="What's This?"></span>
+%endif
+</h3>
 <%block name="closed_note"><p class="small-note">This search does not include closed, cancelled or duplicate feature requests</p></%block>
 <div class="priority-list clearfix">
 %for priority in priorities:
