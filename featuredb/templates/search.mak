@@ -64,7 +64,7 @@ ${renderer.error_notice()}
 		</tr>
 	</table>
 	<br>
-	<input type="submit" value="Submit">
+	<input type="submit" value="Submit"> <input type="reset" value="Clear">
 </form>
 <% 
 priority_types = [('My Ratings', 'User'), ("CIOC's Internal System Ratings", 'Sys')]
