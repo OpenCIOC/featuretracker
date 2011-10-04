@@ -270,7 +270,7 @@ h1,h2,h3,h4,h5 {
 	float: right;
 	vertical-align: middle;
 	line-height: 200%;
-	margin: 0 1em;
+	margin: 2px 1em 0 1em;
 }
 .searchnav {
 	float: right;
@@ -478,7 +478,7 @@ span.ui-icon.menu-icon {
 	display: inline-block; vertical-align: bottom;
 }
 
-.error-notice {-icon
+.error-notice {
 	margin: 1em 0;
 }
 .error-notice-wrapper {

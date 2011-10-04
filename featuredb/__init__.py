@@ -71,6 +71,7 @@ def main(global_config, **settings):
 	config.add_route('register', 'register')
 	config.add_route('priority', 'priority')
 	config.add_route('suggest', 'suggest')
+	config.add_route('account', 'account')
 
 	config.add_static_view('static', 'featuredb:static', cache_max_age=3600)
 	config.add_static_view('/', 'featuredb:static', cache_max_age=3600)

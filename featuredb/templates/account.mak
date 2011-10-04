@@ -1,11 +1,10 @@
 <%inherit file="master.mak"/>
-<%block name="title">Register</%block>
-<%block name="newsearch"/>
+<%block name="title">Account</%block>
 
 <% renderer = request.model_state.renderer %>
 
 ${renderer.error_notice()}
-<form method="post" action="${request.route_url('register')}">
+<form method="post" action="${request.route_url('account')}">
 	<table>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Email', 'Email Address')}</td>
@@ -15,33 +14,11 @@ ${renderer.error_notice()}
 			</td>
 		</tr>
 		<tr>
-			<td class="ui-widget-header">${renderer.label('Password', 'Password')}</td>
-			<td class="ui-widget-content">
-				${renderer.errorlist('Password')}
-				${renderer.password('Password', size=60)}
-			</td>
-		</tr>
-		<tr>
-			<td class="ui-widget-header">${renderer.label('ConfirmPassword', 'Confirm Password')}</td>
-			<td class="ui-widget-content">
-				${renderer.errorlist('ConfirmPassword')}
-				${renderer.password('ConfirmPassword', size=60)}
-			</td>
-		</tr>
-		<tr>
 			<td class="ui-widget-header">${renderer.label('Member', 'CIOC Membership')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('Member')}
-				${renderer.select('Member', options=[('','')] + members )}
+				${renderer.select('Member', options= members )}
 				</td>
-		</tr>
-		<tr>
-			<td class="ui-widget-header">${renderer.label('TomorrowsDate', 'Tomorrows Date')}</td>
-			<td class="ui-widget-content">
-				${renderer.errorlist('TomorrowsDate')}
-				${renderer.text('TomorrowsDate', size=60, maxlength=60)}
-				<div class="field-help">Enter tomorrow's date as dd/mm/yyyy to help prevent spammers</div>
-			</td>
 		</tr>
 		<tr><td colspan="2" class="ui-widget-header" style="text-align: center">Optional Info</td></tr>
 		<tr>
@@ -71,6 +48,21 @@ ${renderer.error_notice()}
 				${renderer.errorlist('LastName')}
 				${renderer.text('LastName', maxlength=50 )}
 				</td>
+		</tr>
+		<tr><td colspan="2" class="ui-widget-header" style="text-align: center">Change Password</td></tr>
+		<tr>
+			<td class="ui-widget-header">${renderer.label('Password', 'Password')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('Password')}
+				${renderer.password('Password', size=60)}
+			</td>
+		</tr>
+		<tr>
+			<td class="ui-widget-header">${renderer.label('ConfirmPassword', 'Confirm Password')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('ConfirmPassword')}
+				${renderer.password('ConfirmPassword', size=60)}
+			</td>
 		</tr>
 	</table>
 	<br>

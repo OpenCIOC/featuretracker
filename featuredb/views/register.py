@@ -16,7 +16,8 @@ class UserDataSchema(Schema):
 
 	if_key_missing = None
 
-	Member = validators.IntID()
+	Email = All(validators.MaxLength(50), validators.Email(not_empty=True))
+	Member = validators.IntID(not_empty=True)
 	Agency = validators.AgencyCode()
 
 	OrgName = validators.String(max=150)
@@ -24,7 +25,6 @@ class UserDataSchema(Schema):
 	LastName = validators.String(max=50)
 
 class RegistrationSchema(UserDataSchema):
-	Email = All(validators.MaxLength(50), validators.Email(not_empty=True))
 	Password = validators.String(not_empty=True)
 	ConfirmPassword = validators.String(not_empty=True)
 
@@ -81,6 +81,7 @@ class Register(ViewBase):
 
 		
 		request.session['user'] = model_state.value('Email')
+		request.session.flash('Thanks for registering.')
 		raise HTTPFound(location=request.route_url('search_index'))
 		
 	@view_config(route_name='register', renderer='register.mak')
