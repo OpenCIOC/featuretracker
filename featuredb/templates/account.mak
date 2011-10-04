@@ -10,7 +10,7 @@ ${renderer.error_notice()}
 			<td class="ui-widget-header">${renderer.label('Email', 'Email Address')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('Email')}
-				${renderer.text('Email', size=60, maxlength=60)}
+				${renderer.text('Email', size=60, maxlength=60, type="email")}
 			</td>
 		</tr>
 		<tr>
