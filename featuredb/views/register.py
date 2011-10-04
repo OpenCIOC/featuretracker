@@ -100,7 +100,7 @@ class Register(ViewBase):
 
 			cursor.nextset()
 
-			agencies = map(tuple,cursor.fetchall())
+			agencies = [(code, title or code) for code,title in cursor.fetchall()]
 
 			cursor.close()
 
