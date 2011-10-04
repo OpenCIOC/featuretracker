@@ -1,7 +1,7 @@
 from pyramid.view import view_config
 from xml.etree import cElementTree as ET
 
-from featuredb.views.base import ViewBase
+from featuredb.views.base import ViewBase, get_row_dict
 from featuredb.views import validators
 
 from markupsafe import escape, Markup
@@ -25,6 +25,7 @@ def _make_html(text):
 		return None
 
 	return escape(text).replace('\r', '').replace('\n', Markup('<br>'))
+
 @view_config(route_name='enhancement', renderer='enhancement.mak')
 class Enhancement(ViewBase):
 
@@ -43,18 +44,20 @@ class Enhancement(ViewBase):
 		enhancement = None
 		priorities = []
 		user_priorities = []
+		user_cart = {}
 		with request.connmgr.get_connection() as conn:
 			cursor = conn.execute('EXEC dbo.sp_EnhancementDetail ?, ?', request.user, enh_id)
 
 			enhancement = cursor.fetchone()
 			if request.user:
 				cursor.nextset()
-
 				priorities = cursor.fetchall()
 
 				cursor.nextset()
-
 				user_priorities = cursor.fetchall()
+
+				cursor.nextset()
+				user_cart = get_row_dict(cursor.fetchone())
 
 			cursor.close()
 
@@ -87,6 +90,6 @@ class Enhancement(ViewBase):
 				pass
 
 
-		return {'enhancement': enhancement, 'enh_nav': enh_nav,
+		return {'enhancement': enhancement, 'enh_nav': enh_nav, 'cart': user_cart,
 		  'priorities':priorities, 'user_priorities': user_priorities}
 

@@ -12,14 +12,14 @@ def group_priorities(user_priorities):
 %>
 
 <%block name="priority_mgmt">
-%if request.user and user_priorities:
+%if request.user and user_priorities is not Undefined:
 <div id="priority-mgmt" class="col2" style="position">
 
 <h1>My Enhancements</h1>
 <p class="small-note">Click and drag the enhancement to re-order or re-prioritize.
 <br>Click the info icon to view the enhancement.
 <br>Click the remove icon to reset to neutral priority.</p>
-
+<div id="cart-total" ${'style="display:none;"' if not all(cart.values()) else ''|n}><strong>Total Cost of selections:</strong><br> $<span id="cost-low">${cart.get('CostLow') or 0}</span> - $<span id="cost-high">${cart.get('CostHigh') or 0}</span> ($<span id="cost-avg">${cart.get('CostAvg') or 0}</span> Avg.)</div>
 <% priority_groups = group_priorities(user_priorities) %>
 %for priority in (p for p in priorities if p.Weight != 0):
 <% priority_class = priority.PriorityCode.lower().replace(' ', '-') %>
@@ -38,15 +38,13 @@ def group_priorities(user_priorities):
 </%block>
 
 <%def name="enhancement_item(id, title)">
-	<li data-enh-id="${id}" id="selected-enhancement-${id}" class="selected-enhancement">
-	<span class="priority-enhancement-actions"><a class="ui-state-default ui-icon ui-icon-info selected-enhancement-details" style="display: inline-block; vertical-align: bottom;" href="${request.route_path('enhancement', id=id)}"> </a>
-	<span class="ui-state-default ui-icon ui-icon-circle-close selected-enhancement-remove" style="display: inline-block; vertical-align: bottom; "></span></span>
-	${title}
+	<li data-enh-id="${id}" id="selected-enhancement-${id}" class="selected-enhancement"><span class="priority-enhancement-actions"><a class="ui-state-default ui-icon ui-icon-info selected-enhancement-details" style="display: inline-block; vertical-align: bottom;" href="${request.route_path('enhancement', id=id)}"> </a>
+	<span class="ui-state-default ui-icon ui-icon-circle-close selected-enhancement-remove" style="display: inline-block; vertical-align: bottom; "></span></span>${title}
 	</li>
 </%def>
 
 <%block name="bottomscripts">
-%if request.user and user_priorities:
+%if request.user and user_priorities is not Undefined:
 <script type="text/html" id="enhancement-item-tmpl">
 ${enhancement_item('IDIDID', '[TITLE]')}
 </script>
@@ -85,7 +83,16 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 
 		},
 		update_priorities = function(priority_lists) {
-			var priorities = [], ajax_settings = {cache: false, contentType: 'application/json', type:'POST'};
+			var priorities = [], ajax_settings = {
+				cache: false, contentType: 'application/json', 
+				type:'POST', dataType: 'json', 
+				success: function(data) {
+					if (!data.failed) {
+						update_cart(data.cart);
+					}
+				}
+			};
+
 			priority_lists.each(function(idx, el) {
 				var enhancements = [], self = $(el), priority = self.data('priority'), 
 					priority_obj = {id: priority, enhancements: enhancements};
@@ -102,10 +109,12 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 			$("#priority-selector-" + enhId).find('option[value="' + priority + '"]').prop('selected', true);
 		}, 
 		refresh_priorities = function(data) {
+			var primgmt = $('#priority-mgmt').hide(), 
+				priorities = data.priorities, cart = data.cart;
 			$('.enhancement-list').each(function(index, el) {
 				// clear old priority information
 				var self = $(this), priority = self.data('priority'), 
-					enhancements = data[priority], i, list_item, enh;
+					enhancements = priorities[priority], i, list_item, enh;
 
 				self.find('li').each(function(index, el) {
 					set_enhancement_priority($(el).data('enhId'), priority);
@@ -127,8 +136,20 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 			});
 
 
+			primgmt.show();
+
+
 		}, fetch_latest_values = function() {
 			$.ajax("${request.route_path('priority')}", {cache: false, dataType: 'json', success:refresh_priorities});
+		}, update_cart = function(cart) {
+			if (!cart) {
+				$("#cart-total").hide()
+			} else {
+				$("#cart-total").show()
+				$("#cost-low").text(cart.CostLow);
+				$("#cost-high").text(cart.CostHigh);
+				$("#cost-avg").text(cart.CostAvg);
+			}
 		};
 
 		window['add_enhancement'] = add_enhancement;

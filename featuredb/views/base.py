@@ -7,3 +7,6 @@ class ViewBase(object):
 		self.request = request
 		self.model_state = request.model_state = modelstate.ModelState(request)
 
+def get_row_dict(row):
+	return dict(zip([d[0] for d in row.cursor_description], row))
+

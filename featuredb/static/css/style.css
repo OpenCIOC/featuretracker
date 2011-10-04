@@ -270,6 +270,7 @@ h1,h2,h3,h4,h5 {
 	float: right;
 	vertical-align: middle;
 	line-height: 200%;
+	margin: 0 1em;
 }
 .searchnav {
 	float: right;
@@ -410,6 +411,7 @@ h3.search-type {
 
 li.selected-enhancement {
 	cursor: move;
+	margin: 0.5em 0;
 }
 
 .selected-enhancement-remove {
@@ -467,11 +469,16 @@ li.selected-enhancement {
 	margin-bottom: inherit;
 }
 
+span.ui-icon.menu-icon {
+	display: inline-block; vertical-align: middle;
+	background-color: transparent;
+	border: none;
+}
 .ui-icon.inline-icon {
 	display: inline-block; vertical-align: bottom;
 }
 
-.error-notice {
+.error-notice {-icon
 	margin: 1em 0;
 }
 .error-notice-wrapper {

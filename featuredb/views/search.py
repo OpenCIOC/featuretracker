@@ -1,7 +1,7 @@
 from pyramid_handlers import action
 from formencode import Schema
 
-from featuredb.views.base import ViewBase
+from featuredb.views.base import ViewBase, get_row_dict
 from featuredb.views import validators
 
 import logging
@@ -38,6 +38,7 @@ class Search(ViewBase):
 	def index(self):
 		request = self.request
 		user_priorities = []
+		user_cart = {}
 		with request.connmgr.get_connection() as conn:
 			cursor = conn.execute('EXEC dbo.sp_SearchPage ?', request.user)
 
@@ -63,10 +64,14 @@ class Search(ViewBase):
 				cursor.nextset()
 				user_priorities = cursor.fetchall()
 
+				cursor.nextset()
+				user_cart = get_row_dict(cursor.fetchone())
+
 			cursor.close()
 
 		return dict(keywords=keywords, modules=modules, priorities=priorities,
-			  estimates=estimates, user_priorities=user_priorities, releases=releases)
+			  estimates=estimates, user_priorities=user_priorities, releases=releases, 
+			  cart=user_cart)
 
 
 	@action(renderer='results.mak')
@@ -85,6 +90,7 @@ class Search(ViewBase):
 			return retval
 
 		user_priorities = []
+		user_cart = {}
 		with request.connmgr.get_connection() as conn:
 			data = model_state.data
 			args = [request.user] 
@@ -105,6 +111,9 @@ class Search(ViewBase):
 				cursor.nextset()
 				user_priorities = cursor.fetchall()
 
+				cursor.nextset()
+				user_cart = get_row_dict(cursor.fetchone())
+
 			cursor.close()
 
 		searched_for = {d[0]: x for d,x in zip(searched_for.cursor_description, searched_for) if x}
@@ -112,5 +121,5 @@ class Search(ViewBase):
 
 		request.session['search_ids'] = [x.ID for x in results]
 
-		return dict(searched_for=searched_for, priorities=priorities,
+		return dict(searched_for=searched_for, priorities=priorities, cart=user_cart,
 			  results=results, user_priorities=user_priorities, priority_map=priority_map)

@@ -38,6 +38,7 @@ ${renderer.error_notice()}
 						[(m.MODULE_ID, m.ModuleName) for m in modules])}
 				</td>
 		</tr>
+		%if request.user:
 		<% priorities_formatted = [('','')] + [(p.PRIORITY_ID, p.PriorityName) for p in priorities] %>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('UserPriority', 'My Rating')}</td>
@@ -46,6 +47,7 @@ ${renderer.error_notice()}
 				${renderer.select('UserPriority', options=priorities_formatted)}
 				</td>
 		</tr>
+		%endif
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Estimate', 'Estimate')}</td>
 			<td class="ui-widget-content">

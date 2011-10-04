@@ -23,8 +23,8 @@
 
   <!-- CSS: implied media=all -->
   <!-- CSS concatenated and minified via ant build script-->
-  <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/redmond/jquery-ui.css" type="text/css" />
+  <link rel="stylesheet" href="/static/css/style.css">
   <style type="text/css">
     /* fix the broken font handling in default jquery-ui styles */
     .ui-widget {
@@ -46,12 +46,12 @@
 
 <header class="ui-widget-header" style="padding-left: 1em;">
 <nav class="site-nav"><%block name="sitenav">
-<%block name="newsearch"><a href="${request.route_url('search_index')}">New Search</a> | </%block>
+<%block name="newsearch"><a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_url('search_index')}"><span class="ui-icon ui-icon-search ui-button-icon-primary"></span><span class="ui-button-text">New Search</span></a></%block>
 %if request.user:
-<a href="new_request">New Request</a> |
-<a href="${request.route_url('logout')}">Logout</a>
+<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('suggest')}"><span class="ui-icon ui-icon-comment ui-button-icon-primary"></span><span class="ui-button-text">New Request</span></a> 
+<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('logout')}"><span class="ui-icon ui-icon-power ui-button-icon-primary"></span><span class="ui-button-text">Logout</span></a>
 %else:
-<a href="${request.route_url('login')}">Login</a>
+<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('login')}"><span class="ui-icon ui-icon-power ui-button-icon-primary"></span><span class="ui-button-text">Login</span></a>
 %endif
 </%block>
 </nav>
@@ -66,6 +66,14 @@
 
     </header>
     <div id="main" role="main">
+	<% message = request.session.pop_flash() %>
+	%if message:
+		<div class="ui-widget error-notice clearfix">
+			<div class="ui-state-highlight ui-corner-all error-notice-wrapper"> 
+				<p><span class="ui-icon ui-icon-info error-notice-icon"></span> ${message[0]} </p>
+			</div>
+		</div>
+	%endif
 
     ${next.body()}
 

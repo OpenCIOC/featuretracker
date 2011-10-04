@@ -5,7 +5,7 @@ from xml.etree import cElementTree as ET
 from pyramid.view import view_config
 from formencode import Schema, ForEach
 
-from featuredb.views.base import ViewBase
+from featuredb.views.base import ViewBase, get_row_dict as _get_dict
 from featuredb.views import validators
 
 import json
@@ -22,9 +22,16 @@ class UserPrioritySchema(Schema):
 class MultiPrioritySchema(Schema):
 	priorities = ForEach(UserPrioritySchema())
 
-def _get_dict(row):
-	return dict(zip([d[0] for d in row.cursor_description], row))
+def _fix_user_cart(user_cart):
+	if not any(user_cart):
+		user_cart = None
+	else:
+		for i, val in enumerate(user_cart):
+			user_cart[i] = str(val)
+		user_cart = _get_dict(user_cart)
 
+
+	return user_cart
 class Priority(ViewBase):
 	
 	@view_config(route_name='priority', request_method='POST', renderer='json')
@@ -59,17 +66,29 @@ class Priority(ViewBase):
 		xml = ET.tostring(root)
 
 		with request.connmgr.get_connection() as conn:
-			sql = '''Declare @RC int, @ErrMsg nvarchar(500)
-					 EXEC @RC = sp_UpdateUserPriorities ?, ?, @ErrMsg OUTPUT
+			sql = '''Declare @RC int, @ErrMsg nvarchar(500), @Email varchar(60)
+					SET @Email = ?
+					 EXEC @RC = sp_UpdateUserPriorities @Email, ?, @ErrMsg OUTPUT
 
-					 SELECT @RC AS [Return], @ErrMsg AS ErrMsg'''
-			result = conn.execute(sql, request.user, xml).fetchone()
+					 SELECT @RC AS [Return], @ErrMsg AS ErrMsg
+					 
+					 EXEC sp_UserCart @Email '''
+			cursor = conn.execute(sql, request.user, xml)
+			
+			result = cursor.fetchone()
+
+			cursor.nextset()
+
+			user_cart = cursor.fetchone()
+
+			cursor.close()
+
 
 		if result.Return:
 			#XXX error
 			return {'failed': True, 'message': result.ErrMsg}
 
-		return {'failed': False}
+		return {'failed': False, 'cart': _fix_user_cart(user_cart)}
 
 	@view_config(route_name='priority', renderer='json')
 	def index(self):
@@ -81,11 +100,16 @@ class Priority(ViewBase):
 
 		with request.connmgr.get_connection() as conn:
 			priorities = conn.execute('EXEC sp_UserPriorities ?', request.user).fetchall()
+			user_cart = conn.execute('EXEC sp_UserCart ?', request.user).fetchone()
 
 		
 		priorities = {k: map(_get_dict, g) for k,g in groupby(priorities, attrgetter('PRIORITY_ID'))}
 
-		return priorities
+
+
+		return dict(priorities=priorities, cart = _fix_user_cart(user_cart))
+
+
 
 
 

@@ -7,7 +7,7 @@ from featuredb.views.base import ViewBase
 from featuredb.views import validators
 
 import logging
-log = logging.getLogger('featuredb.views.search')
+log = logging.getLogger('featuredb.views.register')
 
 
 class UserDataSchema(Schema):
@@ -41,7 +41,6 @@ class Register(ViewBase):
 
 	@view_config(route_name='register', renderer='register.mak', request_method="POST")
 	def save(self):
-		log.debug('Im here')
 		request = self.request
 
 		model_state = self.model_state
@@ -87,7 +86,6 @@ class Register(ViewBase):
 	@view_config(route_name='register', renderer='register.mak')
 	def index(self):
 		#request = self.request
-		log.debug('Fuck off')
 
 		return self._get_edit_info()
 	
