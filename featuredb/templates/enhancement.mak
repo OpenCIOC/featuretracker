@@ -15,7 +15,7 @@ ${Markup(' | ').join(Markup('<a href="%s">%s</a>') % (request.route_url('enhance
 <% model_state = request.model_state %>
 %if not model_state.is_valid:
 
-${request.model_state.renderer.error_notice(model_state.errors_for('*')[0])}
+${request.model_state.renderer.error_notice()}
 
 
 %else:
@@ -94,7 +94,6 @@ see_alsos = (link_tmpl % s for s in see_alsos)
 
 <p class="status-line status-line2">Last Modified: ${enhancement.LastModified} ; Modified By: ${enhancement.ModifiedBy}</p>
 </div>
-
 
 
 

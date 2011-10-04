@@ -67,14 +67,14 @@ ${renderer.error_notice()}
 	<input type="submit" value="Submit"> <input type="reset" value="Clear">
 </form>
 <% 
-priority_types = [('My Ratings', 'User'), ("CIOC's Internal System Ratings", 'Sys')]
+priority_types = [('My Ratings', 'User', False), ("CIOC's Internal System Ratings", 'Sys', True)]
 if not request.user:
 	del priority_types[0]
 
 %>
 <h2 class="ui-state-default ui-corner-all search-type">Browse by Priority</h2>
-%for label, prefix in priority_types:
-<h3>${label}</h3>
+%for label, prefix, show_help in priority_types:
+<h3>${label} <span id="open-dialog" class="ui-state-default ui-icon ui-icon-help inline-icon" title="What's This?"></span></h3>
 <%block name="closed_note"><p class="small-note">This search does not include closed, cancelled or duplicate feature requests</p></%block>
 <div class="priority-list clearfix">
 %for priority in priorities:
@@ -130,3 +130,29 @@ ${closed_note()}
 	</tr>
 %endfor
 </table>
+
+<div id="whatsthisciocranking" style="display:none">
+CIOC Internal System Rating is a baseline rating for all features, independent of member input, which takes into account the priority of the user or users whose problem or request is behind the feature, as well as the feature's overall importance to CIOC's overall sustainability, security, stability, usability, and/or performance, etc.
+</div>
+
+
+<%block name="bottomscripts">
+${parent.bottomscripts()}
+
+<script type="text/javascript">
+jQuery(function($) {
+	var $dialog = $('#whatsthisciocranking')
+		.dialog({
+			autoOpen: false,
+			title: 'About CIOC Internal Ranking'
+		});
+
+	$('#open-dialog').click(function() {
+		$dialog.dialog('open');
+		// prevent the default action, e.g., following a link
+		return false;
+	});
+
+});
+</script>
+</%block>
