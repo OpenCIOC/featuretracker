@@ -685,6 +685,10 @@ span.ui-icon.menu-icon {
 	.url, .email, .text, .password, textarea, select {
 		width: 18em;
 	}
+
+	.col2 {
+		width: 18em;
+	}
 }
 
 @media only screen and (min-width: 1140px) {
