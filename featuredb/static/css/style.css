@@ -270,6 +270,10 @@ h1,h2,h3,h4,h5 {
 	margin: 0 1em;
 }
 
+.url, .email, .text, .password, textarea, select {
+	width: 20em;
+}
+
 .priority-list .priority {
 	display: block;
 	float: left;

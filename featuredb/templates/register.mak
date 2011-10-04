@@ -11,21 +11,21 @@ ${renderer.error_notice()}
 			<td class="ui-widget-header">${renderer.label('Email', 'Email Address')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('Email')}
-				${renderer.text('Email', size=60, maxlength=60, type="email")}
+				${renderer.email('Email')}
 			</td>
 		</tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Password', 'Password')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('Password')}
-				${renderer.password('Password', size=60)}
+				${renderer.password('Password')}
 			</td>
 		</tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('ConfirmPassword', 'Confirm Password')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('ConfirmPassword')}
-				${renderer.password('ConfirmPassword', size=60)}
+				${renderer.password('ConfirmPassword')}
 			</td>
 		</tr>
 		<tr>
@@ -39,7 +39,7 @@ ${renderer.error_notice()}
 			<td class="ui-widget-header">${renderer.label('TomorrowsDate', 'Tomorrows Date')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('TomorrowsDate')}
-				${renderer.text('TomorrowsDate', size=60, maxlength=60)}
+				${renderer.text('TomorrowsDate', maxlength=60)}
 				<div class="field-help">Enter tomorrow's date as dd/mm/yyyy to help prevent spammers</div>
 			</td>
 		</tr>

@@ -5,12 +5,12 @@
 
 ${renderer.error_notice()}
 <form method="post" action="${request.route_url('account')}">
-	<table>
+	<table class="form-table">
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Email', 'Email Address')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('Email')}
-				${renderer.text('Email', size=60, maxlength=60, type="email")}
+				${renderer.email('Email')}
 			</td>
 		</tr>
 		<tr>
@@ -32,7 +32,7 @@ ${renderer.error_notice()}
 			<td class="ui-widget-header">${renderer.label('OrgName', 'Organization Name')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('OrgName')}
-				${renderer.text('OrgName', maxlength=50 )}
+				${renderer.text('OrgName')}
 				</td>
 		</tr>
 		<tr>
@@ -46,7 +46,7 @@ ${renderer.error_notice()}
 			<td class="ui-widget-header">${renderer.label('LastName', 'Last Name')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('LastName')}
-				${renderer.text('LastName', maxlength=50 )}
+				${renderer.text('LastName')}
 				</td>
 		</tr>
 		<tr><td colspan="2" class="ui-state-default" style="text-align: center">Change Password</td></tr>
@@ -54,14 +54,14 @@ ${renderer.error_notice()}
 			<td class="ui-widget-header">${renderer.label('Password', 'Password')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('Password')}
-				${renderer.password('Password', size=60)}
+				${renderer.password('Password')}
 			</td>
 		</tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('ConfirmPassword', 'Confirm Password')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('ConfirmPassword')}
-				${renderer.password('ConfirmPassword', size=60)}
+				${renderer.password('ConfirmPassword')}
 			</td>
 		</tr>
 	</table>

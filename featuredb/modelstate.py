@@ -16,6 +16,9 @@ from pyramid_simpleform.renderers import FormRenderer
 
 from featuredb import const
 
+import logging
+log = logging.getLogger('featuredb.modelstate')
+
 class DefaultModel(object):
 	pass
 
@@ -94,18 +97,18 @@ class CiocFormRenderer(FormRenderer):
 		return HTML.tag("label", label, **attrs)
 
 	def text(self, name, value=None, id=None, **attrs):
-		kw = {'maxlength': 200, 'size': const.TEXT_SIZE}
+		kw = {'maxlength': 200, 'class_': 'text'}
 		kw.update(attrs)
-		kw['size'] = min((kw['maxlength'], kw['size']))
 		return FormRenderer.text(self, name, value, id, **kw)
 
 	def url(self, name, value=None, id=None, **attrs):
-		kw = {'type': 'text', 'maxlength': 150, 'size': const.TEXT_SIZE-5, 'class_': 'url'}
+		kw = {'type': 'text', 'maxlength': 150, 'class_': 'url'}
 		kw.update(attrs) 
 		return literal(u'http://')+self.text(name, value, id, **kw)
 
 	def email(self, name, value=None, id=None, **attrs):
 		kw = {'type': 'email', 'maxlength': 60, 'class_': 'email'}
+		kw.update(attrs)
 		return self.text(name, value, id, **kw)
 
 	def textarea(self, name, value=None, id=None, **attrs):

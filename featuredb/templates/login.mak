@@ -11,14 +11,14 @@ ${renderer.error_notice()}
 	<td class="ui-widget-header">${renderer.label('email', 'Email:')}</td>
 	<td class="ui-widget-content">
 		${renderer.errorlist('email')}
-		${renderer.text('email', size=40, maxlength=60)}
+		${renderer.email('email')}
 	</td>
 </tr>
 <tr>
 	<td class="ui-widget-header">${renderer.label('password', 'Password:')}</td>
 	<td class="ui-widget-content">
 		${renderer.errorlist('password')}
-		${renderer.password('password', size=40, maxlenght=None)}
+		${renderer.password('password', maxlenght=None)}
 	</td>
 </tr>
 </table>

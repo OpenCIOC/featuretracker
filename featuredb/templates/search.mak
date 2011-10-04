@@ -20,7 +20,7 @@ ${renderer.error_notice()}
 			<td class="ui-widget-header">${renderer.label('Terms', 'Full-Text Search')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('Terms')}
-				${renderer.text('Terms', size=50, maxlength=100)}
+				${renderer.text('Terms', maxlength=100)}
 			</td>
 		</tr>
 		<tr>
