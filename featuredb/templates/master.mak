@@ -42,7 +42,9 @@
   <script src="/static/js/libs/modernizr-2.0.6-custom.min.js"></script>
 </head>
 
+<%block name="body_open_tag">
 <body>
+</%block>
 
 <header class="ui-widget-header" style="padding-left: 1em;">
 <nav class="site-nav"><%block name="sitenav">

@@ -6,7 +6,7 @@
 
 ${renderer.error_notice()}
 <form method="post" action="${request.route_url('register')}">
-	<table>
+	<table class="form-table">
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Email', 'Email Address')}</td>
 			<td class="ui-widget-content">
@@ -43,7 +43,7 @@ ${renderer.error_notice()}
 				<div class="field-help">Enter tomorrow's date as dd/mm/yyyy to help prevent spammers</div>
 			</td>
 		</tr>
-		<tr><td colspan="2" class="ui-widget-header" style="text-align: center">Optional Info</td></tr>
+		<tr><td colspan="2" class="ui-state-default" style="text-align: center">Optional Info</td></tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Agency', 'CIOC Agency')}</td>
 			<td class="ui-widget-content">

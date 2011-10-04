@@ -211,6 +211,9 @@ p span {
 }
 	*/
 
+.ie7 ol { list-style-type: decimal; list-style-position:inside; }
+.ie7 li {display: list-item; }
+
 body {
     font-family: "Arial","Helvetica","Verdana","sans-serif";
     font-size: 0.9em;
@@ -220,43 +223,52 @@ h1,h2,h3,h4,h5 {
 	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
-	/* column container */
-	.colmask {
-		position:relative;		/* This fixes the IE7 overflow hidden bug and stops the layout jumping out of place */
-	    clear:both;
-	    float:left;
-        width:100%;			/* width of whole page */
-		overflow:hidden;	/* This chops off any overhanging divs */
-	}
-	/* 2 column right menu settings */
-	.rightmenu .colleft {
-        float:left;
-        width:200%;
-        margin-left:-22em;
-        position:relative;
-        right:100%;
-        background:#fff;
-    }
-    .rightmenu .col1wrap {
-	    float:left;
-	    width:50%;
-	    position:relative;
-	    left:50%;
-	    padding-bottom:1em;
-	}
-	.rightmenu .col1 {
-        margin:0 1em 0 23em;
-        overflow:visible;
-	}
-    .rightmenu .col2 {
-        float:right;
-        width:20em;
-        position:relative;
-        left:21em;
-    }
-    .ie6 .col1 {
-	    width:100%;
-	}
+.colmask {
+	margin: 0 1em;
+}
+
+/* column container */
+.oldie .priority-sidebar .colmask {
+	position:relative;		/* This fixes the IE7 overflow hidden bug and stops the layout jumping out of place */
+	clear:both;
+	float:left;
+	width:100%;			/* width of whole page */
+	overflow:hidden;	/* This chops off any overhanging divs */
+}
+/* 2 column right menu settings */
+.oldie .priority-sidebar .rightmenu .colleft {
+	float:left;
+	width:200%;
+	margin-left:-22em;
+	position:relative;
+	right:100%;
+	background:#fff;
+}
+.oldie .priority-sidebar .rightmenu .col1wrap {
+	float:left;
+	width:50%;
+	position:relative;
+	left:50%;
+	padding-bottom:1em;
+}
+.oldie .priority-sidebar .rightmenu .col1 {
+	margin:0 1em 0 23em;
+	overflow:visible;
+}
+.oldie .priority-sidebar .rightmenu .col2 {
+	float:right;
+	width:20em;
+	position:relative;
+	left:21em;
+}
+.oldie .ie6 .priority-sidebar .col1 {
+	width:100%;
+}
+
+.oldie .site-nav {
+	float: right;
+	margin: 0 1em;
+}
 
 .priority-list .priority {
 	display: block;
@@ -267,11 +279,11 @@ h1,h2,h3,h4,h5 {
 }
 
 .site-nav {
-	float: right;
 	vertical-align: middle;
 	line-height: 200%;
-	margin: 0 1em;
+	margin: 0 1em 1em 1em
 }
+
 .searchnav {
 	float: right;
 	font-size: 50%;
@@ -407,6 +419,9 @@ h3.search-type {
 	min-height: 2em;
 	padding: 2px;
 	margin: 0 0 0 2em;
+}
+.ie7 .enhancement-list {
+	margin-left: 0.5em;
 }
 
 li.selected-enhancement {
@@ -610,6 +625,48 @@ span.ui-icon.menu-icon {
 		width: 30em;
 	}
 		*/
+	/* column container */
+	.priority-sidebar .colmask {
+		position:relative;		/* This fixes the IE7 overflow hidden bug and stops the layout jumping out of place */
+	    clear:both;
+	    float:left;
+        width:100%;			/* width of whole page */
+		overflow:hidden;	/* This chops off any overhanging divs */
+	}
+	/* 2 column right menu settings */
+	.priority-sidebar .rightmenu .colleft {
+        float:left;
+        width:200%;
+        margin-left:-22em;
+        position:relative;
+        right:100%;
+        background:#fff;
+    }
+    .priority-sidebar .rightmenu .col1wrap {
+	    float:left;
+	    width:50%;
+	    position:relative;
+	    left:50%;
+	    padding-bottom:1em;
+	}
+	.priority-sidebar .rightmenu .col1 {
+        margin:0 1em 0 23em;
+        overflow:visible;
+	}
+    .priority-sidebar .rightmenu .col2 {
+        float:right;
+        width:20em;
+        position:relative;
+        left:21em;
+    }
+    .ie6 .priority-sidebar .col1 {
+	    width:100%;
+	}
+
+	.site-nav {
+		float: right;
+		margin: 0 1em;
+	}
 
 }
 
@@ -628,6 +685,10 @@ span.ui-icon.menu-icon {
 	}
 		*/
 
+}
+
+.ie7 .ui-icon, .ie7 .module-icon {
+	text-indent: 0;
 }
 
 

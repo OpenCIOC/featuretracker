@@ -203,3 +203,11 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 </%block>
 
 ${next.body()}
+
+<%block name="body_open_tag">
+%if request.user and user_priorities is not Undefined:
+<body class="priority-sidebar">
+%else:
+${parent.body_open_tag()}
+%endif
+</%block>

@@ -20,7 +20,7 @@ ${renderer.error_notice()}
 				${renderer.select('Member', options= members )}
 				</td>
 		</tr>
-		<tr><td colspan="2" class="ui-widget-header" style="text-align: center">Optional Info</td></tr>
+		<tr><td colspan="2" class="ui-state-default" style="text-align: center">Optional Info</td></tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Agency', 'CIOC Agency')}</td>
 			<td class="ui-widget-content">
@@ -49,7 +49,7 @@ ${renderer.error_notice()}
 				${renderer.text('LastName', maxlength=50 )}
 				</td>
 		</tr>
-		<tr><td colspan="2" class="ui-widget-header" style="text-align: center">Change Password</td></tr>
+		<tr><td colspan="2" class="ui-state-default" style="text-align: center">Change Password</td></tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Password', 'Password')}</td>
 			<td class="ui-widget-content">
