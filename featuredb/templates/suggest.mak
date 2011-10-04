@@ -16,6 +16,7 @@ ${renderer.error_notice()}
 			</td>
 		</tr>
 	</table>
+<br>
 <input type="submit" value="Submit">
 </form>
 

@@ -6,7 +6,7 @@
 
 ${renderer.error_notice()}
 <form action='' method='post'>
-<table>
+<table class="form-table">
 <tr>
 	<td class="ui-widget-header">${renderer.label('email', 'Email:')}</td>
 	<td class="ui-widget-content">
@@ -22,6 +22,7 @@ ${renderer.error_notice()}
 	</td>
 </tr>
 </table>
+<br>
 <input type="Submit" value="Login">
 </form>
 
