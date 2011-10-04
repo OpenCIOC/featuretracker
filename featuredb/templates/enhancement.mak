@@ -50,6 +50,13 @@ ${request.model_state.renderer.error_notice(model_state.errors_for('*')[0])}
 <dd><a href="${request.route_url('search_results', _query=[('Module', module['MODULE_ID'])])}">${module['ModuleName']}</a></dd>
 %endfor
 </dl>
+
+%if enhancement.Releases:
+<dl><dt>Releases</dt>
+%for release in enhancement.Releases:
+<dd><a href="${request.route_url('search_results', _query=[('Release', release['RELEASE_ID']), ('IncludeClosed', 'on')])}">${release['ReleaseName']}</a></dd>
+%endfor
+%endif
 </div>
 
 <p class="description"><strong>Description:</strong> ${enhancement.BasicDescription}</p>

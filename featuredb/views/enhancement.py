@@ -71,6 +71,7 @@ class Enhancement(ViewBase):
 		enhancement.Modules = _xml_to_dict_list(enhancement.Modules)
 		enhancement.Keywords = _xml_to_dict_list(enhancement.Keywords)
 		enhancement.SeeAlsos = _xml_to_dict_list(enhancement.SeeAlsos)
+		enhancement.Releases = _xml_to_dict_list(enhancement.Releases)
 
 		enhancement.BasicDescription = _make_html(enhancement.BasicDescription)
 		enhancement.AdditionalNotes = _make_html(enhancement.AdditionalNotes)
