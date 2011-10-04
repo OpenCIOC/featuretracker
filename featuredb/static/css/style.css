@@ -299,6 +299,10 @@ h1,h2,h3,h4,h5 {
 	vertical-align: middle;
 }
 
+.site-nav a {
+	margin-bottom: 0.5em;
+}
+
 .priority {
     font-family: "Arial","Helvetica","Verdana","sans-serif";
 	padding: 2px 4px 2px 4px;
@@ -672,6 +676,15 @@ span.ui-icon.menu-icon {
 		margin: 0 1em;
 	}
 
+}
+
+@media only screen and (max-width: 400px) {
+	.form-table td, .form-table tr {
+		display: block;
+	}
+	.url, .email, .text, .password, textarea, select {
+		width: 18em;
+	}
 }
 
 @media only screen and (min-width: 1140px) {
