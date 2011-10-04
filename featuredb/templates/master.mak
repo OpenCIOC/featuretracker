@@ -39,7 +39,7 @@
   <!-- All JavaScript at the bottom, except for Modernizr / Respond.
        Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
        For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
-  <script src="/static/js/libs/modernizr-1.7.min.js"></script>
+  <script src="/static/js/libs/modernizr-2.0.6-custom.min.js"></script>
 </head>
 
 <body>
