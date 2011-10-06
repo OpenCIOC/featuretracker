@@ -274,6 +274,11 @@ h1,h2,h3,h4,h5 {
 	width: 20em;
 }
 
+textarea {
+	min-width: 30em;
+	min-height: 25em;
+}
+
 .priority-list .priority {
 	display: block;
 	float: left;
@@ -675,6 +680,10 @@ span.ui-icon.menu-icon {
 		float: right;
 		margin: 0 1em;
 	}
+	textarea {
+		min-width: 50em;
+		min-height: 25em;
+	}
 
 }
 
@@ -682,13 +691,14 @@ span.ui-icon.menu-icon {
 	.form-table td, .form-table tr {
 		display: block;
 	}
-	.url, .email, .text, .password, textarea, select {
+	.url, .email, .text, .password, select {
 		width: 18em;
 	}
 
 	.col2 {
 		width: 18em;
 	}
+
 }
 
 @media only screen and (min-width: 1140px) {
