@@ -17,7 +17,7 @@ class UserDataSchema(Schema):
 	if_key_missing = None
 
 	Email = All(validators.MaxLength(50), validators.Email(not_empty=True))
-	Member = validators.IntID(not_empty=True)
+	Member = validators.IntID()
 	Agency = validators.AgencyCode()
 
 	OrgName = validators.String(max=150)

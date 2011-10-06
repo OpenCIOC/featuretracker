@@ -29,13 +29,6 @@ ${renderer.error_notice()}
 			</td>
 		</tr>
 		<tr>
-			<td class="ui-widget-header">${renderer.label('Member', 'CIOC Membership')}</td>
-			<td class="ui-widget-content">
-				${renderer.errorlist('Member')}
-				${renderer.select('Member', options=[('','')] + members )}
-				</td>
-		</tr>
-		<tr>
 			<td class="ui-widget-header">${renderer.label('TomorrowsDate', 'Tomorrows Date')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('TomorrowsDate')}
@@ -44,6 +37,13 @@ ${renderer.error_notice()}
 			</td>
 		</tr>
 		<tr><td colspan="2" class="ui-state-default" style="text-align: center">Optional Info</td></tr>
+		<tr>
+			<td class="ui-widget-header">${renderer.label('Member', 'CIOC Membership')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('Member')}
+				${renderer.select('Member', options=[('','')] + members )}
+				</td>
+		</tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Agency', 'CIOC Agency')}</td>
 			<td class="ui-widget-content">
