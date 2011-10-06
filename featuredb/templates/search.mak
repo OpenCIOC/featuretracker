@@ -38,8 +38,8 @@ ${renderer.error_notice()}
 						[(m.MODULE_ID, m.ModuleName) for m in modules])}
 				</td>
 		</tr>
-		%if request.user:
 		<% priorities_formatted = [('','')] + [(p.PRIORITY_ID, p.PriorityName) for p in priorities] %>
+		%if request.user:
 		<tr>
 			<td class="ui-widget-header">${renderer.label('UserPriority', 'My Rating')}</td>
 			<td class="ui-widget-content">
@@ -48,6 +48,13 @@ ${renderer.error_notice()}
 				</td>
 		</tr>
 		%endif
+		<tr>
+			<td class="ui-widget-header">${renderer.label('SysPriority', 'CIOC Ratings')} <span class="ui-reset ui-widget ui-state-default ui-content"><span class="open-dialog ui-icon ui-icon-help inline-icon" title="What's This?"></span></td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('SysPriority')}
+				${renderer.select('SysPriority', options=priorities_formatted)}
+				</td>
+		</tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Estimate', 'Estimate')}</td>
 			<td class="ui-widget-content">
@@ -76,7 +83,7 @@ if not request.user:
 %for label, prefix, show_help in priority_types:
 <h3>${label}
 %if show_help:
-<span id="open-dialog" class="ui-state-default ui-icon ui-icon-help inline-icon" title="What's This?"></span>
+<span class="open-dialog ui-state-default ui-icon ui-icon-help inline-icon" title="What's This?"></span>
 %endif
 </h3>
 <%block name="closed_note"><p class="small-note">This search does not include closed, cancelled or duplicate feature requests</p></%block>
@@ -151,7 +158,7 @@ jQuery(function($) {
 			title: 'About CIOC Internal Ranking'
 		});
 
-	$('#open-dialog').click(function() {
+	$('.open-dialog').click(function() {
 		$dialog.dialog('open');
 		// prevent the default action, e.g., following a link
 		return false;
