@@ -59,7 +59,9 @@ ${request.model_state.renderer.error_notice()}
 %endif
 </div>
 
+%if enhancement.BasicDescription:
 <p class="description"><strong>Description:</strong> ${enhancement.BasicDescription}</p>
+%endif
 
 %if enhancement.AdditionalNotes:
 <p><strong>Notes:</strong> ${enhancement.AdditionalNotes }</p>
