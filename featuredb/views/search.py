@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from pyramid_handlers import action
 from formencode import Schema
 
@@ -20,6 +22,7 @@ class SearchSchema(Schema):
 	SysPriority = validators.IntID()
 	Estimate = validators.Int(min=0, max=32767)
 	IncludeClosed = validators.Bool()
+	CreatedInTheLastXDays = validators.Int(min=1, max=32767)
 	Release	= validators.IntID()
 
 field_order =  [
@@ -91,10 +94,16 @@ class Search(ViewBase):
 
 		user_priorities = []
 		user_cart = {}
+
 		with request.connmgr.get_connection() as conn:
 			data = model_state.data
 			args = [request.user] 
 			args.extend(data.get(f) for f in field_order)
+
+			created_in_the_last = data.get('CreatedInTheLastXDays')
+			if created_in_the_last:
+				created_in_the_last = date.today()-timedelta(created_in_the_last)
+			args.append(created_in_the_last)
 			cursor = conn.execute('EXEC dbo.sp_SearchResults %s' % ','.join('?' * len(args)), *args)
 
 			searched_for = cursor.fetchone()

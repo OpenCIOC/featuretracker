@@ -1,5 +1,6 @@
 <%inherit file="priority.mak"/>
 <%!
+from datetime import date, timedelta
 from itertools import izip_longest
 def grouper(n, iterable, fillvalue=None):
     "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx"
@@ -60,6 +61,16 @@ ${renderer.error_notice()}
 			<td class="ui-widget-content">
 				${renderer.errorlist('Estimate')}
 				${renderer.select('Estimate', options=[('','')] + map(tuple, estimates))}
+				</td>
+		</tr>
+		<tr>
+			<td class="ui-widget-header">${renderer.label('CreatedInTheLastXDays', 'Created')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('CreatedInTheLastXDays')}
+				Created in the last
+				<% days = ['', 30, 14, 7, 2, 1] %>
+				${renderer.select('CreatedInTheLastXDays', options=days, class_='smallselect')}
+				day(s).
 				</td>
 		</tr>
 		<tr>

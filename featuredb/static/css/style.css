@@ -267,6 +267,10 @@ h1,h2,h3,h4,h5 {
 	width: 20em;
 }
 
+.smallselect {
+	width: 3em;
+}
+
 textarea {
 	min-width: 30em;
 	min-height: 25em;
