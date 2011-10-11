@@ -27,7 +27,7 @@ def _fix_user_cart(user_cart):
 		user_cart = None
 	else:
 		for i, val in enumerate(user_cart):
-			user_cart[i] = str(val)
+			user_cart[i] = str(val) if val is not None else val
 		user_cart = _get_dict(user_cart)
 
 

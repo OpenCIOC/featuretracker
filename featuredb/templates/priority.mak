@@ -19,7 +19,9 @@ def group_priorities(user_priorities):
 <p class="small-note">Click and drag the enhancement to re-order or re-prioritize.
 <br>Click the info icon to view the enhancement.
 <br>Click the remove icon to reset to neutral priority.</p>
-<div id="cart-total" ${'style="display:none;"' if not all(cart.values()) else ''|n}><strong>Total Cost of selections:</strong><br> $<span id="cost-low">${cart.get('CostLow') or 0}</span> - $<span id="cost-high">${cart.get('CostHigh') or 0}</span> ($<span id="cost-avg">${cart.get('CostAvg') or 0}</span> Avg.)</div>
+<div id="cart-total" ${'style="display:none;"' if not any(cart.values()) else ''|n}><strong>Total Cost of selections:</strong><br>
+<span id="cart-cost" ${'style="display:none;"' if not any(cart.get(x) for x in ['CostLow','CostHigh','CostAvg']) else ''|n}>$<span id="cost-low">${cart.get('CostLow') or 0}</span> - $<span id="cost-high">${cart.get('CostHigh') or 0}</span> ($<span id="cost-avg">${cart.get('CostAvg') or 0}</span> Avg.)</span><span id="cart-both" ${'style="display:none;"' if not all(cart.values()) else ''|n}>
+<br>+</span><span id="cart-not-estimated" ${'style="display:none;"' if not cart.get('NotEstimated') else ''|n}><span id="cart-none">${cart.get('NotEstimated')}</span> enhacement(s) with no estimate.</span></div>
 <% priority_groups = group_priorities(user_priorities) %>
 %for priority in (p for p in priorities if p.Weight != 0):
 <% priority_class = priority.PriorityCode.lower().replace(' ', '-') %>
@@ -146,9 +148,30 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 				$("#cart-total").hide()
 			} else {
 				$("#cart-total").show()
-				$("#cost-low").text(cart.CostLow);
-				$("#cost-high").text(cart.CostHigh);
-				$("#cost-avg").text(cart.CostAvg);
+				var cost = cart.CostLow || cart.CostAvg || cart.CostHigh,
+					noestimate = cart.NotEstimated;
+
+				if (!cost) {
+					$('#cart-cost').hide();
+				} else {
+					$('#cart-cost').show();
+					$("#cost-low").text(cart.CostLow);
+					$("#cost-high").text(cart.CostHigh);
+					$("#cost-avg").text(cart.CostAvg);
+				}
+
+				if (!noestimate) {
+					$('#cart-not-estimated').hide();
+				} else {
+					$('#cart-not-estimated').show();
+					$('#cart-none').text(cart.NotEstimated);
+				}
+
+				if (cost && noestimate) {
+					$('#cart-both').show();
+				} else {
+					$('#cart-both').hide();
+				}
 			}
 		};
 
