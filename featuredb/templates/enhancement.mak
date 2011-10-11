@@ -68,8 +68,18 @@ ${request.model_state.renderer.error_notice()}
 %endif
 
 %if request.user:
+<p>
+<strong>My Ranking:</strong> 
+%if enhancement.CanRankStatus:
 <% dataargs = {'data-enh-id': enhancement.ID, 'data-enh-title': enhancement.Title} %>
-<strong>My Ranking:</strong> ${tags.select(None, enhancement.UserPriority['PRIORITY_ID'],[(x.PRIORITY_ID, x.PriorityName) for x in priorities], id='priority-selector-%d' % enhancement.ID, class_='priority-selector', **dataargs)} </p>
+${tags.select(None, enhancement.UserPriority['PRIORITY_ID'],[(x.PRIORITY_ID, x.PriorityName) for x in priorities], id='priority-selector-%d' % enhancement.ID, class_='priority-selector', **dataargs)} 
+
+%else:
+<% priority = enhancement.UserPriority %>
+<span class="${priority['PriorityCode'].lower().replace(' ', '-')}-text align-bottom">${priority['PriorityName']}</span>
+%endif
+</p>
+
 %endif
 
 
