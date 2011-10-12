@@ -40,8 +40,8 @@ def group_priorities(user_priorities):
 </%block>
 
 <%def name="enhancement_item(id, title)">
-	<li data-enh-id="${id}" id="selected-enhancement-${id}" class="selected-enhancement"><span class="priority-enhancement-actions"><a class="ui-state-default ui-icon ui-icon-info selected-enhancement-details inline-icon" href="${request.route_path('enhancement', id=id)}"> </a>
-	<span class="ui-state-default ui-icon ui-icon-circle-close selected-enhancement-remove inline-icon"></span></span>${title}
+	<li data-enh-id="${id}" id="selected-enhancement-${id}" class="selected-enhancement"><span class="priority-enhancement-actions"><a class="ui-state-default ui-icon ui-icon-info selected-enhancement-details inline-icon" href="${request.route_path('enhancement', id=id)}" title="more info"> </a>
+	<span class="ui-state-default ui-icon ui-icon-circle-close selected-enhancement-remove inline-icon" title="remove"></span></span>${title}
 	</li>
 </%def>
 
