@@ -18,7 +18,7 @@ ${renderer.error_notice()}
 			<td class="ui-widget-header">${renderer.label('Member', 'CIOC Membership')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('Member')}
-				${renderer.select('Member', options= members )}
+				${renderer.select('Member', options=[('','')] + members )}
 				</td>
 		</tr>
 		<tr>
