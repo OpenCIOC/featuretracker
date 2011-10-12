@@ -151,6 +151,10 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 				var cost = cart.CostLow || cart.CostAvg || cart.CostHigh,
 					noestimate = cart.NotEstimated;
 
+				if (noestimate === '0') {
+					noestimate = null;
+				}
+
 				if (!cost) {
 					$('#cart-cost').hide();
 				} else {
