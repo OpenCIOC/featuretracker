@@ -8,5 +8,7 @@ class ViewBase(object):
 		self.model_state = request.model_state = modelstate.ModelState(request)
 
 def get_row_dict(row):
+	if not row:
+		return {}
 	return dict(zip([d[0] for d in row.cursor_description], row))
 

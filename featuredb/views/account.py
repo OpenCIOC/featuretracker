@@ -70,6 +70,9 @@ class Register(ViewBase):
 	def index(self):
 		#request = self.request
 		edit_info = self._get_edit_info()
+		if not edit_info['user']:
+			return HTTPFound(location=self.request.route_url('login'))
+
 		self.model_state.form.data = get_row_dict(edit_info['user'])
 		return edit_info
 	
