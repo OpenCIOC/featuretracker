@@ -76,7 +76,7 @@ ${tags.select(None, enhancement.UserPriority['PRIORITY_ID'],[(x.PRIORITY_ID, x.P
 
 %else:
 <% priority = enhancement.UserPriority %>
-<span class="${priority['PriorityCode'].lower().replace(' ', '-')}-text align-bottom">${priority['PriorityName']}</span>
+This feature is marked as <span class="${priority['PriorityCode'].lower().replace(' ', '-')}-text align-bottom">${priority['PriorityName']}</span>, and does not require a rating.
 %endif
 </p>
 
