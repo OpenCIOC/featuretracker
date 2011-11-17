@@ -64,7 +64,7 @@ class Enhancement(ViewBase):
 		if enhancement is None:
 			#error condition, change template?
 			self.model_state.add_error_for('*', 'No enhancement with ID %d' % enh_id)
-			return {'priorities':priorities, 'user_priorities': user_priorities}
+			return {'priorities': priorities, 'user_priorities': user_priorities}
 
 		enhancement.SysPriority = _priority_xml_to_dict(enhancement.SysPriority)
 		enhancement.UserPriority = _priority_xml_to_dict(enhancement.UserPriority)
@@ -90,7 +90,6 @@ class Enhancement(ViewBase):
 			except ValueError:
 				pass
 
-
 		return {'enhancement': enhancement, 'enh_nav': enh_nav, 'cart': user_cart,
-		  'priorities':priorities, 'user_priorities': user_priorities}
+		  'priorities': priorities, 'user_priorities': user_priorities}
 

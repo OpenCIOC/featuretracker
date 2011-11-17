@@ -17,15 +17,12 @@ ${Markup(' | ').join(Markup('<a href="%s">%s</a>') % (request.route_url('enhance
 
 ${request.model_state.renderer.error_notice()}
 
-
 %else:
 <div class="enhancement">
 <h2 class="ui-state-default ui-corner-all clearfix">
 <span class="module-icons">
 %for module in enhancement.Modules:
-%if module['ModuleCode'] != 'ADMIN':
 <span class="module-icon module-icon-${module['ModuleCode'].lower()}" title="${module['ModuleName']}"></span>
-%endif
 %endfor
 </span>
 #${enhancement.ID} ${enhancement.Title}
@@ -73,10 +70,10 @@ ${request.model_state.renderer.error_notice()}
 %if enhancement.CanRankStatus:
 <% dataargs = {'data-enh-id': enhancement.ID, 'data-enh-title': enhancement.Title} %>
 ${tags.select(None, enhancement.UserPriority['PRIORITY_ID'],[(x.PRIORITY_ID, x.PriorityName) for x in priorities], id='priority-selector-%d' % enhancement.ID, class_='priority-selector', **dataargs)} 
-
 %else:
 <% priority = enhancement.UserPriority %>
-This feature is marked as <em>${enhancement.Status}</em>, and does not require a rating.
+<span class="${priority['PriorityCode'].lower().replace(' ', '-')}-text align-bottom">${priority['PriorityName']}</span>
+<br>Note This feature is marked as <em>${enhancement.Status}</em>; ratings are no longer required, and cannot be changed.
 %endif
 </p>
 
