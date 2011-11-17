@@ -68,7 +68,7 @@ ${renderer.error_notice()}
 			<td class="ui-widget-content">
 				${renderer.errorlist('CreatedInTheLastXDays')}
 				Created in the last
-				<% days = ['', 30, 14, 7, 2, 1] %>
+				<% days = ['', 120, 90, 60, 30, 14, 7, 2, 1] %>
 				${renderer.select('CreatedInTheLastXDays', options=days, class_='smallselect')}
 				day(s).
 				</td>

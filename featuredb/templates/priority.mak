@@ -23,7 +23,7 @@ def group_priorities(user_priorities):
 <span id="cart-cost" ${'style="display:none;"' if not any(cart.get(x) for x in ['CostLow','CostHigh','CostAvg']) else ''|n}>$<span id="cost-low">${cart.get('CostLow') or 0}</span> - $<span id="cost-high">${cart.get('CostHigh') or 0}</span> ($<span id="cost-avg">${cart.get('CostAvg') or 0}</span> Avg.)</span><span id="cart-both" ${'style="display:none;"' if not all(cart.values()) else ''|n}>
 <br>+</span><span id="cart-not-estimated" ${'style="display:none;"' if not cart.get('NotEstimated') else ''|n}><span id="cart-none">${cart.get('NotEstimated')}</span> enhacement(s) with no estimate.</span></div>
 <% priority_groups = group_priorities(user_priorities) %>
-%for priority in (p for p in priorities if p.Weight != 0):
+%for priority in (p for p in priorities if p.PriorityCode != 'NEUTRAL'):
 <% priority_class = priority.PriorityCode.lower().replace(' ', '-') %>
 <h3 class="priority ${priority_class}">${priority.PriorityName}</h3>
 <div class="priority-en ${priority_class}-en"> 
@@ -52,9 +52,9 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 </script>
 <script type="text/javascript">
 	(function() {
-		var neutral_priority = ${[p.PRIORITY_ID for p in priorities if p.Weight == 0][0]},
+		var neutral_priority = ${[p.PRIORITY_ID for p in priorities if p.PriorityCode == 'NEUTRAL'][0]},
 			enh_item_tmpl = null,
-		gen_enh_item = function(id, title) {
+		gen_enh_item = function(id, title) {'
 			if (!enh_item_tmpl) {
 				enh_item_tmpl = $('#enhancement-item-tmpl').html()
 			}
