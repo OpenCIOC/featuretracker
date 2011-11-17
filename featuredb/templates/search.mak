@@ -77,12 +77,26 @@ ${renderer.error_notice()}
 			<td class="ui-widget-header">${renderer.label('IncludeClosed', 'Closed/Cancelled')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('IncludeClosed')}
-				${renderer.checkbox('IncludeClosed')}&nbsp;<label for="IncludeClosed">Include Closed, Cancelled, and Duplicate Items</label>
+				${renderer.checkbox('IncludeClosed')}&nbsp;<label for="IncludeClosed">Include Closed and Cancelled Requests</label>
 				</td>
 		</tr>
 	</table>
 	<br>
 	<input type="submit" value="Submit"> <input type="reset" value="Clear">
+</form>
+
+<h2 class="ui-state-default ui-corner-all search-type">Go To Specific Enhancement</h2>
+<form method="get" action="${request.route_url('search_results')}">
+	<table class="form-table">
+		<tr>
+			<td class="ui-widget-header">${renderer.label('ID', 'ID #')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('ID')}
+				${renderer.text('ID', size=5, maxlength=4)}
+				<input type="submit" value="Submit">
+			</td>
+		</tr>
+	</table>
 </form>
 <% 
 priority_types = [('My Ratings', 'User', False), ("CIOC's Internal System Ratings", 'Sys', True)]
@@ -97,7 +111,7 @@ if not request.user:
 <span class="open-dialog ui-state-default ui-icon ui-icon-help inline-icon" title="What's This?"></span>
 %endif
 </h3>
-<%block name="closed_note"><p class="small-note">This search does not include closed, cancelled or duplicate feature requests</p></%block>
+<%block name="closed_note"><p class="small-note">This search does not include closed or cancelled feature requests</p></%block>
 <div class="priority-list clearfix">
 %for priority in priorities:
 <a class="priority ${priority.PriorityCode.lower().replace(' ', '-')}" href="${request.route_url('search_results', _query=[(prefix + 'Priority',priority[0])])}">${priority.PriorityName} (${getattr(priority, prefix + 'EnhancementCount')})</a>
