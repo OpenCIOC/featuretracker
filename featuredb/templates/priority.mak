@@ -54,7 +54,7 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 	(function() {
 		var neutral_priority = ${[p.PRIORITY_ID for p in priorities if p.PriorityCode == 'NEUTRAL'][0]},
 			enh_item_tmpl = null,
-		gen_enh_item = function(id, title) {'
+		gen_enh_item = function(id, title) {
 			if (!enh_item_tmpl) {
 				enh_item_tmpl = $('#enhancement-item-tmpl').html()
 			}
