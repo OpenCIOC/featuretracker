@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 
+from pyramid.httpexceptions import HTTPFound
 from pyramid_handlers import action
 from formencode import Schema
 
@@ -24,6 +25,7 @@ class SearchSchema(Schema):
 	IncludeClosed = validators.Bool()
 	CreatedInTheLastXDays = validators.Int(min=1, max=32767)
 	Release	= validators.IntID()
+	ID = validators.IntID()
 
 field_order =  [
 	'Keyword',
@@ -95,8 +97,14 @@ class Search(ViewBase):
 		user_priorities = []
 		user_cart = {}
 
+		data = model_state.data
+		
+		enhid = data.get('ID')
+		if enhid:
+			return HTTPFound(location=request.route_url('enhancement', id=enhid))
+
 		with request.connmgr.get_connection() as conn:
-			data = model_state.data
+
 			args = [request.user] 
 			args.extend(data.get(f) for f in field_order)
 
