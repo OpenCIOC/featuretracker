@@ -22,7 +22,7 @@ def group_priorities(user_priorities):
 <br>List does not include funded, closed, or cancelled items.</p>
 <div id="cart-total" ${'style="display:none;"' if not any(cart.values()) else ''|n}><strong>Total Cost of selections:</strong><br>
 <span id="cart-cost" ${'style="display:none;"' if not any(cart.get(x) for x in ['CostLow','CostHigh','CostAvg']) else ''|n}>$<span id="cost-low">${cart.get('CostLow') or 0}</span> - $<span id="cost-high">${cart.get('CostHigh') or 0}</span> ($<span id="cost-avg">${cart.get('CostAvg') or 0}</span> Avg.)</span><span id="cart-both" ${'style="display:none;"' if not all(cart.values()) else ''|n}>
-<br>+</span><span id="cart-not-estimated" ${'style="display:none;"' if not cart.get('NotEstimated') else ''|n}><span id="cart-none">${cart.get('NotEstimated')}</span> enhacement(s) with no estimate.</span></div>
+<br>+</span><span id="cart-not-estimated" ${'style="display:none;"' if not cart.get('NotEstimated') else ''|n}><span id="cart-none">${cart.get('NotEstimated')}</span> enhancement(s) with no estimate.</span></div>
 <% priority_groups = group_priorities(user_priorities) %>
 %for priority in (p for p in priorities if p.PriorityCode != 'NEUTRAL'):
 <% priority_class = priority.PriorityCode.lower().replace(' ', '-') %>
