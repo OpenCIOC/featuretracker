@@ -29,7 +29,7 @@ searched = searched_for.items()
 
 <p>There are <strong>${len(results)}</strong> enhancements(s) that match your criteria. 
 <br>Click on the enhancement name to view the full details of the enhancement.</p>
-<% modules = [('CIC', 'Community Information'),('VOL', 'Volunteer Opportunities'),('TRACKER', 'Client Tracker')] %>
+<% modules = [('CIC', 'Community Information'),('VOL', 'Volunteer Opportunities'),('TRACKER', 'Client Tracker'),('OFFLINE','Offline Tools'),('ENHANCEMENT','Enhancements Database'),('COMMUNITY','Communities Repository')] %>
 <ol class="results">
 
 %for result in results:
