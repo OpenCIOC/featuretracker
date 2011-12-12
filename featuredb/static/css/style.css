@@ -551,6 +551,18 @@ span.ui-icon.menu-icon {
   background: url('../img/ct-icon.gif');
   width: 17px; height: 17px;
 }
+.module-icon-community {
+  background: url('../img/community-icon.gif');
+  width: 17px; height: 17px;
+}
+.module-icon-enhancement {
+  background: url('../img/enhancement-icon.gif');
+  width: 17px; height: 17px;
+}
+.module-icon-offline {
+  background: url('../img/offline-icon.gif');
+  width: 17px; height: 17px;
+}
 
 .module-icons {
 	display: inline-block;
