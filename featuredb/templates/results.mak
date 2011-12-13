@@ -29,6 +29,9 @@ searched = searched_for.items()
 
 <p>There are <strong>${len(results)}</strong> enhancements(s) that match your criteria. 
 <br>Click on the enhancement name to view the full details of the enhancement.</p>
+%if not include_closed:
+<p class="small-note">Closed or Cancelled enhancements are not included in this list.</p>
+%endif
 <% modules = [('CIC', 'Community Information'),('VOL', 'Volunteer Opportunities'),('TRACKER', 'Client Tracker'),('OFFLINE','Offline Tools'),('ENHANCEMENT','Feature Request Database'),('COMMUNITY','Communities Repository')] %>
 <ol class="results">
 

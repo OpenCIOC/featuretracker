@@ -136,7 +136,13 @@ class Search(ViewBase):
 		searched_for = {d[0]: x for d,x in zip(searched_for.cursor_description, searched_for) if x}
 		priority_map = {x[0]: x for x in priorities}
 
+		include_closed = data.get('IncludeClosed')
+
+		if include_closed:
+			searched_for['IncludeClosed'] = 'Yes'
+
 		request.session['search_ids'] = [x.ID for x in results]
 
 		return dict(searched_for=searched_for, priorities=priorities, cart=user_cart,
-			  results=results, user_priorities=user_priorities, priority_map=priority_map)
+			  results=results, user_priorities=user_priorities, priority_map=priority_map,
+			 include_closed=include_closed)
