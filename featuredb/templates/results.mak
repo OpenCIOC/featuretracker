@@ -1,24 +1,33 @@
 <%inherit file="priority.mak"/>
 <%block name="title">Search Results</%block>
-<% 
+<%! 
+from markupsafe import Markup
 searched_for_map = {
 	'UserPriority': 'My Ranking',
 	'CostRange': 'Estimate',
-	'SysPriority': 'CIOC Internal Priority'
+	'SysPriority': 'CIOC Internal Priority',
+	'IncludeClosed': 'Include Closed and Cancelled Requests'
 }
 
-searched = searched_for.items()
+searched_for_tmpl = Markup('<strong>%s</strong> is <em>%s</em>')
+%>
+
+<%
+searched = sorted(((searched_for_map.get(name, name),val) for name, val in  searched_for.items()), key=lambda x: x[0])
+searched = [searched_for_tmpl % x for x in searched]
+if include_closed:
+	searched.append(Markup('<strong>Include Closed and Cancelled Requests</strong>'))
 
 %>
 
 %if searched:
 	%if len(searched) == 1:
-		<p>You searched for <strong>${searched_for_map.get(searched[0][0], searched[0][0])}</strong> is <em>${searched[0][1]}</em>
+		<p>You searched for ${searched[0]}
 	%else:
 		<p>You searched for:
 		<ul>
-		%for field, val in sorted(searched, key=lambda x: searched_for_map.get(x[0], x[0])):
-			<li><strong>${searched_for_map.get(field, field)}</strong> is <em>${val}</em></li>
+		%for searched_item in searched:
+			<li>${searched_item}</li>
 		%endfor
 		</ul>
 	%endif
@@ -30,7 +39,7 @@ searched = searched_for.items()
 <p>There are <strong>${len(results)}</strong> enhancements(s) that match your criteria. 
 <br>Click on the enhancement name to view the full details of the enhancement.</p>
 %if not include_closed:
-<p class="small-note">Closed or Cancelled enhancements are not included in this list.</p>
+<p class="small-note">Closed and Cancelled enhancements are not included in this list.</p>
 %endif
 <% modules = [('CIC', 'Community Information'),('VOL', 'Volunteer Opportunities'),('TRACKER', 'Client Tracker'),('OFFLINE','Offline Tools'),('ENHANCEMENT','Feature Request Database'),('COMMUNITY','Communities Repository')] %>
 <ol class="results">

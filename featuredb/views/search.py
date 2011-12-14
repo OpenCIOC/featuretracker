@@ -138,9 +138,6 @@ class Search(ViewBase):
 
 		include_closed = data.get('IncludeClosed')
 
-		if include_closed:
-			searched_for['IncludeClosed'] = 'Yes'
-
 		request.session['search_ids'] = [x.ID for x in results]
 
 		return dict(searched_for=searched_for, priorities=priorities, cart=user_cart,
