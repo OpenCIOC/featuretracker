@@ -11,8 +11,8 @@ import logging
 log = logging.getLogger('featuredb.views.search')
 
 class SearchSchema(Schema):
-	allow_extra_keys = True
-	filter_extra_keys = True
+	allow_extra_fields = True
+	filter_extra_fields = True
 
 	if_key_missing = None
 
@@ -139,6 +139,7 @@ class Search(ViewBase):
 		include_closed = data.get('IncludeClosed')
 
 		request.session['search_ids'] = [x.ID for x in results]
+
 
 		return dict(searched_for=searched_for, priorities=priorities, cart=user_cart,
 			  results=results, user_priorities=user_priorities, priority_map=priority_map,
