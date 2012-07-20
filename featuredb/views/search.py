@@ -108,9 +108,9 @@ class Search(ViewBase):
 			args = [request.user] 
 			args.extend(data.get(f) for f in field_order)
 
-			created_in_the_last = data.get('CreatedInTheLastXDays')
-			if created_in_the_last:
-				created_in_the_last = date.today()-timedelta(created_in_the_last)
+			created_in_the_last_number = data.get('CreatedInTheLastXDays')
+			if created_in_the_last_number:
+				created_in_the_last = date.today()-timedelta(created_in_the_last_number)
 			args.append(created_in_the_last)
 			cursor = conn.execute('EXEC dbo.sp_SearchResults %s' % ','.join('?' * len(args)), *args)
 
@@ -137,10 +137,11 @@ class Search(ViewBase):
 		priority_map = {x[0]: x for x in priorities}
 
 		include_closed = data.get('IncludeClosed')
+		fulltext_keywords = data.get('Terms')
 
 		request.session['search_ids'] = [x.ID for x in results]
 
 
 		return dict(searched_for=searched_for, priorities=priorities, cart=user_cart,
 			  results=results, user_priorities=user_priorities, priority_map=priority_map,
-			 include_closed=include_closed)
+			 include_closed=include_closed, fulltext_keywords=fulltext_keywords, created_in_the_last_number=created_in_the_last_number)

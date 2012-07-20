@@ -5,19 +5,21 @@ from markupsafe import Markup
 searched_for_map = {
 	'UserPriority': 'My Ranking',
 	'CostRange': 'Estimate',
-	'SysPriority': 'CIOC Internal Priority',
-	'IncludeClosed': 'Include Closed and Cancelled Requests'
+	'SysPriority': 'CIOC Internal Priority'
 }
 
 searched_for_tmpl = Markup('<strong>%s</strong> is <em>%s</em>')
 %>
 
 <%
-searched = sorted(((searched_for_map.get(name, name),val) for name, val in  searched_for.items()), key=lambda x: x[0])
+searched = sorted(((searched_for_map.get(name, name),val) for name, val in searched_for.items()), key=lambda x: x[0])
 searched = [searched_for_tmpl % x for x in searched]
+if fulltext_keywords:
+	searched.insert(0,Markup('<strong>Full-text Search</strong> is <em>%s</em>') % fulltext_keywords)
+if created_in_the_last_number:
+	searched.append(Markup('<strong>Created in the Last</strong> <em>%s</em> <strong>days</strong>') % created_in_the_last_number)
 if include_closed:
 	searched.append(Markup('<strong>Include Closed and Cancelled Requests</strong>'))
-
 %>
 
 %if searched:
@@ -31,16 +33,16 @@ if include_closed:
 		%endfor
 		</ul>
 	%endif
+%endif
 
+%if not include_closed:
+<p class="small-note">Closed and Cancelled enhancements are not included in this list.</p>
 %endif
 
 %if results:
 
 <p>There are <strong>${len(results)}</strong> enhancements(s) that match your criteria. 
 <br>Click on the enhancement name to view the full details of the enhancement.</p>
-%if not include_closed:
-<p class="small-note">Closed and Cancelled enhancements are not included in this list.</p>
-%endif
 <% modules = [('CIC', 'Community Information'),('VOL', 'Volunteer Opportunities'),('TRACKER', 'Client Tracker'),('OFFLINE','Offline Tools'),('ENHANCEMENT','Feature Request Database'),('COMMUNITY','Communities Repository')] %>
 <ol class="results">
 
