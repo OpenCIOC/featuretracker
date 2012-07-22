@@ -55,13 +55,18 @@ def main(global_config, **settings):
 	session_factory = session_factory_from_settings(settings)
 	config = Configurator(settings=settings, session_factory=session_factory)
 
-	config.add_route('enhancement', '/enhancement/{id:\d+}')
-
+	config.add_route('enhancement', 'enhancement/{id:\d+}')
+	config.add_route('enhancementupdate', 'enhancement/{action}')
+	
 	config.add_handler('search_index', '/',
 			handler='featuredb.views.search.Search', action='index')
 
 	config.add_handler('search_results', 'results',
 			handler='featuredb.views.search.Search', action='results')
+
+	config.add_route('report', 'report')
+	config.add_route('suggestions', 'suggestions')
+	config.add_route('concerns', 'concerns')
 
 	#config.add_route('priority', 'priority')
 

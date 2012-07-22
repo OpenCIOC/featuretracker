@@ -21,7 +21,7 @@ _skip_fields = {'ConfirmPassword', 'Password'}
 _fields = [x for x in AccountSchema.fields.keys() if x not in _skip_fields]
 _password_hash_fields = ['PasswordHashRepeat', 'PasswordHashSalt', 'PasswordHash']
 
-class Register(ViewBase):
+class Account(ViewBase):
 
 	@view_config(route_name='account', renderer='account.mak', request_method="POST")
 	def save(self):

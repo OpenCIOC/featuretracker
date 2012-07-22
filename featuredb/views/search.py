@@ -111,6 +111,9 @@ class Search(ViewBase):
 			created_in_the_last_number = data.get('CreatedInTheLastXDays')
 			if created_in_the_last_number:
 				created_in_the_last = date.today()-timedelta(created_in_the_last_number)
+			else:
+				created_in_the_last = None
+				
 			args.append(created_in_the_last)
 			cursor = conn.execute('EXEC dbo.sp_SearchResults %s' % ','.join('?' * len(args)), *args)
 

@@ -276,6 +276,10 @@ textarea {
 	min-height: 25em;
 }
 
+.bold-text {
+	font-weight: bold;
+}
+
 .priority-list .priority {
 	display: block;
 	float: left;
