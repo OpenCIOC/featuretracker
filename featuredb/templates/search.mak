@@ -74,10 +74,18 @@ ${renderer.error_notice()}
 				</td>
 		</tr>
 		<tr>
+			<td class="ui-widget-header">${renderer.label('Release', 'Release')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('Release')}
+				${renderer.select('Release', options=[('','')] + 
+						[(r.RELEASE_ID, r.ReleaseName) for r in releases])}
+				</td>
+		</tr>
+		<tr>
 			<td class="ui-widget-header">${renderer.label('IncludeClosed', 'Closed/Cancelled')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('IncludeClosed')}
-				${renderer.checkbox('IncludeClosed')}&nbsp;<label for="IncludeClosed">Include Closed and Cancelled Requests</label>
+				${renderer.checkbox('IncludeClosed', checked=True)}&nbsp;<label for="IncludeClosed">Include Closed and Cancelled Requests</label>
 				</td>
 		</tr>
 	</table>
