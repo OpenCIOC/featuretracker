@@ -10,7 +10,7 @@ import logging
 log = logging.getLogger('featuredb.views.concerns')
 
 class Report(ViewBase):
-	@view_config(route_name='concerns', renderer='concerns.mak')
+	@view_config(route_name='concerns', renderer='concerns.mak', permission='admin')
 	def index(self):
 		request = self.request
 		user = request.user

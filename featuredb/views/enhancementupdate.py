@@ -37,9 +37,6 @@ class Enhancement(ViewBase):
 	@view_config(route_name='enhancementupdate', match_param='action=edit', renderer='enhancementupdate.mak', request_method="POST", permission='admin')
 	def save(self):
 		request = self.request
-		user = request.user
-		
-		#if not (user.TechAdmin):
 		
 		action = request.matchdict.get('action')
 		is_add = action == 'add'
@@ -66,29 +63,33 @@ class Enhancement(ViewBase):
 	@view_config(route_name='enhancementupdate', match_param='action=edit', renderer='enhancementupdate.mak', permission='admin')
 	def edit(self):
 		request = self.request
-		user = request.user
+		
+		action = request.matchdict.get('action')
+		is_add = action == 'add'
+		
+		validator = validators.IntID(not_empty=not is_add)
+		
+		enhancement = None
+		
+		if not is_add:
+			try:
+				ID = validator.to_python(request.params.get('ID'))
+			except validators.Invalid:
+				self.model_state.add_error_for('*', 'Invalid ID')
 
-		#if not (user.TechAdmin):
+			with self.request.connmgr.get_connection() as conn:
+				cursor = conn.execute('EXEC sp_Enhancement_Form ?', ID)
+	
+				enhancement = cursor.fetchone()
+				
+				if not enhancement:
+					self.model_state.add_error_for('*', 'No enhancement with ID %d' % ID)
+				else:
+					self.model_state.form.data = get_row_dict(enhancement)
+	
+				cursor.close()
 
-		members = []
-		agencies = []
-		with self.request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC sp_Enhancement_Form ?', self.request.user.Email)
-
-			user = cursor.fetchone()
-
-			cursor.nextset()
-
-			members = map(tuple,cursor.fetchall())
-
-			cursor.nextset()
-
-			agencies = [(code, title or code) for code,title in cursor.fetchall()]
-
-			cursor.close()
-			
-
-		return {'agencies': agencies, 'members': members, 'user': user}
+		return dict(is_add=is_add, enhancement=enhancement)
 
 
 

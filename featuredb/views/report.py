@@ -11,7 +11,7 @@ class Report(ViewBase):
 		request = self.request
 		
 		with request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC dbo.sp_Reporting ?', request.user.Email)
+			cursor = conn.execute('EXEC dbo.sp_Reporting ?', request.user and request.user.Email)
 
 			priorities = cursor.fetchall()
 

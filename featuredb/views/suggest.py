@@ -21,7 +21,7 @@ class SuggestionSchema(Schema):
 
 class Suggest(ViewBase):
 
-	@view_config(route_name='suggest', renderer='suggest.mak', request_method="POST")
+	@view_config(route_name='suggest', renderer='suggest.mak', request_method="POST", permission='loggedin')
 	def save(self):
 		request = self.request
 
@@ -51,7 +51,7 @@ class Suggest(ViewBase):
 		request.session.flash('Thank you for your suggestion')
 		raise HTTPFound(location=request.route_url('search_index'))
 		
-	@view_config(route_name='suggest', renderer='suggest.mak')
+	@view_config(route_name='suggest', renderer='suggest.mak', permission='loggedin')
 	def index(self):
 
 		return {}
