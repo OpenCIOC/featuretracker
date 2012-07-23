@@ -67,3 +67,9 @@ class Login(ViewBase):
 
 		return HTTPFound(location=request.route_url('login'))
 
+	
+	@view_config(context='pyramid.httpexceptions.HTTPForbidden', renderer="accessdenied.mak", permission=NO_PERMISSION_REQUIRED, custom_predicates=[lambda c,r: not not r.user])
+	def access_denied(self):
+		self.model_state.add_error_for('*', 'You do not have permission to view this page.')
+		return {}
+
