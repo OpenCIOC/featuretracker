@@ -23,7 +23,7 @@ _password_hash_fields = ['PasswordHashRepeat', 'PasswordHashSalt', 'PasswordHash
 
 class Account(ViewBase):
 
-	@view_config(route_name='account', renderer='account.mak', request_method="POST", permission='user')
+	@view_config(route_name='account', renderer='account.mak', request_method="POST", permission='loggedin')
 	def save(self):
 		request = self.request
 
@@ -66,7 +66,7 @@ class Account(ViewBase):
 		request.session.flash('Account updated.')
 		raise HTTPFound(location=request.route_url('account'))
 		
-	@view_config(route_name='account', renderer='account.mak', permission='user')
+	@view_config(route_name='account', renderer='account.mak', permission='loggedin')
 	def index(self):
 		#request = self.request
 		edit_info = self._get_edit_info()
