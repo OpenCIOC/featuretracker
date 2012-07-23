@@ -20,6 +20,9 @@ ${request.model_state.renderer.error_notice()}
 %else:
 <div class="enhancement">
 <h2 class="ui-state-default ui-corner-all clearfix">
+%if request.user.TechAdmin:
+<a href="${request.route_path('enhancementupdate',action='edit',_query=dict(ID=enhancement.ID))}"><span class="edit-icon" title="Edit Enhancement"></span></a>
+%endif
 <span class="module-icons">
 %for module in enhancement.Modules:
 <span class="module-icon module-icon-${module['ModuleCode'].lower()}" title="${module['ModuleName']}"></span>
@@ -27,20 +30,29 @@ ${request.model_state.renderer.error_notice()}
 </span>
 #${enhancement.ID} ${enhancement.Title}
 </h2>
-<%doc>
-<ul class="modules clearfix">
-<li class="title">Modules:</li>
-%for module in enhancement.Modules:
-<li><a href="${request.route_url('search_results', _query=[('Module', module['MODULE_ID'])])}">${module['ModuleName']}</a></li>
-%endfor
-</ul>
-</%doc>
+
 <div class="enhancement-status-row clearfix">
-<dl> <dt>Priority</dt><dd class="${enhancement.SysPriority['PriorityCode'].lower().replace(' ', '-')}-text">${enhancement.SysPriority['PriorityName']}</dd></dl>
+<dl>
+	<dt>Priority</dt>
+	<dd class="${enhancement.SysPriority['PriorityCode'].lower().replace(' ', '-')}-text">${enhancement.SysPriority['PriorityName']}</dd>
+</dl>
 
 <dl><dt>Estimate</dt><dd>${enhancement.CostRange}</dd></dl>
 
 <dl><dt>Status</dt><dd>${enhancement.Status}</dd></dl>
+
+<dl>
+	<dt>Ranked by</dt>
+	<dd>${enhancement.RankedByUsers} Users</dd>
+	<dd>${enhancement.RankedByMembers} Members</dd>
+</dl>
+
+%if enhancement.AvgRating:
+<dl>
+	<dt>Avg. User Priority</dt>
+	<dd class="${enhancement.AvgRating['PriorityCode'].lower().replace(' ', '-')}-text">${enhancement.AvgRating['PriorityName']}</dd>
+</dl>
+%endif
 
 <dl><dt>Modules</dt>
 %for module in enhancement.Modules:

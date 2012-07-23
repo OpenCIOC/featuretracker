@@ -45,7 +45,7 @@ class Search(ViewBase):
 		user_priorities = []
 		user_cart = {}
 		with request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC dbo.sp_SearchPage ?', request.user and request.user.Email)
+			cursor = conn.execute('EXEC dbo.sp_Search_Page ?', request.user and request.user.Email)
 
 			keywords =  cursor.fetchall()
 
@@ -115,7 +115,7 @@ class Search(ViewBase):
 				created_in_the_last = None
 				
 			args.append(created_in_the_last)
-			cursor = conn.execute('EXEC dbo.sp_SearchResults %s' % ','.join('?' * len(args)), *args)
+			cursor = conn.execute('EXEC dbo.sp_Search_Results %s' % ','.join('?' * len(args)), *args)
 
 			searched_for = cursor.fetchone()
 

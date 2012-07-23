@@ -68,11 +68,11 @@ class Priority(ViewBase):
 		with request.connmgr.get_connection() as conn:
 			sql = '''Declare @RC int, @ErrMsg nvarchar(500), @Email varchar(60)
 					SET @Email = ?
-					 EXEC @RC = sp_UpdateUserPriorities @Email, ?, @ErrMsg OUTPUT
+					 EXEC @RC = sp_User_Priorities_Update @Email, ?, @ErrMsg OUTPUT
 
 					 SELECT @RC AS [Return], @ErrMsg AS ErrMsg
 					 
-					 EXEC sp_UserCart @Email '''
+					 EXEC sp_User_Cart @Email '''
 			cursor = conn.execute(sql, request.user.Email, xml)
 			
 			result = cursor.fetchone()

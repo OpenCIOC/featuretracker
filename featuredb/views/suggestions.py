@@ -11,7 +11,7 @@ class Suggestions(ViewBase):
 		request = self.request
 		
 		with request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC dbo.sp_Suggestion')
+			cursor = conn.execute('EXEC dbo.sp_Suggest_List')
 
 			suggestions = cursor.fetchall()
 

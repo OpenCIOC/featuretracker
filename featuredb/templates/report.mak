@@ -17,12 +17,13 @@ from markupsafe import Markup
 	<th class="ui-widget-header">Module(s)</th>
 	<th class="ui-widget-header">Est. Cost</th>
 	<th class="ui-widget-header">CIOC Priority</th>
-	<th class="ui-widget-header">Ranked by # Members</th>
-	<th class="ui-widget-header">Ranked by # Users</th>
-	<th class="ui-widget-header">Times in User Top 50</th>
+	<th class="ui-widget-header">Avg. Priority</th>
 %if request.user:
 	<th class="ui-widget-header">My Priority</th>
 %endif
+	<th class="ui-widget-header">Ranked by # Members</th>
+	<th class="ui-widget-header">Ranked by # Users</th>
+	<th class="ui-widget-header">Times in User Top 50</th>
 </tr>
 
 %for result in results:
@@ -41,13 +42,16 @@ from markupsafe import Markup
 <td>${result.CostRange}</td>
 <% priority = priority_map[result.SysPriority] %>
 <td><span class="${priority.PriorityCode.lower().replace(' ', '-')}-text">${priority.PriorityName}</span></td>
-<td>${result.TimesRankedByMemberTotal}</td>
-<td>${result.TimesRankedByUserTotal}</td>
-<td>${result.TimesTop50}</td>
+<% priority = priority_map[result.AvgPriority] %>
+<td><span class="${priority.PriorityCode.lower().replace(' ', '-')}-text">${priority.PriorityName}</span></td>
 %if request.user:
 <% priority = priority_map[result.UserPriority] %>
 <td><span class="${priority.PriorityCode.lower().replace(' ', '-')}-text bold-text">${priority.PriorityName}</span></td>
 %endif
+<td>${result.TimesRankedByMemberTotal}</td>
+<td>${result.TimesRankedByUserTotal}</td>
+<td>${result.TimesTop50}</td>
+
 
 </tr>
 %endfor

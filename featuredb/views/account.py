@@ -49,7 +49,7 @@ class Account(ViewBase):
 		with request.connmgr.get_connection() as conn:
 			sql = '''
 				Declare @RC int, @ErrMsg nvarchar(500)
-				EXEC @RC = sp_UpdateAccount ?, %s, @ErrMsg=@ErrMsg OUTPUT
+				EXEC @RC = sp_User_Update ?, %s, @ErrMsg=@ErrMsg OUTPUT
 
 				SELECT @RC AS [Return], @ErrMsg AS ErrMsg''' % kwargs
 			result = conn.execute(sql, request.user.Email, *args).fetchone()
@@ -80,7 +80,7 @@ class Account(ViewBase):
 		members = []
 		agencies = []
 		with self.request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC sp_Account_Form ?', self.request.user.Email)
+			cursor = conn.execute('EXEC sp_User_Form ?', self.request.user.Email)
 
 			user = cursor.fetchone()
 

@@ -46,7 +46,7 @@ class Enhancement(ViewBase):
 		user_priorities = []
 		user_cart = {}
 		with request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC dbo.sp_EnhancementDetail ?, ?', request.user and request.user.Email, enh_id)
+			cursor = conn.execute('EXEC dbo.sp_Enhancement_Detail ?, ?', request.user and request.user.Email, enh_id)
 
 			enhancement = cursor.fetchone()
 			if request.user:
@@ -68,6 +68,7 @@ class Enhancement(ViewBase):
 
 		enhancement.SysPriority = _priority_xml_to_dict(enhancement.SysPriority)
 		enhancement.UserPriority = _priority_xml_to_dict(enhancement.UserPriority)
+		enhancement.AvgRating = _priority_xml_to_dict(enhancement.AvgRating)
 		enhancement.Modules = _xml_to_dict_list(enhancement.Modules)
 		enhancement.Keywords = _xml_to_dict_list(enhancement.Keywords)
 		enhancement.SeeAlsos = _xml_to_dict_list(enhancement.SeeAlsos)

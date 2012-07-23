@@ -535,6 +535,15 @@ span.ui-icon.menu-icon {
 	float: left; margin-right: .3em; margin-top: .025em; vertical-align: bottom;
 }
 
+.edit-icon {
+  background: url('../img/edit-icon.gif');
+  width: 17px; height: 17px;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: baseline;
+  margin-top: 2px;
+}
+
 .module-icon {
   display: inline-block;
   overflow: hidden;
