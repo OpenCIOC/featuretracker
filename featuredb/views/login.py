@@ -58,7 +58,7 @@ class Login(ViewBase):
 	def index(self):
 		return {}
 
-	@view_config(route_name='logout', permission='view')
+	@view_config(route_name='logout', permission=NO_PERMISSION_REQUIRED)
 	def logout(self):
 		request = self.request
 

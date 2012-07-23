@@ -40,7 +40,7 @@ class RootFactory(object):
 	def __acl__(self):
 		request = self.request
 
-		acl = [(Allow, 'group:TechAmdin', ('view', 'edit', 'public')), (Allow, Authenticated, ('view', 'public'))]
+		acl = [(Allow, 'group:TechAmdin', ('loggedin', 'admin', 'public')), (Allow, Authenticated, ('loggedin', 'public'))]
 
 		has_bypass = False
 		if not request.user:
