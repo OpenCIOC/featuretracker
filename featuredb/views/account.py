@@ -1,7 +1,7 @@
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 
-from featuredb import security
+from featuredb.lib import security
 from featuredb.views.base import ViewBase, get_row_dict
 from featuredb.views import validators, register
 
@@ -23,7 +23,7 @@ _password_hash_fields = ['PasswordHashRepeat', 'PasswordHashSalt', 'PasswordHash
 
 class Account(ViewBase):
 
-	@view_config(route_name='account', renderer='account.mak', request_method="POST")
+	@view_config(route_name='account', renderer='account.mak', request_method="POST", permission='user')
 	def save(self):
 		request = self.request
 
@@ -52,7 +52,7 @@ class Account(ViewBase):
 				EXEC @RC = sp_UpdateAccount ?, %s, @ErrMsg=@ErrMsg OUTPUT
 
 				SELECT @RC AS [Return], @ErrMsg AS ErrMsg''' % kwargs
-			result = conn.execute(sql, request.user, *args).fetchone()
+			result = conn.execute(sql, request.user.Email, *args).fetchone()
 
 
 		if result.Return:
@@ -66,7 +66,7 @@ class Account(ViewBase):
 		request.session.flash('Account updated.')
 		raise HTTPFound(location=request.route_url('account'))
 		
-	@view_config(route_name='account', renderer='account.mak')
+	@view_config(route_name='account', renderer='account.mak', permission='user')
 	def index(self):
 		#request = self.request
 		edit_info = self._get_edit_info()
@@ -80,7 +80,7 @@ class Account(ViewBase):
 		members = []
 		agencies = []
 		with self.request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC sp_Account_Form ?', self.request.user)
+			cursor = conn.execute('EXEC sp_Account_Form ?', self.request.user.Email)
 
 			user = cursor.fetchone()
 

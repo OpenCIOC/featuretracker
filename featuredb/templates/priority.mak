@@ -12,7 +12,7 @@ def group_priorities(user_priorities):
 %>
 
 <%block name="priority_mgmt">
-%if request.user and user_priorities is not Undefined:
+%if request.user and context.get('user_priorities') is not None:
 <div id="priority-mgmt" class="col2" style="position">
 
 <h1>My Enhancements</h1>
@@ -20,6 +20,11 @@ def group_priorities(user_priorities):
 <br>Click the info icon to view the enhancement.
 <br>Click the remove icon to reset to neutral priority.
 <br>List does not include funded, closed, or cancelled items.</p>
+<%
+cart = context.get('cart', {})
+user_priorities = context.get('user_priorities', [])
+priorities = context.get('priorities', [])
+%>
 <div id="cart-total" ${'style="display:none;"' if not any(cart.values()) else ''|n}><strong>Total Cost of selections:</strong><br>
 <span id="cart-cost" ${'style="display:none;"' if not any(cart.get(x) for x in ['CostLow','CostHigh','CostAvg']) else ''|n}>$<span id="cost-low">${cart.get('CostLow') or 0}</span> - $<span id="cost-high">${cart.get('CostHigh') or 0}</span> ($<span id="cost-avg">${cart.get('CostAvg') or 0}</span> Avg.)</span><span id="cart-both" ${'style="display:none;"' if not all(cart.values()) else ''|n}>
 <br>+</span><span id="cart-not-estimated" ${'style="display:none;"' if not cart.get('NotEstimated') else ''|n}><span id="cart-none">${cart.get('NotEstimated')}</span> enhancement(s) with no estimate.</span></div>
@@ -47,7 +52,10 @@ def group_priorities(user_priorities):
 </%def>
 
 <%block name="bottomscripts">
-%if request.user and user_priorities is not Undefined:
+<%
+priorities = context.get('priorities', [])
+%>
+%if request.user and context.get('user_priorities') is not None:
 <script type="text/html" id="enhancement-item-tmpl">
 ${enhancement_item('IDIDID', '[TITLE]')}
 </script>
@@ -233,7 +241,7 @@ ${enhancement_item('IDIDID', '[TITLE]')}
 ${next.body()}
 
 <%block name="body_open_tag">
-%if request.user and user_priorities is not Undefined:
+%if request.user and context.get('user_priorities') is not None:
 <body class="priority-sidebar">
 %else:
 ${parent.body_open_tag()}

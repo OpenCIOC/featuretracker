@@ -5,7 +5,7 @@
 <% renderer = request.model_state.renderer %>
 
 ${renderer.error_notice()}
-<form action='' method='post'>
+<form action="${request.route_path('login')}" method='post'>
 <table class="form-table">
 <tr>
 	<td class="ui-widget-header">${renderer.label('email', 'Email:')}</td>

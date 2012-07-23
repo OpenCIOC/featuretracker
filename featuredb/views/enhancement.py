@@ -46,7 +46,7 @@ class Enhancement(ViewBase):
 		user_priorities = []
 		user_cart = {}
 		with request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC dbo.sp_EnhancementDetail ?, ?', request.user, enh_id)
+			cursor = conn.execute('EXEC dbo.sp_EnhancementDetail ?, ?', request.user and request.user.Email, enh_id)
 
 			enhancement = cursor.fetchone()
 			if request.user:

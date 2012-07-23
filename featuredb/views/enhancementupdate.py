@@ -1,9 +1,7 @@
-from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
-from formencode import Schema, ForEach, All, Pipe
+from formencode import Schema, ForEach
 
-from featuredb import security
-from featuredb.views.base import ViewBase, get_row_dict
+from featuredb.views.base import ViewBase
 from featuredb.views import validators
 
 import logging
@@ -35,8 +33,8 @@ class EnhancementSchema(Schema):
 
 class Enhancement(ViewBase):
 
-	@view_config(route_name='enhancementupdate', match_param='action=add', renderer='enhancementupdate.mak', request_method="POST")
-	@view_config(route_name='enhancementupdate', match_param='action=edit', renderer='enhancementupdate.mak', request_method="POST")
+	@view_config(route_name='enhancementupdate', match_param='action=add', renderer='enhancementupdate.mak', request_method="POST", permission='edit')
+	@view_config(route_name='enhancementupdate', match_param='action=edit', renderer='enhancementupdate.mak', request_method="POST", permission='edit')
 	def save(self):
 		request = self.request
 		user = request.user
@@ -64,8 +62,8 @@ class Enhancement(ViewBase):
 		args.extend(model_state.value(k) for k in ('Title','SYS_PRIORITY','SYS_ESTIMATE','SYS_STATUS','SYS_FUNDER','BasicDescription','AdditionalNotes','SYS_SOURCETYPE','SourceDetail'))
 		args.extend(','.join(model_state.value(k)) for k in ('Modules','Keywords','Releases','SeeAlso'))
 		
-	@view_config(route_name='enhancementupdate', match_param='action=add', renderer='enhancementupdate.mak')
-	@view_config(route_name='enhancementupdate', match_param='action=edit', renderer='enhancementupdate.mak')
+	@view_config(route_name='enhancementupdate', match_param='action=add', renderer='enhancementupdate.mak', permission='edit')
+	@view_config(route_name='enhancementupdate', match_param='action=edit', renderer='enhancementupdate.mak', permission='edit')
 	def edit(self):
 		request = self.request
 		user = request.user
@@ -75,7 +73,7 @@ class Enhancement(ViewBase):
 		members = []
 		agencies = []
 		with self.request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC sp_Enhancement_Form ?', self.request.user)
+			cursor = conn.execute('EXEC sp_Enhancement_Form ?', self.request.user.Email)
 
 			user = cursor.fetchone()
 

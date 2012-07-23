@@ -1,15 +1,11 @@
-from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
-from pyramid_handlers import action
-from formencode import Schema
 
-from featuredb.views.base import ViewBase, get_row_dict
-from featuredb.views import validators
+from featuredb.views.base import ViewBase
 
 import logging
 log = logging.getLogger('featuredb.views.suggestions')
 
-class Report(ViewBase):
+class Suggestions(ViewBase):
 	@view_config(route_name='suggestions', renderer='suggestions.mak')
 	def index(self):
 		request = self.request

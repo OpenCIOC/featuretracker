@@ -1,4 +1,4 @@
-from featuredb import modelstate
+from featuredb.lib import modelstate
 
 class ViewBase(object):
 	__autoexpose__ = None

@@ -1,12 +1,17 @@
+#stdlib
+import logging
+
+#3rd party
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
+from pyramid.security import NO_PERMISSION_REQUIRED
 from formencode import Schema, All, Pipe
 
-from featuredb import security
+#this app
+from featuredb.lib import security
 from featuredb.views.base import ViewBase
 from featuredb.views import validators
 
-import logging
 log = logging.getLogger('featuredb.views.register')
 
 
@@ -39,7 +44,7 @@ _password_hash_fields = ['PasswordHashRepeat', 'PasswordHashSalt', 'PasswordHash
 
 class Register(ViewBase):
 
-	@view_config(route_name='register', renderer='register.mak', request_method="POST")
+	@view_config(route_name='register', renderer='register.mak', request_method="POST", permission=NO_PERMISSION_REQUIRED)
 	def save(self):
 		request = self.request
 
@@ -84,7 +89,7 @@ class Register(ViewBase):
 		request.session.flash('Thanks for registering.')
 		raise HTTPFound(location=request.route_url('search_index'))
 		
-	@view_config(route_name='register', renderer='register.mak')
+	@view_config(route_name='register', renderer='register.mak', permission=NO_PERMISSION_REQUIRED)
 	def index(self):
 		#request = self.request
 

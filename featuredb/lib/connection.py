@@ -8,9 +8,9 @@
 import pyodbc
 
 class ConnectionManager(object):
-	def __init__(self, request, config):
+	def __init__(self, request):
 		self.request = request
-		self.config= config
+		self.config= request.config
 
 		
 	def get_connection_string(self):

@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
+from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
-from pyramid_handlers import action
 from formencode import Schema
 
 from featuredb.views.base import ViewBase, get_row_dict
@@ -39,13 +39,13 @@ field_order =  [
 	]
 
 class Search(ViewBase):
-	@action(renderer='search.mak')
+	@view_config(route_name="search_index", renderer='search.mak')
 	def index(self):
 		request = self.request
 		user_priorities = []
 		user_cart = {}
 		with request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC dbo.sp_SearchPage ?', request.user)
+			cursor = conn.execute('EXEC dbo.sp_SearchPage ?', request.user and request.user.Email)
 
 			keywords =  cursor.fetchall()
 
@@ -79,7 +79,7 @@ class Search(ViewBase):
 			  cart=user_cart)
 
 
-	@action(renderer='results.mak')
+	@view_config(route_name='search_results', renderer='results.mak')
 	def results(self):
 		request = self.request
 		model_state = request.model_state
@@ -105,7 +105,7 @@ class Search(ViewBase):
 
 		with request.connmgr.get_connection() as conn:
 
-			args = [request.user] 
+			args = [request.user and request.user.Email] 
 			args.extend(data.get(f) for f in field_order)
 
 			created_in_the_last_number = data.get('CreatedInTheLastXDays')

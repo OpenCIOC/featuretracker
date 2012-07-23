@@ -1,10 +1,6 @@
-from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
-from pyramid_handlers import action
-from formencode import Schema
 
-from featuredb.views.base import ViewBase, get_row_dict
-from featuredb.views import validators
+from featuredb.views.base import ViewBase
 
 import logging
 log = logging.getLogger('featuredb.views.report')
@@ -15,7 +11,7 @@ class Report(ViewBase):
 		request = self.request
 		
 		with request.connmgr.get_connection() as conn:
-			cursor = conn.execute('EXEC dbo.sp_Reporting ?', request.user)
+			cursor = conn.execute('EXEC dbo.sp_Reporting ?', request.user.Email)
 
 			priorities = cursor.fetchall()
 

@@ -73,7 +73,7 @@ class Priority(ViewBase):
 					 SELECT @RC AS [Return], @ErrMsg AS ErrMsg
 					 
 					 EXEC sp_UserCart @Email '''
-			cursor = conn.execute(sql, request.user, xml)
+			cursor = conn.execute(sql, request.user.Email, xml)
 			
 			result = cursor.fetchone()
 
@@ -99,8 +99,8 @@ class Priority(ViewBase):
 			return {}
 
 		with request.connmgr.get_connection() as conn:
-			priorities = conn.execute('EXEC sp_UserPriorities ?', request.user).fetchall()
-			user_cart = conn.execute('EXEC sp_UserCart ?', request.user).fetchone()
+			priorities = conn.execute('EXEC sp_UserPriorities ?', request.user.Email).fetchall()
+			user_cart = conn.execute('EXEC sp_UserCart ?', request.user.Email).fetchone()
 
 		
 		priorities = {k: map(_get_dict, g) for k,g in groupby(priorities, attrgetter('PRIORITY_ID'))}
