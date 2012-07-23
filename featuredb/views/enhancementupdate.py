@@ -1,7 +1,7 @@
 from pyramid.view import view_config
 from formencode import Schema, ForEach
 
-from featuredb.views.base import ViewBase
+from featuredb.views.base import ViewBase, get_row_dict, ErrorPage
 from featuredb.views import validators
 
 import logging
@@ -75,7 +75,7 @@ class Enhancement(ViewBase):
 			try:
 				ID = validator.to_python(request.params.get('ID'))
 			except validators.Invalid:
-				self.model_state.add_error_for('*', 'Invalid ID')
+				raise ErrorPage('Update Enhancement', 'Invalid ID')
 
 			with self.request.connmgr.get_connection() as conn:
 				cursor = conn.execute('EXEC sp_Enhancement_Form ?', ID)
