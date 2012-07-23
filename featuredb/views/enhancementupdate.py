@@ -1,7 +1,7 @@
 from pyramid.view import view_config
 from formencode import Schema, ForEach
 
-from featuredb.views.base import ViewBase
+from featuredb.views.base import ViewBase, get_row_dict
 from featuredb.views import validators
 
 import logging
