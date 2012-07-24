@@ -20,7 +20,7 @@ ${request.model_state.renderer.error_notice()}
 %else:
 <div class="enhancement">
 <h2 class="ui-state-default ui-corner-all clearfix">
-%if request.user.TechAdmin:
+%if request.user and request.user.TechAdmin:
 <a href="${request.route_path('enhancementupdate',action='edit',_query=dict(ID=enhancement.ID))}"><span class="edit-icon" title="Edit Enhancement"></span></a>
 %endif
 <span class="module-icons">
