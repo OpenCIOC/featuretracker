@@ -23,7 +23,7 @@ from markupsafe import Markup
 %endif
 	<th class="ui-widget-header">Ranked by # Members</th>
 	<th class="ui-widget-header">Ranked by # Users</th>
-	<th class="ui-widget-header">Times in User Top 50</th>
+	<th class="ui-widget-header">Times in User Top 30</th>
 </tr>
 
 %for result in results:
@@ -50,7 +50,7 @@ from markupsafe import Markup
 %endif
 <td>${result.TimesRankedByMemberTotal}</td>
 <td>${result.TimesRankedByUserTotal}</td>
-<td>${result.TimesTop50}</td>
+<td>${result.TimesTop30}</td>
 
 
 </tr>
