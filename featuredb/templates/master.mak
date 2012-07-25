@@ -118,3 +118,37 @@
 	
 </body>
 </html>
+
+<%def name="makeMgmtInfo(model, show_created=True, show_modified=True)">
+<% _ = lambda x: x %>
+%if show_created:
+<%
+	created_date = getattr(model, 'CREATED_DATE', None)
+	created_by = getattr(model, 'CREATED_BY', None) or _('Unknown')
+%>
+<tr>
+    <td class="ui-widget-header field">${_('Date Created')}</td>
+    <td class="ui-widget-content">${request.format_date(created_date) if created_date else _('Unknown')} (${_('set automatically')})</td>
+</tr>
+<tr>
+    <td class="ui-widget-header field">${_('Created By')}</td>
+    <td class="ui-widget-content">${created_by} (${_('set automatically')})</td>
+</tr>
+
+%endif
+%if show_modified:
+<%
+	modified_date = getattr(model, 'MODIFIED_DATE', None)
+	modified_by = getattr(model, 'MODIFIED_BY', None) or _('Unknown')
+%>
+<tr>
+    <td class="ui-widget-header field">${_('Last Modified')}</td>
+    <td class="ui-widget-content">${request.format_date(modified_date) if modified_date else _('Unknown')} (${_('set automatically')})</td>
+</tr>
+<tr>
+    <td class="ui-widget-header field">${_('Last Modified By')}</td>
+    <td class="ui-widget-content">${modified_by} (${_('set automatically')})</td>
+</tr>
+
+%endif
+</%def>

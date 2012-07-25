@@ -263,7 +263,7 @@ h1,h2,h3,h4,h5 {
 	margin: 0 1em;
 }
 
-.url, .email, .text, .password, textarea, select {
+.url, .email, .text, .widetext, .password, textarea, select {
 	width: 20em;
 }
 
@@ -274,6 +274,15 @@ h1,h2,h3,h4,h5 {
 textarea {
 	min-width: 30em;
 	min-height: 25em;
+}
+
+.textwide {
+	width: 30em;
+}
+
+.smalltextarea {
+	min-width: 30em;
+	min-height: 10em;
 }
 
 .bold-text {
@@ -720,6 +729,14 @@ span.ui-icon.menu-icon {
 		min-height: 25em;
 	}
 
+	.textwide {
+		width: 30em;
+	}
+	.smalltextarea {
+		min-width: 30em;
+		min-height: 10em;
+	}
+
 }
 
 @media only screen and (max-width: 400px) {
@@ -732,6 +749,13 @@ span.ui-icon.menu-icon {
 
 	.col2 {
 		width: 18em;
+	}
+
+	.textwide {
+		width: 18em;
+	}
+	textarea, .smalltextarea {
+		min-width: 18em;
 	}
 
 }
