@@ -66,6 +66,10 @@ def main(global_config, **settings):
 	"""
 
 	const.update_cache_values()
+
+	settings['mako.imports'] = ['from markupsafe import escape_silent']
+	settings['mako.default_filters'] = ['escape_silent']
+
 	session_factory = session_factory_from_settings(settings)
 
 	authn_policy = SessionAuthenticationPolicy(callback=groupfinder)
