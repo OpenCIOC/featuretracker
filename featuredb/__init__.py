@@ -61,28 +61,6 @@ class RootFactory(object):
 	def __init__(self, request):
 		self.request = request
 
-def on_context_found(event):
-	request = event.request
-
-	if request.user:
-		return
-
-	if not request.matched_route or request.matched_route.name in {'login', 'register'} or \
-		request.matched_route.name.startswith('debugtoolbar.') or \
-		request.matched_route.name.startswith('__'):
-		# always available
-		return
-
-	if request.params.get('bypass_login'):
-		request.session['bypass_login'] = True
-		return
-
-	if request.session.get('bypass_login'):
-		return
-
-	raise HTTPFound(location=request.route_url('login'))
-
-
 def main(global_config, **settings):
 	""" This function returns a Pyramid WSGI application.
 	"""
@@ -90,7 +68,7 @@ def main(global_config, **settings):
 	const.update_cache_values()
 	session_factory = session_factory_from_settings(settings)
 
-	authn_policy = SessionAuthenticationPolicy(callback=groupfinder, debug=True)
+	authn_policy = SessionAuthenticationPolicy(callback=groupfinder)
 	authz_policy = ACLAuthorizationPolicy()
 
 	config = Configurator(settings=settings, session_factory=session_factory,
