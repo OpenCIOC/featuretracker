@@ -87,6 +87,7 @@ def main(global_config, **settings):
 
 	config.add_route('report', 'report')
 	config.add_route('suggestions', 'suggestions')
+	config.add_route('suggestion_delete', 'suggestions/delete')
 	config.add_route('concerns', 'concerns')
 
 	#config.add_route('priority', 'priority')

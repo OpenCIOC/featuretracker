@@ -25,8 +25,7 @@ from markupsafe import Markup
 <td>${suggestion.OrgName}</td>
 <td>${suggestion.Suggestion}</td>
 <td>
-<a href="">Create</a>
-<br><a href="">Delete</a>
+<a href="${request.route_path('suggestion_delete', _query=[('ID', suggestion.SUGGEST_ID)])}">Delete</a>
 </td>
 </tr>
 %endfor
