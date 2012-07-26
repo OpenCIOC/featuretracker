@@ -16,7 +16,7 @@ from markupsafe import Markup
 
 %for suggestion in suggestions:
 <tr>
-<td style="white-space:nowrap;">${suggestion.DateSuggested}</td>
+<td style="white-space:nowrap;">${request.format_date(suggestion.DateSuggested)}</td>
 <td><a href="mailto:${suggestion.Email}">${suggestion.Email}</a>
 %if suggestion.UserName:
 <br>(${suggestion.UserName})
