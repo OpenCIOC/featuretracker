@@ -91,7 +91,14 @@
 
     </div>
     <footer>
-
+	<% email_messages = request.session.pop_flash('email_messages') %>
+	%if email_messages:
+			<div>
+		%for message in email_messages:
+				${message}
+		%endfor
+			</div>
+	%endif
     </footer>
   </div> <!--! end of #container -->
   </div>
