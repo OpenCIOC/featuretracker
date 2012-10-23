@@ -131,7 +131,8 @@ if not request.user:
 <h2 class="ui-state-default ui-corner-all search-type">Browse by Keyword</h2>
 ${closed_note()}
 <table class="ui-widget-content browse-table">
-%for group in grouper(min([len(keywords),3]), keywords):
+<% keywords_tmp = [x for x in keywords if x.EnhancementCount] %>
+%for group in grouper(min([len(keywords_tmp),3]), keywords_tmp):
 	<tr>
 	%for keyword in group:
 		<td class="ui-widget-content">
@@ -147,7 +148,8 @@ ${closed_note()}
 <h2 class="ui-state-default ui-corner-all search-type">Browse by Estimate</h2>
 ${closed_note()}
 <table class="ui-widget-content browse-table">
-%for group in grouper(min([len(estimates),3]), estimates):
+<% tmp_estimates = [x for x in estimates if x.EnhancementCount] %>
+%for group in grouper(min([len(tmp_estimates),3]), tmp_estimates):
 	<tr>
 	%for estimate in group:
 		<td class="ui-widget-content">
