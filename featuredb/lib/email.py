@@ -22,30 +22,34 @@ log = logging.getLogger(__name__)
 
 _mailer = None
 
+
 class DummyMailer(object):
 	def __init__(self, request):
 		self.request = request
 
 	def send(self, message):
-		markup = Markup(''' <p>Sending Email...<br><br>
-							  <strong>From:</strong> %s<br><br>
-							  <strong>To:</strong> %s<br><br>
-							  <strong>Reply-To:</strong> %s<br><br>
-							  <strong>Subject:</strong> %s<br><br>
-							  <strong>Message:</strong><br>%s</p>''') % (
-								  message.author, ', '.join(unicode(x) for x in message.to), message.reply or '', 
-								  message.subject, escape_silent(message.plain)
-									  .replace('\n', Markup('<br>'))
-									  .replace('\r', ''))
+		markup = Markup('''\
+					<p>Sending Email...<br><br>
+					<strong>From:</strong> %s<br><br>
+					<strong>To:</strong> %s<br><br>
+					<strong>Reply-To:</strong> %s<br><br>
+					<strong>Subject:</strong> %s<br><br>
+					<strong>Message:</strong><br>%s</p>''') % (
+						message.author, ', '.join(unicode(x) for x in message.to), message.reply or '',
+						message.subject, escape_silent(message.plain)
+						.replace('\n', Markup('<br>'))
+						.replace('\r', ''))
 		log.debug('Sending email %s', markup)
 		self.request.session.flash(markup, 'email_messages')
+
 
 class DummyMailerFactory(object):
 	def __call__(self, request):
 		return DummyMailer(request)
 
+
 class RealMailerFactory(object):
-	def __init__(self,host):
+	def __init__(self, host):
 		transport = {
 			'use': 'smtp',
 			'host': host,
@@ -55,17 +59,19 @@ class RealMailerFactory(object):
 
 		log.debug('transport host: %s', host)
 
-		transport = {k:v for k,v in transport.iteritems() if v}
+		transport = {k: v for k, v in transport.iteritems() if v}
 		mailer = self.mailer = Mailer({
 			'transport': transport,
-			'manager': { 'use': 'immediate' }
+			'manager': {'use': 'immediate'}
 		})
 		mailer.start()
 
 	def __call__(self, request):
 		return self.mailer
-	
+
 _mailer_factory = None
+
+
 def _get_mailer(request):
 	global _mailer_factory
 
@@ -79,6 +85,7 @@ def _get_mailer(request):
 
 	return _mailer_factory(request)
 
+
 def send_email(request, author, to, subject, message, reply=None):
 	if not isinstance(to, (list, tuple)):
 		to = [to]
@@ -91,4 +98,3 @@ def send_email(request, author, to, subject, message, reply=None):
 		args['reply'] = unicode(reply)
 	message = Message(**args)
 	mailer.send(message)
-
