@@ -13,13 +13,15 @@ class AccountSchema(register.UserDataSchema):
 	Password = validators.String()
 	ConfirmPassword = validators.String()
 
+	EmailOnNew = validators.Bool()
+	EmailOnUpdate = validators.Bool()
 
-	chained_validators = [validators.FieldsMatch('Password', 'ConfirmPassword')
-						  ]
+	chained_validators = [validators.FieldsMatch('Password', 'ConfirmPassword')]
 
 _skip_fields = {'ConfirmPassword', 'Password'}
 _fields = [x for x in AccountSchema.fields.keys() if x not in _skip_fields]
 _password_hash_fields = ['PasswordHashRepeat', 'PasswordHashSalt', 'PasswordHash']
+
 
 class Account(ViewBase):
 
@@ -28,7 +30,7 @@ class Account(ViewBase):
 		request = self.request
 
 		model_state = self.model_state
-		
+
 		model_state.schema = AccountSchema()
 
 		if not model_state.validate():
@@ -41,7 +43,7 @@ class Account(ViewBase):
 		if password:
 			salt = security.MakeSalt()
 			hash = security.Crypt(salt, model_state.value('Password'))
-			hash_args =  [security.DEFAULT_REPEAT, salt, hash]
+			hash_args = [security.DEFAULT_REPEAT, salt, hash]
 
 		args = [model_state.value(x) for x in _fields] + hash_args
 		kwargs = ', '.join(x.join(('@', '=?')) for x in _fields + _password_hash_fields)
@@ -54,18 +56,16 @@ class Account(ViewBase):
 				SELECT @RC AS [Return], @ErrMsg AS ErrMsg''' % kwargs
 			result = conn.execute(sql, request.user.Email, *args).fetchone()
 
-
 		if result.Return:
 			log.debug('Other Error: %s', result.ErrMsg)
 			request.errors = tuple(result)
 			model_state.add_error_for('*', result.ErrMsg)
 			return self._get_edit_info()
 
-		
 		request.session['user'] = model_state.value('Email')
 		request.session.flash('Account updated.')
 		raise HTTPFound(location=request.route_url('account'))
-		
+
 	@view_config(route_name='account', renderer='account.mak', permission='loggedin')
 	def index(self):
 		#request = self.request
@@ -75,7 +75,7 @@ class Account(ViewBase):
 
 		self.model_state.form.data = get_row_dict(edit_info['user'])
 		return edit_info
-	
+
 	def _get_edit_info(self):
 		members = []
 		agencies = []
@@ -86,18 +86,12 @@ class Account(ViewBase):
 
 			cursor.nextset()
 
-			members = map(tuple,cursor.fetchall())
+			members = map(tuple, cursor.fetchall())
 
 			cursor.nextset()
 
-			agencies = [(code, title or code) for code,title in cursor.fetchall()]
+			agencies = [(code, title or code) for code, title in cursor.fetchall()]
 
 			cursor.close()
 
-			
-
 		return {'agencies': agencies, 'members': members, 'user': user}
-
-
-
-
