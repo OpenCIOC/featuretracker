@@ -74,11 +74,29 @@ ${renderer.error_notice()}
 				</td>
 		</tr>
 		<tr>
+			<td class="ui-widget-header">${renderer.label('ModifiedInTheLastXDays', 'Modified')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('ModifiedInTheLastXDays')}
+				Modified in the last
+				<% days = ['', 120, 90, 60, 30, 14, 7, 2, 1] %>
+				${renderer.select('ModifiedInTheLastXDays', options=days, class_='smallselect')}
+				day(s).
+				</td>
+		</tr>
+		<tr>
 			<td class="ui-widget-header">${renderer.label('Release', 'Release')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('Release')}
 				${renderer.select('Release', options=[('','')] + 
 						[(r.RELEASE_ID, r.ReleaseName) for r in releases])}
+				</td>
+		</tr>
+		<tr>
+			<td class="ui-widget-header">${renderer.label('Funder', 'Funder')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('Funder')}
+				${renderer.select('Funder', options=[('','')] + 
+						[(f.FUNDER_ID, f.FunderName) for f in funders])}
 				</td>
 		</tr>
 		<tr>
@@ -168,6 +186,21 @@ ${closed_note()}
 		<td class="ui-widget-content">
 			%if release:
 			<a href="${request.route_url('search_results', _query=[('Release',release[0]), ('IncludeClosed', 'on')])}">${release.ReleaseName} (${release.EnhancementCount})</a>
+			%endif
+		</td>
+	%endfor
+	</tr>
+%endfor
+</table>
+
+<h2 class="ui-state-default ui-corner-all search-type">Browse by Funder</h2>
+<table class="ui-widget-content browse-table">
+%for group in grouper(min([len(funders),3]), funders):
+	<tr>
+	%for funder in group:
+		<td class="ui-widget-content">
+			%if funder:
+			<a href="${request.route_url('search_results', _query=[('Funder',funder[0]), ('IncludeClosed', 'on')])}">${funder.FunderName} (${funder.EnhancementCount})</a>
 			%endif
 		</td>
 	%endfor

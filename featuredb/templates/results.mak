@@ -18,6 +18,8 @@ if fulltext_keywords:
 	searched.insert(0,Markup('<strong>Full-text Search</strong> is <em>%s</em>') % fulltext_keywords)
 if created_in_the_last_number:
 	searched.append(Markup('<strong>Created in the Last</strong> <em>%s</em> <strong>days</strong>') % created_in_the_last_number)
+if modified_in_the_last_number:
+	searched.append(Markup('<strong>Modified in the Last</strong> <em>%s</em> <strong>days</strong>') % modified_in_the_last_number)
 if include_closed:
 	searched.append(Markup('<strong>Include Closed and Cancelled Requests</strong>'))
 %>
@@ -60,7 +62,11 @@ if include_closed:
 </h3>
 
 <p class="status-line status-line1">Module(s): ${result.Modules} ; 
-Status: ${result.Status}</p>
+Status: ${result.Status}
+%if result.Funder:
+ ; Funder: ${result.Funder}
+%endif
+</p>
 
 <p class="status-line status-line2">Last Modified: ${result.LastModified} ; 
 <% priority = priority_map[result.SysPriority] %>

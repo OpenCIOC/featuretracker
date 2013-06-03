@@ -24,7 +24,9 @@ class SearchSchema(Schema):
 	Estimate = validators.Int(min=0, max=32767)
 	IncludeClosed = validators.Bool()
 	CreatedInTheLastXDays = validators.Int(min=1, max=32767)
+	ModifiedInTheLastXDays = validators.Int(min=1, max=32767)
 	Release	= validators.IntID()
+	Funder = validators.IntID()
 	ID = validators.IntID()
 
 field_order =  [
@@ -34,6 +36,7 @@ field_order =  [
 	'Estimate',
 	'SysPriority',
 	'Release',
+	'Funder',
 	'IncludeClosed',
 	'Terms',
 	]
@@ -64,6 +67,10 @@ class Search(ViewBase):
 			cursor.nextset()
 
 			releases = cursor.fetchall()
+			
+			cursor.nextset()
+			
+			funders = cursor.fetchall()
 
 			if request.user:
 				cursor.nextset()
@@ -75,8 +82,8 @@ class Search(ViewBase):
 			cursor.close()
 
 		return dict(keywords=keywords, modules=modules, priorities=priorities,
-			  estimates=estimates, user_priorities=user_priorities, releases=releases, 
-			  cart=user_cart)
+			  estimates=estimates, user_priorities=user_priorities, releases=releases,
+			  funders=funders, cart=user_cart)
 
 
 	@view_config(route_name='search_results', renderer='results.mak')
@@ -113,8 +120,15 @@ class Search(ViewBase):
 				created_in_the_last = date.today()-timedelta(created_in_the_last_number)
 			else:
 				created_in_the_last = None
-				
 			args.append(created_in_the_last)
+				
+			modified_in_the_last_number = data.get('ModifiedInTheLastXDays')
+			if modified_in_the_last_number:
+				modified_in_the_last = date.today()-timedelta(modified_in_the_last_number)
+			else:
+				modified_in_the_last = None
+			args.append(modified_in_the_last)
+			
 			cursor = conn.execute('EXEC dbo.sp_Search_Results %s' % ','.join('?' * len(args)), *args)
 
 			searched_for = cursor.fetchone()
@@ -145,6 +159,7 @@ class Search(ViewBase):
 		request.session['search_ids'] = [x.ID for x in results]
 
 
-		return dict(searched_for=searched_for, priorities=priorities, cart=user_cart,
-			  results=results, user_priorities=user_priorities, priority_map=priority_map,
-			 include_closed=include_closed, fulltext_keywords=fulltext_keywords, created_in_the_last_number=created_in_the_last_number)
+		return dict(searched_for=searched_for, priorities=priorities, cart=user_cart, 
+			 results=results, user_priorities=user_priorities, priority_map=priority_map, 
+			 include_closed=include_closed, fulltext_keywords=fulltext_keywords, 
+			 created_in_the_last_number=created_in_the_last_number, modified_in_the_last_number=modified_in_the_last_number)

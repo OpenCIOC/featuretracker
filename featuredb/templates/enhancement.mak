@@ -32,14 +32,13 @@ ${request.model_state.renderer.error_notice()}
 </h2>
 
 <div class="enhancement-status-row clearfix">
+	
 <dl>
 	<dt>Priority</dt>
 	<dd class="${enhancement.SysPriority['PriorityCode'].lower().replace(' ', '-')}-text">${enhancement.SysPriority['PriorityName']}</dd>
 </dl>
 
 <dl><dt>Estimate</dt><dd>${enhancement.CostRange}</dd></dl>
-
-<dl><dt>Status</dt><dd>${enhancement.Status}</dd></dl>
 
 <dl>
 	<dt>Ranked by</dt>
@@ -60,12 +59,20 @@ ${request.model_state.renderer.error_notice()}
 %endfor
 </dl>
 
+<dl><dt>Status</dt><dd>${enhancement.Status}</dd></dl>
+
+%if enhancement.Funder:
+<dl><dt>Funder</dt><dd>${enhancement.Funder}</dd></dl>
+%endif
+
 %if enhancement.Releases:
 <dl><dt>Releases</dt>
 %for release in enhancement.Releases:
 <dd><a href="${request.route_url('search_results', _query=[('Release', release['RELEASE_ID']), ('IncludeClosed', 'on')])}">${release['ReleaseName']}</a></dd>
 %endfor
+</dl>
 %endif
+
 </div>
 
 %if enhancement.BasicDescription:
