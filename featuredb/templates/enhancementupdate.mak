@@ -8,6 +8,10 @@ def grouper(n, iterable, fillvalue=None):
     return izip_longest(fillvalue=fillvalue, *args)
 %>
 
+%if not is_add:
+<p><a href="${request.route_path('enhancement', id=enhancement.ID)}">Back to Enhancement</a></p>
+%endif
+
 <% renderer = request.model_state.renderer %>
 
 ${renderer.error_notice()}

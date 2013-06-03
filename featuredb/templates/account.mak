@@ -49,6 +49,15 @@ ${renderer.error_notice()}
 				${renderer.text('LastName')}
 				</td>
 		</tr>
+		<tr>
+			<td class="ui-widget-header">Email Settings</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('EmailOnNew')}
+				${renderer.checkbox('EmailOnNew', label=' Send me an email when new enhancements are added.')}<br>
+				${renderer.errorlist('EmailOnUpdate')}
+				${renderer.checkbox('EmailOnUpdate', label=' Send me an email when enhancements I\'ve ranked are updated.')}
+				</td>
+		</tr>
 		<tr><td colspan="2" class="ui-state-default" style="text-align: center">Change Password</td></tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('Password', 'Password')}</td>

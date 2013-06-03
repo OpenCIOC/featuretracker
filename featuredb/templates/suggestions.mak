@@ -16,7 +16,7 @@ from markupsafe import Markup
 
 %for suggestion in suggestions:
 <tr>
-<td style="white-space:nowrap;">${suggestion.DateSuggested}</td>
+<td style="white-space:nowrap;">${request.format_date(suggestion.DateSuggested)}</td>
 <td><a href="mailto:${suggestion.Email}">${suggestion.Email}</a>
 %if suggestion.UserName:
 <br>(${suggestion.UserName})
@@ -25,8 +25,7 @@ from markupsafe import Markup
 <td>${suggestion.OrgName}</td>
 <td>${suggestion.Suggestion}</td>
 <td>
-<a href="">Create</a>
-<br><a href="">Delete</a>
+<a href="${request.route_path('suggestion_delete', _query=[('ID', suggestion.SUGGEST_ID)])}">Delete</a>
 </td>
 </tr>
 %endfor

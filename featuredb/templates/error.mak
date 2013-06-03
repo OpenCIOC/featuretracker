@@ -3,4 +3,4 @@
 
 <% renderer = request.model_state.renderer %>
 
-${renderer.error_notice()}
+${renderer.error_msg(error_message)}

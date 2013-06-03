@@ -33,6 +33,5 @@ class ErrorPageController(ViewBase):
 	@view_config(context=ErrorPage, renderer='error.mak', permission=NO_PERMISSION_REQUIRED)
 	def error_page(self):
 
-		self.model_state.add_error_for('*', self.exception.message)
-		return {'page_title': self.exception.title}
+		return {'page_title': self.exception.title, 'error_message': self.exception.message}
 
