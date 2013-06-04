@@ -26,7 +26,8 @@ class SearchSchema(Schema):
 	CreatedInTheLastXDays = validators.Int(min=1, max=32767)
 	ModifiedInTheLastXDays = validators.Int(min=1, max=32767)
 	Release	= validators.IntID()
-	Funder = validators.IntID()
+	Funder = validators.Int(min=-1, max=32767)
+	Status = validators.IntID()
 	ID = validators.IntID()
 
 field_order =  [
@@ -37,6 +38,7 @@ field_order =  [
 	'SysPriority',
 	'Release',
 	'Funder',
+	'Status',
 	'IncludeClosed',
 	'Terms',
 	]
@@ -71,6 +73,10 @@ class Search(ViewBase):
 			cursor.nextset()
 			
 			funders = cursor.fetchall()
+			
+			cursor.nextset()
+			
+			statuses = cursor.fetchall()
 
 			if request.user:
 				cursor.nextset()
@@ -83,7 +89,7 @@ class Search(ViewBase):
 
 		return dict(keywords=keywords, modules=modules, priorities=priorities,
 			  estimates=estimates, user_priorities=user_priorities, releases=releases,
-			  funders=funders, cart=user_cart)
+			  funders=funders, statuses=statuses, cart=user_cart)
 
 
 	@view_config(route_name='search_results', renderer='results.mak')

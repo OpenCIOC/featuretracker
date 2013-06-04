@@ -100,6 +100,14 @@ ${renderer.error_notice()}
 				</td>
 		</tr>
 		<tr>
+			<td class="ui-widget-header">${renderer.label('Status', 'Status')}</td>
+			<td class="ui-widget-content">
+				${renderer.errorlist('Status')}
+				${renderer.select('Status', options=[('','')] + 
+						[(s.STATUS_ID, s.StatusName) for s in statuses])}
+				</td>
+		</tr>
+		<tr>
 			<td class="ui-widget-header">${renderer.label('IncludeClosed', 'Closed/Cancelled')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('IncludeClosed')}
