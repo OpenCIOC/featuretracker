@@ -188,6 +188,22 @@ ${closed_note()}
 %endfor
 </table>
 
+<h2 class="ui-state-default ui-corner-all search-type">Browse by Status</h2>
+<table class="ui-widget-content browse-table">
+%for group in grouper(min([len(statuses),3]), statuses):
+	<tr>
+	%for status in group:
+		<td class="ui-widget-content">
+			%if status:
+			<a href="${request.route_url('search_results', _query=[('Status',status[0]), ('IncludeClosed', 'on')])}">${status.StatusName} (${status.EnhancementCount})</a>
+			%endif
+		</td>
+	%endfor
+	</tr>
+%endfor
+</table>
+
+
 <h2 class="ui-state-default ui-corner-all search-type">Browse by Release</h2>
 <table class="ui-widget-content browse-table">
 %for group in grouper(min([len(releases),3]), releases):
