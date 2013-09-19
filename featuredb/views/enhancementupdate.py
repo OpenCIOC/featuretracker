@@ -23,7 +23,7 @@ class EnhancementSchema(Schema):
 	SYS_ESTIMATE = validators.Int(min=0, max=15, not_empty=True)
 	SYS_STATUS = validators.IntID(max=7, not_empty=True)
 	SYS_FUNDER = validators.IntID()
-	BasicDescription = validators.String(max=2000)
+	BasicDescription = validators.String(max=8000)
 	AdditionalNotes = validators.String(max=2000)
 	SYS_SOURCETYPE = validators.IntID()
 	SourceDetail = validators.String(max=255)
