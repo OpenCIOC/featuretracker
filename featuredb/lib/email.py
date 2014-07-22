@@ -4,14 +4,13 @@
 # Developed By Katherine Lambacher / KCL Custom Software
 # If you did not receive a copy of the license agreement with this
 # software, please contact CIOC via their website above.
-#==================================================================
-#stdlib
-import os
-
-
+# ==================================================================
+# stdlib
 import logging
+import os
+import textwrap
 
-#3rd party
+# 3rd party
 from markupsafe import Markup, escape_silent
 from marrow.mailer import Mailer, Message
 from marrow.mailer.exc import DeliveryException
@@ -28,17 +27,20 @@ class DummyMailer(object):
 		self.request = request
 
 	def send(self, message):
-		markup = Markup('''\
-					<p>Sending Email...<br><br>
-					<strong>From:</strong> %s<br><br>
-					<strong>To:</strong> %s<br><br>
-					<strong>Reply-To:</strong> %s<br><br>
-					<strong>Subject:</strong> %s<br><br>
-					<strong>Message:</strong><br>%s</p>''') % (
-						message.author, ', '.join(unicode(x) for x in message.to), message.reply or '',
-						message.subject, escape_silent(message.plain)
-						.replace('\n', Markup('<br>'))
-						.replace('\r', ''))
+		markup = Markup(
+			'''\
+			<p>Sending Email...<br><br>
+			<strong>From:</strong> %s<br><br>
+			<strong>To:</strong> %s<br><br>
+			<strong>Reply-To:</strong> %s<br><br>
+			<strong>Subject:</strong> %s<br><br>
+			<strong>Message:</strong><br>%s</p>'''
+		) % (
+			message.author, ', '.join(unicode(x) for x in message.to), message.reply or '',
+			message.subject, escape_silent(message.plain)
+			.replace('\n', Markup('<br>'))
+			.replace('\r', '')
+		)
 		log.debug('Sending email %s', markup)
 		self.request.session.flash(markup, 'email_messages')
 
@@ -54,7 +56,8 @@ class RealMailerFactory(object):
 			'use': 'smtp',
 			'host': host,
 			'username': os.environ.get('CIOC_MAIL_USERNAME'),
-			'password': os.environ.get('CIOC_MAIL_PASSWORD')
+			'password': os.environ.get('CIOC_MAIL_PASSWORD'),
+			'port': os.environ.get('CIOC_MAIL_PORT'),
 		}
 
 		log.debug('transport host: %s', host)
@@ -98,3 +101,7 @@ def send_email(request, author, to, subject, message, reply=None):
 		args['reply'] = unicode(reply)
 	message = Message(**args)
 	mailer.send(message)
+
+
+def format_message(message, sep='\n\n'):
+	return sep.join(textwrap.fill(x, width=80) for x in message.split(sep))

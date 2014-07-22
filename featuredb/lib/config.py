@@ -5,9 +5,10 @@
 # Developed By Katherine Lambacher / KCL Custom Software
 # If you did not receive a copy of the license agreement with this
 # software, please contact CIOC via their website above.
-#==================================================================
+# ==================================================================
 import os
 from ConfigParser import SafeConfigParser as ConfigParser
+
 
 class ConfigManager(object):
 	def __init__(self, config_file):
@@ -34,6 +35,8 @@ class ConfigManager(object):
 
 
 _config = None
+
+
 def get_config(config_file, include_changed=False):
 	global _config
 	if not _config:
@@ -45,6 +48,6 @@ def get_config(config_file, include_changed=False):
 		changed = _config._changed != before
 
 	if include_changed:
-		return _config.config_dict.copy(),changed
-	
+		return _config.config_dict.copy(), changed
+
 	return _config.config_dict.copy()
