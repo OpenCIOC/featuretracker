@@ -16,7 +16,7 @@ import os
 import sys
 import traceback
 
-sys.append(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 # 3rd party
 from pyramid.paster import bootstrap
