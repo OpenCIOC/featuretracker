@@ -4,15 +4,15 @@
 # Developed By Katherine Lambacher / KCL Custom Software
 # If you did not receive a copy of the license agreement with this
 # software, please contact CIOC via their website above.
-#==================================================================
+# ==================================================================
 import pyodbc
+
 
 class ConnectionManager(object):
 	def __init__(self, request):
 		self.request = request
-		self.config= request.config
+		self.config = request.config
 
-		
 	def get_connection_string(self):
 		config = self.config
 		settings = [
@@ -29,4 +29,3 @@ class ConnectionManager(object):
 		conn = pyodbc.connect(self.get_connection_string(), autocommit=True, unicode_results=True)
 
 		return conn
-
