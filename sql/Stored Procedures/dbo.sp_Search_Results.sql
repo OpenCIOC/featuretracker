@@ -1,3 +1,4 @@
+
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
@@ -85,7 +86,18 @@ SELECT e.ID,
 		OR p.PRIORITY_ID=@NEUTRAL_PRIORITY
 		ORDER BY CASE WHEN p.PRIORITY_ID=@NEUTRAL_PRIORITY THEN 1 ELSE 0 END
 	) AS UserPriority,
-	ISNULL('$' + CAST(es.CostLow AS varchar) + ' - $' + CAST(es.CostHigh AS varchar),EstimateCode) AS CostRange
+	ISNULL('$' + CAST(es.CostLow AS varchar) + ' - $' + CAST(es.CostHigh AS varchar),EstimateCode) AS CostRange,
+	STUFF(
+       (SELECT
+            N', ' + r.ReleaseName
+            FROM Release r
+            INNER JOIN EnhancementRelease er
+				ON r.RELEASE_ID=er.RELEASE_ID AND er.ENHANCEMENT_ID=e.ID
+            ORDER BY r.ReleaseName
+            FOR XML PATH(''), TYPE
+       ).value('./text()[1]','nvarchar(max)')
+       ,1,2, ''
+    ) AS Releases
 	FROM Enhancement e
 	INNER JOIN Estimate es
 		ON e.SYS_ESTIMATE=es.ESTIMATE_ID
@@ -118,5 +130,7 @@ SET NOCOUNT OFF
 
 
 GO
+
+
 GRANT EXECUTE ON  [dbo].[sp_Search_Results] TO [web_user_role]
 GO
