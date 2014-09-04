@@ -1,0 +1,11 @@
+CREATE TABLE [dbo].[Member]
+(
+[MEMBER_ID] [int] NOT NULL IDENTITY(1, 1),
+[MemberName] [varchar] (150) COLLATE Latin1_General_CI_AS NOT NULL,
+[Inactive] [bit] NOT NULL CONSTRAINT [DF_Member_Inactive] DEFAULT ((0))
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Member] ADD CONSTRAINT [PK_Member] PRIMARY KEY CLUSTERED  ([MEMBER_ID]) ON [PRIMARY]
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Member] ON [dbo].[Member] ([MemberName]) ON [PRIMARY]
+GO

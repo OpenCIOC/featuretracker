@@ -1,0 +1,39 @@
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+CREATE PROCEDURE [dbo].[sp_User_Priorities]
+	@UserEmail [varchar](60)
+WITH EXECUTE AS CALLER
+AS
+SET NOCOUNT ON
+
+/*
+	Checked for Release: 1.1
+	Checked by: KL
+	Checked on: 23-Jul-2012
+	Action: NO ACTION REQUIRED
+*/
+
+DECLARE @NEUTRAL_PRIORITY smallint
+SELECT @NEUTRAL_PRIORITY=PRIORITY_ID FROM Priority WHERE PriorityCode='NEUTRAL'
+
+DECLARE @USER_ID int
+SELECT @USER_ID=u.[USER_ID] FROM UserAccount u WHERE u.Email=@UserEmail
+
+SELECT e.ID,
+	e.Title,
+	p.PRIORITY_ID
+	FROM Enhancement e
+	INNER JOIN UserEnhancementPriority uep
+		ON e.ID=uep.ENHANCEMENT_ID AND uep.[USER_ID]=@USER_ID
+	INNER JOIN Priority p
+		ON uep.PRIORITY_ID=p.PRIORITY_ID
+WHERE p.PRIORITY_ID <> @NEUTRAL_PRIORITY
+	AND e.SYS_STATUS IN (SELECT STATUS_ID FROM [Status] WHERE CanRank=1)
+ORDER BY uep.PRIORITY_ID, InPriorityOrder, Title
+
+SET NOCOUNT OFF
+GO
+GRANT EXECUTE ON  [dbo].[sp_User_Priorities] TO [web_user_role]
+GO

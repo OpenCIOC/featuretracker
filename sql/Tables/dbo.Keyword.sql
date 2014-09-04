@@ -1,0 +1,10 @@
+CREATE TABLE [dbo].[Keyword]
+(
+[KEYWORD_ID] [int] NOT NULL IDENTITY(1, 1),
+[Keyword] [nvarchar] (255) COLLATE Latin1_General_CI_AI NOT NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Keyword] ADD CONSTRAINT [PK_Keyword] PRIMARY KEY CLUSTERED  ([KEYWORD_ID]) ON [PRIMARY]
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Keyword] ON [dbo].[Keyword] ([Keyword]) ON [PRIMARY]
+GO

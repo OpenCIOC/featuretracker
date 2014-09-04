@@ -1,0 +1,17 @@
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+CREATE PROCEDURE [dbo].[sp_User_Login]
+	@UserEmail [varchar](60)
+WITH EXECUTE AS CALLER
+AS
+SET NOCOUNT ON
+
+SELECT * FROM UserAccount u WHERE u.Email=@UserEmail
+
+
+SET NOCOUNT OFF
+GO
+GRANT EXECUTE ON  [dbo].[sp_User_Login] TO [web_user_role]
+GO
