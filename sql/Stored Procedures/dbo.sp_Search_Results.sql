@@ -89,13 +89,13 @@ SELECT e.ID,
 	ISNULL('$' + CAST(es.CostLow AS varchar) + ' - $' + CAST(es.CostHigh AS varchar),EstimateCode) AS CostRange,
 	STUFF(
        (SELECT
-            N',' + r.ReleaseName
+            N', ' + r.ReleaseName
             FROM Release r
             INNER JOIN EnhancementRelease er
 				ON r.RELEASE_ID=er.RELEASE_ID AND er.ENHANCEMENT_ID=e.ID
             ORDER BY r.ReleaseName
             FOR XML PATH(''), TYPE
-       ).value('.','varchar(max)')
+       ).value('./text()[1]','nvarchar(max)')
        ,1,2, ''
     ) AS Releases
 	FROM Enhancement e
@@ -130,6 +130,7 @@ SET NOCOUNT OFF
 
 
 GO
+
 
 GRANT EXECUTE ON  [dbo].[sp_Search_Results] TO [web_user_role]
 GO
