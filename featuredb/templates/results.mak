@@ -73,6 +73,10 @@ Status: ${result.Status}
 Priority: <span class="${priority.PriorityCode.lower().replace(' ', '-')}-results">${priority.PriorityName}</span> ;
 Est. Cost: ${result.CostRange}</p>
 
+%if result.Releases:
+<p class="status-line status-line3">Release(s): ${result.Releases}</p>
+%endif
+
 %if result.ShortDescription:
 <p class="short-description">${result.ShortDescription}</p>
 %endif
