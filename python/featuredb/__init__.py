@@ -4,12 +4,12 @@
 # Developed By Katherine Lambacher / KCL Custom Software
 # If you did not receive a copy of the license agreement with this
 # software, please contact CIOC via their website above.
-#==================================================================
+# ==================================================================
 
-#stdlib
+# stdlib
 import logging
 
-#3rd party
+# 3rd party
 from pyramid.config import Configurator
 from pyramid.decorator import reify
 from pyramid.authentication import SessionAuthenticationPolicy
@@ -18,7 +18,7 @@ from pyramid.security import NO_PERMISSION_REQUIRED, Authenticated, Everyone, Al
 
 from pyramid_beaker import session_factory_from_settings
 
-#this app
+# this app
 from featuredb.lib import const
 
 log = logging.getLogger(__name__)
@@ -105,7 +105,7 @@ def main(global_config, **settings):
 	config.add_route('suggestion_delete', 'suggestions/delete')
 	config.add_route('concerns', 'concerns')
 
-	#config.add_route('priority', 'priority')
+	# config.add_route('priority', 'priority')
 
 	config.add_route('login', 'login')
 	config.add_route('logout', 'logout')

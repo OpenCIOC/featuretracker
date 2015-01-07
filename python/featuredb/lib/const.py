@@ -35,7 +35,7 @@ def update_cache_values():
     global _app_path, _config_file, _app_name, session_lock_dir, publish_dir
 
     if _app_path is None:
-        _app_path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+        _app_path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..'))
         _app_name = os.path.split(_app_path)[1]
         _config_file = os.path.join(_app_path, '..', '..', 'config', _app_name + '.ini')
         session_lock_dir = os.path.join(_app_path, 'session_lock')

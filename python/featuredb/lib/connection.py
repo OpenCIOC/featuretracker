@@ -16,7 +16,7 @@ class ConnectionManager(object):
 	def get_connection_string(self):
 		config = self.config
 		settings = [
-			('Driver', '{SQL Server Native Client 10.0}'),
+			('Driver', '{%s}' % config.get('driver', 'SQL Server Native Client 10.0')),
 			('Server', config['server']),
 			('Database', config['database']),
 			('UID', config['uid']),
