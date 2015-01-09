@@ -19,7 +19,7 @@ from pyramid.security import NO_PERMISSION_REQUIRED, Authenticated, Everyone, Al
 from pyramid_beaker import session_factory_from_settings
 
 # this app
-from featuredb.lib import const
+from featuredb.lib import const, config as ciocconfig
 
 log = logging.getLogger(__name__)
 
@@ -74,6 +74,11 @@ def main(global_config, **settings):
 	"""
 
 	const.update_cache_values()
+	settings['beaker.session.lock_dir'] = const.session_lock_dir
+	cnf = ciocconfig.get_config(const._config_file)
+	redis_url = cnf.get('session.url')
+	if redis_url:
+		settings['beaker.session.url'] = redis_url
 
 	settings['mako.imports'] = ['from markupsafe import escape_silent']
 	settings['mako.default_filters'] = ['escape_silent']
