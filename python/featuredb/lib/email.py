@@ -79,7 +79,7 @@ def _get_mailer(request):
 	global _mailer_factory
 
 	if not _mailer_factory:
-		host = os.environ.get('CIOC_MAIL_HOST', '192.168.100.20')
+		host = os.environ.get('CIOC_MAIL_HOST', '127.0.0.1')
 		if host == 'test':
 			_mailer_factory = DummyMailerFactory()
 
