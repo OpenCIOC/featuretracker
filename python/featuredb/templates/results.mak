@@ -54,7 +54,7 @@ if include_closed:
 <h3 class="ui-state-default ui-corner-all clearfix"><span class="module-icons">
 %for module, title in modules:
 %if getattr(result, module):
-<span class="module-icon module-icon-${module.lower()}" title="${title}"></span>
+<span class="module-icon module-icon-${module.lower()}" title="${title}">Community Information</span>
 %endif
 %endfor
 </span>
@@ -84,7 +84,7 @@ Est. Cost: ${result.CostRange}</p>
 
 %if request.user:
 <% priority = priority_map[result.UserPriority] %>
-<p class="status-my-rank"><span class="ui-icon ui-icon-circle-triangle-e inline-icon"></span> 
+<p class="status-my-rank"><span class="ui-icon ui-icon-circle-triangle-e inline-icon" aria-hidden="true"></span> 
 My Ranking: <span class="${priority.PriorityCode.lower().replace(' ', '-')}-text align-bottom">${priority.PriorityName}</span></p>
 %endif
 

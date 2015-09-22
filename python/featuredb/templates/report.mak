@@ -36,7 +36,7 @@ from markupsafe import Markup
 <td>
 %for module, title in modules:
 %if getattr(result, module):
-<span class="module-icon module-icon-${module.lower()}" title="${title}"></span>
+<span class="module-icon module-icon-${module.lower()}" title="${title}" aria-hidden="true"></span>
 %endif
 %endfor
 <td>${result.CostRange}</td>

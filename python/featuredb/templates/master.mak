@@ -48,8 +48,8 @@
 
 <header class="ui-widget-header" style="padding-left: 1em;">
 <nav class="site-nav"><%block name="sitenav">
-<%block name="newsearch"><a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_url('search_index')}"><span class="ui-icon ui-icon-search ui-button-icon-primary"></span><span class="ui-button-text">New Search</span></a></%block>
-<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('report')}"><span class="ui-icon ui-icon-signal ui-button-icon-primary"></span><span class="ui-button-text">Ranking Report</span></a> 
+<%block name="newsearch"><a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_url('search_index')}"><span class="ui-icon ui-icon-search ui-button-icon-primary" aria-hidden="true"></span><span class="ui-button-text">New Search</span></a></%block>
+<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('report')}"><span class="ui-icon ui-icon-signal ui-button-icon-primary" aria-hidden="true"></span><span class="ui-button-text">Ranking Report</span></a> 
 %if request.user:
   %if request.user.TechAdmin:
 <a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('suggestions')}"><span class="ui-icon ui-icon-document ui-button-icon-primary"></span><span class="ui-button-text">Suggestions</span></a>   
@@ -58,12 +58,12 @@
   %if request.user.TechAdmin:
 <a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('enhancementupdate',action='add')}"><span class="ui-icon ui-icon-comment ui-button-icon-primary"></span><span class="ui-button-text">New Request</span></a>  
   %else:
-<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('suggest')}"><span class="ui-icon ui-icon-comment ui-button-icon-primary"></span><span class="ui-button-text">New Request</span></a>
+<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('suggest')}"><span class="ui-icon ui-icon-comment ui-button-icon-primary" aria-hidden="true"></span><span class="ui-button-text">New Request</span></a>
   %endif
-<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('account')}"><span class="ui-icon ui-icon-person ui-button-icon-primary"></span><span class="ui-button-text">Account</span></a>
-<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('logout')}"><span class="ui-icon ui-icon-power ui-button-icon-primary"></span><span class="ui-button-text">Logout</span></a>
+<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('account')}"><span class="ui-icon ui-icon-person ui-button-icon-primary" aria-hidden="true"></span><span class="ui-button-text">Account</span></a>
+<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('logout')}"><span class="ui-icon ui-icon-power ui-button-icon-primary" aria-hidden="true"></span><span class="ui-button-text">Logout</span></a>
 %else:
-<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('login')}"><span class="ui-icon ui-icon-power ui-button-icon-primary"></span><span class="ui-button-text">Login</span></a>
+<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('login')}"><span class="ui-icon ui-icon-power ui-button-icon-primary" aria-hidden="true"></span><span class="ui-button-text">Login</span></a>
 %endif
 </%block>
 </nav>
@@ -82,7 +82,7 @@
 	%if message:
 		<div class="ui-widget error-notice clearfix">
 			<div class="ui-state-highlight ui-corner-all error-notice-wrapper"> 
-				<p><span class="ui-icon ui-icon-info error-notice-icon"></span> ${message[0]} </p>
+				<p><span class="ui-icon ui-icon-info error-notice-icon" aria-hidden="true"></span> ${message[0]} </p>
 			</div>
 		</div>
 	%endif

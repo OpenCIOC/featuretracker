@@ -169,10 +169,10 @@ class CiocFormRenderer(FormRenderer):
 		return Markup('''
 			<div class="ui-widget clearfix" style="margin: 0.25em;">
 				<div class="ui-state-error error-field-wrapper"> 
-				<span class="ui-icon ui-icon-alert error-notice-icon"></span>%s
+				<span class="ui-icon ui-icon-alert error-notice-icon">%s</span>%s
 				</div>
 			</div>
-			''') % errors[0]
+			''') % ('Warning',errors[0])
 
 	def error_notice(self, msg=None):
 		if not self.all_errors():
@@ -188,11 +188,11 @@ class CiocFormRenderer(FormRenderer):
 		return Markup('''
 			<div class="ui-widget error-notice clearfix">
 				<div class="ui-state-error ui-corner-all error-notice-wrapper"> 
-					<p><span class="ui-icon ui-icon-alert error-notice-icon"></span>
+					<p><span class="ui-icon ui-icon-alert error-notice-icon">%s</span>
 					%s</p>
 				</div>
 			</div>
-			''') % msg
+			''') % ('Warning',msg)
 
 
 class ModelState(object):
