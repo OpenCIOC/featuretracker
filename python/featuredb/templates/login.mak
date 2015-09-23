@@ -18,7 +18,7 @@ ${renderer.error_notice()}
 	<td class="ui-widget-header">${renderer.label('password', 'Password:')}</td>
 	<td class="ui-widget-content">
 		${renderer.errorlist('password')}
-		${renderer.password('password', id='password', maxlenght=None)}
+		${renderer.password('password', id='password', maxlength=None)}
 	</td>
 </tr>
 </table>

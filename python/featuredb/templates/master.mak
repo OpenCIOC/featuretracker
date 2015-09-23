@@ -82,7 +82,7 @@
 	%if message:
 		<div class="ui-widget error-notice clearfix">
 			<div class="ui-state-highlight ui-corner-all error-notice-wrapper"> 
-				<p><span class="ui-icon ui-icon-info error-notice-icon" aria-hidden="true"></span> ${message[0]} </p>
+				<p><span class="ui-icon ui-icon-info error-notice-icon">Notice</span> ${message[0]} </p>
 			</div>
 		</div>
 	%endif

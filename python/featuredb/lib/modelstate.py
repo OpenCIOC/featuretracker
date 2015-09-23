@@ -172,7 +172,7 @@ class CiocFormRenderer(FormRenderer):
 				<span class="ui-icon ui-icon-alert error-notice-icon">%s</span>%s
 				</div>
 			</div>
-			''') % ('Warning',errors[0])
+			''') % ('Error',errors[0])
 
 	def error_notice(self, msg=None):
 		if not self.all_errors():
@@ -192,7 +192,7 @@ class CiocFormRenderer(FormRenderer):
 					%s</p>
 				</div>
 			</div>
-			''') % ('Warning',msg)
+			''') % ('Error',msg)
 
 
 class ModelState(object):
