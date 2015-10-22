@@ -31,7 +31,7 @@ ${self.makeMgmtInfo(enhancement)}
 		</td>
 	</tr>
 	<tr>
-		<td class="ui-widget-header">${renderer.label('Basic Description', 'Description')}</td>
+		<td class="ui-widget-header">${renderer.label('BasicDescription', 'Description')}</td>
 		<td class="ui-widget-content">
 			${renderer.errorlist('BasicDescription')}
 			${renderer.textarea('BasicDescription', class_='smalltextarea')}
@@ -153,7 +153,7 @@ ${self.makeMgmtInfo(enhancement)}
 				%endfor
 			</table>
 			<p>
-			<input type="text" class="text" id="add_see_also_source"> <button id="add_see_also">Add Enh ID</button>
+			<input type="text" class="text" title="Enhancement ID to add" id="add_see_also_source"> <button id="add_see_also">Add Enh ID</button>
 			</p>
 		</td>
 	</tr>

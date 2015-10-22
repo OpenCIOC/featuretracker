@@ -50,7 +50,7 @@ ${renderer.error_notice()}
 		</tr>
 		%endif
 		<tr>
-			<td class="ui-widget-header">${renderer.label('SysPriority', 'CIOC Ratings')} <span class="ui-reset ui-widget ui-state-default ui-content"><span class="open-dialog ui-icon ui-icon-help inline-icon" title="What's This?" aria-hidden="true"></span></td>
+			<td class="ui-widget-header">${renderer.label('SysPriority', 'CIOC Ratings')} <span class="ui-reset ui-widget ui-state-default ui-content"><span class="open-dialog ui-icon ui-icon-help inline-icon" title="What's This?" aria-hidden="true"></span></span></td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('SysPriority')}
 				${renderer.select('SysPriority', options=priorities_formatted)}

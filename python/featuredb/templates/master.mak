@@ -52,11 +52,11 @@
 <a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('report')}"><span class="ui-icon ui-icon-signal ui-button-icon-primary" aria-hidden="true"></span><span class="ui-button-text">Ranking Report</span></a> 
 %if request.user:
   %if request.user.TechAdmin:
-<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('suggestions')}"><span class="ui-icon ui-icon-document ui-button-icon-primary"></span><span class="ui-button-text">Suggestions</span></a>   
-<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('concerns')}"><span class="ui-icon ui-icon-alert ui-button-icon-primary"></span><span class="ui-button-text">Concerns</span></a> 
+<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('suggestions')}"><span class="ui-icon ui-icon-document ui-button-icon-primary" aria-hidden="true"></span><span class="ui-button-text">Suggestions</span></a>   
+<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('concerns')}"><span class="ui-icon ui-icon-alert ui-button-icon-primary" aria-hidden="true"></span><span class="ui-button-text">Concerns</span></a> 
   %endif
   %if request.user.TechAdmin:
-<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('enhancementupdate',action='add')}"><span class="ui-icon ui-icon-comment ui-button-icon-primary"></span><span class="ui-button-text">New Request</span></a>  
+<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('enhancementupdate',action='add')}"><span class="ui-icon ui-icon-comment ui-button-icon-primary" aria-hidden="true"></span><span class="ui-button-text">New Request</span></a>  
   %else:
 <a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="${request.route_path('suggest')}"><span class="ui-icon ui-icon-comment ui-button-icon-primary" aria-hidden="true"></span><span class="ui-button-text">New Request</span></a>
   %endif
