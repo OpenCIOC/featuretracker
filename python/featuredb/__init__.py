@@ -16,7 +16,7 @@ from pyramid.authentication import SessionAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.security import NO_PERMISSION_REQUIRED, Authenticated, Everyone, Allow, DENY_ALL
 
-from pyramid_beaker import session_factory_from_settings
+from redis import ConnectionPool
 
 # this app
 from featuredb.lib import const, config as ciocconfig
@@ -69,34 +69,54 @@ class RootFactory(object):
 		self.request = request
 
 
+def get_redis_pool(config):
+	url = config.get('session.url', '172.23.16.12:6379')
+
+	host, port = url.split(':')
+	redispool = ConnectionPool(host=host, port=int(port))
+
+	return redispool
+
+
+def get_session_settings(cnf, settings):
+	settings['redis.sessions.connection_pool'] = get_redis_pool(cnf)
+
+	session_secret = cnf.get('session.secret')
+	if session_secret:
+		settings['redis.sessions.secret'] = session_secret
+
+	settings['redis.sessions.prefix'] = const._app_name + '-session:'
+
+	cookie_secure = cnf.get('session.cookie_secure')
+	if cookie_secure:
+		settings['redis.sessions.cookie_secure'] = cookie_secure
+
+
 def main(global_config, **settings):
 	""" This function returns a Pyramid WSGI application.
 	"""
 
 	const.update_cache_values()
-	settings['session.lock_dir'] = const.session_lock_dir
 	cnf = ciocconfig.get_config(const._config_file)
-	redis_url = cnf.get('session.url')
-	if redis_url:
-		settings['session.url'] = redis_url
+
+	get_session_settings(cnf, settings)
 
 	settings['mako.imports'] = ['from markupsafe import escape_silent']
 	settings['mako.default_filters'] = ['escape_silent']
-
-	session_factory = session_factory_from_settings(settings)
 
 	authn_policy = SessionAuthenticationPolicy(callback=groupfinder)
 	authz_policy = ACLAuthorizationPolicy()
 
 	config = Configurator(
 		settings=settings,
-		session_factory=session_factory,
 		root_factory=RootFactory,
 		default_permission='public',
 		request_factory='featuredb.lib.request.CommunityManagerRequest',
 		authentication_policy=authn_policy,
 		authorization_policy=authz_policy
 	)
+
+	config.include('pyramid_redis_sessions')
 
 	config.add_route('enhancement', 'enhancement/{id:\d+}')
 	config.add_route('enhancementupdate', 'enhancement/{action}')

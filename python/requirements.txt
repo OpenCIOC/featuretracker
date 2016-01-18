@@ -27,7 +27,3 @@ pycrypto==2.6.1
 pyramid_debugtoolbar==2.2
 pyramid_multiauth==0.4.0
 pyramid_handlers==0.5
-
-Beaker==1.6.4
-pyramid_beaker==0.8
-https://github.com/lambacck/beaker_extensions/zipball/master#egg=beaker-extensions==0.1.2dev
