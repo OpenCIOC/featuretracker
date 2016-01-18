@@ -20,6 +20,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 
   <!-- CSS: implied media=all -->
   <!-- CSS concatenated and minified via ant build script-->
