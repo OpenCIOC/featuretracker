@@ -50,7 +50,7 @@ ${renderer.error_notice()}
 		</tr>
 		%endif
 		<tr>
-			<td class="ui-widget-header">${renderer.label('SysPriority', 'CIOC Ratings')} <span class="ui-reset ui-widget ui-state-default ui-content"><span class="open-dialog ui-icon ui-icon-help inline-icon" title="What's This?" aria-hidden="true"></span></span></td>
+			<td class="ui-widget-header">${renderer.label('SysPriority', 'CIOC Ratings')} <span class="ui-reset ui-widget ui-state-default ui-content"><span class="open-dialog ui-icon ui-icon-help inline-icon" title="What's This?">What's This?</span></span></td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('SysPriority')}
 				${renderer.select('SysPriority', options=priorities_formatted)}
@@ -142,7 +142,7 @@ if not request.user:
 %for label, prefix, show_help in priority_types:
 <h3>${label}
 %if show_help:
-<span class="open-dialog ui-state-default ui-icon ui-icon-help inline-icon" title="What's This?" aria-hidden="true"></span>
+<span class="open-dialog ui-state-default ui-icon ui-icon-help inline-icon" title="What's This?">What's This?</span>
 %endif
 </h3>
 <%block name="closed_note"><p class="small-note">This search does not include closed or cancelled feature requests</p></%block>
