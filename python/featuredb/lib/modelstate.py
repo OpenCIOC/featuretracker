@@ -25,7 +25,7 @@ class DefaultModel(object):
 _split_re = re.compile(r'((?:-\d+)?\.)')
 def split(value):
 	retval = _split_re.split(value,1)
-	
+
 	return retval + ([''] * (3-len(retval)))
 
 def traverse_object_for_value(obj, name, is_array=False):
@@ -72,7 +72,7 @@ class CiocFormRenderer(FormRenderer):
 	def checkbox(self, name, value='1', checked=False, label=None, id=None, **attrs):
 		return tags.checkbox(name, value, self.value(name) or checked, 
 			label, id or name, **attrs)
-		
+
 	def ms_checkbox(self, name, value=None, checked=False, label=None, id=None, **attrs):
 		"""
 		Outputs checkbox in radio style (i.e. multi select)
@@ -137,6 +137,9 @@ class CiocFormRenderer(FormRenderer):
 	def password(self, name, id=None, **attrs):
 		kw = {'class_': 'password'}
 		kw.update(attrs)
+
+		id = id or name
+
 		return tags.password(name, id=id, **kw)
 
 	def errorlist(self, name=None, **attrs):
@@ -244,14 +247,12 @@ class ModelState(object):
 		if self._defaults:
 			raise RuntimeError, \
 					"defaults property has already been set"
-		
+
 		if self.form.is_validated:
 			raise RuntimeError, \
 					"Form has already been validated"
 		self._defaults = value
 		self.form.data.update(value)
-		
-
 
 	@property
 	def data(self):
@@ -260,7 +261,6 @@ class ModelState(object):
 	def validate(self, *args, **kw):
 		return self.form.validate(*args, **kw)
 
-	
 	def bind(self, obj=None, include=None, exclude=None):
 		if obj is None:
 			obj = DefaultModel()
@@ -284,5 +284,3 @@ class ModelState(object):
 		errlist.append(msg)
 
 		self.form.errors[name] = errlist
-
-

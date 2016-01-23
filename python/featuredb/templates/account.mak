@@ -63,14 +63,14 @@ ${renderer.error_notice()}
 			<td class="ui-widget-header">${renderer.label('Password', 'Password')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('Password')}
-				${renderer.password('Password', id='Password')}
+				${renderer.password('Password')}
 			</td>
 		</tr>
 		<tr>
 			<td class="ui-widget-header">${renderer.label('ConfirmPassword', 'Confirm Password')}</td>
 			<td class="ui-widget-content">
 				${renderer.errorlist('ConfirmPassword')}
-				${renderer.password('ConfirmPassword', id='ConfirmPassword')}
+				${renderer.password('ConfirmPassword')}
 			</td>
 		</tr>
 	</table>
