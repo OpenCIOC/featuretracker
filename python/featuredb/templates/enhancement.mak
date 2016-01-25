@@ -43,7 +43,7 @@ ${request.model_state.renderer.error_notice()}
 %endif
 <span class="module-icons">
 %for module in enhancement.Modules:
-<span class="module-icon module-icon-${module['ModuleCode'].lower()}" title="${module['ModuleName']}"></span>
+<span class="module-icon module-icon-${module['ModuleCode'].lower()}" title="${module['ModuleName']}">${module['ModuleName']}</span>
 %endfor
 </span>
 #${enhancement.ID} ${enhancement.Title}
